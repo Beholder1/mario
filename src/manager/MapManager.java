@@ -2,8 +2,8 @@ package manager;
 
 import model.GameObject;
 import model.Map;
-import model.brick.Brick;
-import model.brick.OrdinaryBrick;
+import model.blok.Blok;
+import model.blok.Cegla;
 import model.enemy.Enemy;
 import model.hero.Mario;
 import model.prize.BoostItem;
@@ -100,7 +100,7 @@ public class MapManager {
 
     private void checkBottomCollisions(GameEngine engine) {
         Mario mario = getMario();
-        ArrayList<Brick> bricks = map.getAllBricks();
+        ArrayList<Blok> bricks = map.getAllBricks();
         ArrayList<Enemy> enemies = map.getEnemies();
         ArrayList<GameObject> toBeRemoved = new ArrayList<>();
 
@@ -109,7 +109,7 @@ public class MapManager {
         if (!mario.isJumping())
             mario.setFalling(true);
 
-        for (Brick brick : bricks) {
+        for (Blok brick : bricks) {
             Rectangle brickTopBounds = brick.getTopBounds();
             if (marioBottomBounds.intersects(brickTopBounds)) {
                 mario.setY(brick.getY() - mario.getDimension().height + 1);
@@ -137,15 +137,15 @@ public class MapManager {
 
     private void checkTopCollisions(GameEngine engine) {
         Mario mario = getMario();
-        ArrayList<Brick> bricks = map.getAllBricks();
+        ArrayList<Blok> bricks = map.getAllBricks();
 
         Rectangle marioTopBounds = mario.getTopBounds();
-        for (Brick brick : bricks) {
+        for (Blok brick : bricks) {
             Rectangle brickBottomBounds = brick.getBottomBounds();
             if (marioTopBounds.intersects(brickBottomBounds)) {
                 mario.setVelY(0);
                 mario.setY(brick.getY() + brick.getDimension().height);
-                Prize prize = brick.reveal(engine);
+                Prize prize = brick.odkryj(engine);
                 if(prize != null)
                     map.addRevealedPrize(prize);
             }
@@ -154,7 +154,7 @@ public class MapManager {
 
     private void checkMarioHorizontalCollision(GameEngine engine){
         Mario mario = getMario();
-        ArrayList<Brick> bricks = map.getAllBricks();
+        ArrayList<Blok> bricks = map.getAllBricks();
         ArrayList<Enemy> enemies = map.getEnemies();
         ArrayList<GameObject> toBeRemoved = new ArrayList<>();
 
@@ -163,7 +163,7 @@ public class MapManager {
 
         Rectangle marioBounds = toRight ? mario.getRightBounds() : mario.getLeftBounds();
 
-        for (Brick brick : bricks) {
+        for (Blok brick : bricks) {
             Rectangle brickBounds = !toRight ? brick.getRightBounds() : brick.getLeftBounds();
             if (marioBounds.intersects(brickBounds)) {
                 mario.setVelX(0);
@@ -195,13 +195,13 @@ public class MapManager {
     }
 
     private void checkEnemyCollisions() {
-        ArrayList<Brick> bricks = map.getAllBricks();
+        ArrayList<Blok> bricks = map.getAllBricks();
         ArrayList<Enemy> enemies = map.getEnemies();
 
         for (Enemy enemy : enemies) {
             boolean standsOnBrick = false;
 
-            for (Brick brick : bricks) {
+            for (Blok brick : bricks) {
                 Rectangle enemyBounds = enemy.getLeftBounds();
                 Rectangle brickBounds = brick.getRightBounds();
 
@@ -239,7 +239,7 @@ public class MapManager {
 
     private void checkPrizeCollision() {
         ArrayList<Prize> prizes = map.getRevealedPrizes();
-        ArrayList<Brick> bricks = map.getAllBricks();
+        ArrayList<Blok> bricks = map.getAllBricks();
 
         for (Prize prize : prizes) {
             if (prize instanceof BoostItem) {
@@ -249,7 +249,7 @@ public class MapManager {
                 Rectangle prizeLeftBounds = boost.getLeftBounds();
                 boost.setFalling(true);
 
-                for (Brick brick : bricks) {
+                for (Blok brick : bricks) {
                     Rectangle brickBounds;
 
                     if (boost.isFalling()) {
@@ -323,7 +323,7 @@ public class MapManager {
         }
     }
 
-    public void addRevealedBrick(OrdinaryBrick ordinaryBrick) {
+    public void addRevealedBrick(Cegla ordinaryBrick) {
         map.addRevealedBrick(ordinaryBrick);
     }
 

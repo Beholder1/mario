@@ -93,7 +93,7 @@ public class UIManager extends JPanel{
     private void drawVictoryScreen(Graphics2D g2) {
         g2.setFont(gameFont.deriveFont(50f));
         g2.setColor(Color.WHITE);
-        String displayedStr = "YOU WON!";
+        String displayedStr = "Wygrana!";
         int stringLength = g2.getFontMetrics().stringWidth(displayedStr);
         g2.drawString(displayedStr, (getWidth()-stringLength)/2, getHeight()/2);
     }

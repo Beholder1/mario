@@ -1,7 +1,7 @@
 package model;
 
-import model.brick.Brick;
-import model.brick.OrdinaryBrick;
+import model.blok.Blok;
+import model.blok.Cegla;
 import model.enemy.Enemy;
 import model.hero.Mario;
 import model.prize.BoostItem;
@@ -17,11 +17,11 @@ public class Map {
 
     private double remainingTime;
     private Mario mario;
-    private ArrayList<Brick> bricks = new ArrayList<>();
+    private ArrayList<Blok> bricks = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
-    private ArrayList<Brick> groundBricks = new ArrayList<>();
+    private ArrayList<Blok> groundBricks = new ArrayList<>();
     private ArrayList<Prize> revealedPrizes = new ArrayList<>();
-    private ArrayList<Brick> revealedBricks = new ArrayList<>();
+    private ArrayList<Blok> revealedBricks = new ArrayList<>();
     private EndFlag endPoint;
     private BufferedImage backgroundImage;
     private double bottomBorder = 720 - 70;
@@ -50,8 +50,8 @@ public class Map {
         return revealedPrizes;
     }
 
-    public ArrayList<Brick> getAllBricks() {
-        ArrayList<Brick> allBricks = new ArrayList<>();
+    public ArrayList<Blok> getAllBricks() {
+        ArrayList<Blok> allBricks = new ArrayList<>();
 
         allBricks.addAll(bricks);
         allBricks.addAll(groundBricks);
@@ -59,11 +59,11 @@ public class Map {
         return allBricks;
     }
 
-    public void addBrick(Brick brick) {
+    public void addBrick(Blok brick) {
         this.bricks.add(brick);
     }
 
-    public void addGroundBrick(Brick brick) {
+    public void addGroundBrick(Blok brick) {
         this.groundBricks.add(brick);
     }
 
@@ -97,12 +97,12 @@ public class Map {
     }
 
     private void drawBricks(Graphics2D g2) {
-        for(Brick brick : bricks){
+        for(Blok brick : bricks){
             if(brick != null)
                 brick.draw(g2);
         }
 
-        for(Brick brick : groundBricks){
+        for(Blok brick : groundBricks){
             brick.draw(g2);
         }
     }
@@ -137,9 +137,9 @@ public class Map {
             }
         }
 
-        for(Iterator<Brick> brickIterator = revealedBricks.iterator(); brickIterator.hasNext();){
-            OrdinaryBrick brick = (OrdinaryBrick)brickIterator.next();
-            brick.animate();
+        for(Iterator<Blok> brickIterator = revealedBricks.iterator(); brickIterator.hasNext();){
+            Cegla brick = (Cegla)brickIterator.next();
+            brick.animuj();
             if(brick.getFrames() < 0){
                 bricks.remove(brick);
                 brickIterator.remove();
@@ -166,7 +166,7 @@ public class Map {
         return endPoint;
     }
 
-    public void addRevealedBrick(OrdinaryBrick ordinaryBrick) {
+    public void addRevealedBrick(Cegla ordinaryBrick) {
         revealedBricks.add(ordinaryBrick);
     }
 

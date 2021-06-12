@@ -1,7 +1,7 @@
 package manager;
 
 import model.EndFlag;
-import model.brick.*;
+import model.blok.*;
 import model.prize.*;
 import view.ImageLoader;
 import model.Map;
@@ -70,20 +70,20 @@ class MapCreator {
                 int yLocation = y*pixelMultiplier;
 
                 if (currentPixel == ordinaryBrick) {
-                    Brick brick = new OrdinaryBrick(xLocation, yLocation, this.ordinaryBrick);
+                    Blok brick = new Cegla(xLocation, yLocation, this.ordinaryBrick);
                     createdMap.addBrick(brick);
                 }
                 else if (currentPixel == surpriseBrick) {
                     Prize prize = generateRandomPrize(xLocation, yLocation);
-                    Brick brick = new SurpriseBrick(xLocation, yLocation, this.surpriseBrick, prize);
+                    Blok brick = new SurpriseBrick(xLocation, yLocation, this.surpriseBrick, prize);
                     createdMap.addBrick(brick);
                 }
                 else if (currentPixel == pipe) {
-                    Brick brick = new Pipe(xLocation, yLocation, this.pipe);
+                    Blok brick = new Rura(xLocation, yLocation, this.pipe);
                     createdMap.addGroundBrick(brick);
                 }
                 else if (currentPixel == groundBrick) {
-                    Brick brick = new GroundBrick(xLocation, yLocation, this.groundBrick);
+                    Blok brick = new NiezniszczalnaCegla(xLocation, yLocation, this.groundBrick);
                     createdMap.addGroundBrick(brick);
                 }
                 else if (currentPixel == goomba) {
