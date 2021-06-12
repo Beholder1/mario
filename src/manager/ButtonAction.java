@@ -1,10 +1,10 @@
 package manager;
 
 public enum ButtonAction {
-    JUMP,
-    M_RIGHT,
-    M_LEFT,
-    PAUSE_RESUME,
+    SKOK,
+    W_PRAWO,
+    W_LEWO,
+    PAUZA,
     ACTION_COMPLETED,
     SELECT,
     GO_UP,

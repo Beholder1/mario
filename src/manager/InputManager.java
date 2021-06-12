@@ -23,24 +23,24 @@ public class InputManager implements KeyListener, MouseListener{
             if(status == GameStatus.START_SCREEN || status == GameStatus.MAP_SELECTION)
                 currentAction = ButtonAction.GO_UP;
             else
-                currentAction = ButtonAction.JUMP;
+                currentAction = ButtonAction.SKOK;
         }
         else if(keyCode == KeyEvent.VK_DOWN){
             if(status == GameStatus.START_SCREEN || status == GameStatus.MAP_SELECTION)
                 currentAction = ButtonAction.GO_DOWN;
         }
         else if (keyCode == KeyEvent.VK_RIGHT) {
-            currentAction = ButtonAction.M_RIGHT;
+            currentAction = ButtonAction.W_PRAWO;
         }
         else if (keyCode == KeyEvent.VK_LEFT) {
-            currentAction = ButtonAction.M_LEFT;
+            currentAction = ButtonAction.W_LEWO;
         }
         else if (keyCode == KeyEvent.VK_ENTER) {
             currentAction = ButtonAction.SELECT;
         }
         else if (keyCode == KeyEvent.VK_ESCAPE) {
             if(status == GameStatus.RUNNING || status == GameStatus.PAUSED )
-                currentAction = ButtonAction.PAUSE_RESUME;
+                currentAction = ButtonAction.PAUZA;
             else
                 currentAction = ButtonAction.GO_TO_START_SCREEN;
 

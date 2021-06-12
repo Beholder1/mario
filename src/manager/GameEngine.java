@@ -191,19 +191,19 @@ public class GameEngine implements Runnable {
             }
         } else if (gameStatus == GameStatus.RUNNING) {
             Rario rario = mapManager.getMario();
-            if (input == ButtonAction.JUMP) {
+            if (input == ButtonAction.SKOK) {
                 rario.skok();
-            } else if (input == ButtonAction.M_RIGHT) {
+            } else if (input == ButtonAction.W_PRAWO) {
                 rario.rusz(true, camera);
-            } else if (input == ButtonAction.M_LEFT) {
+            } else if (input == ButtonAction.W_LEWO) {
                 rario.rusz(false, camera);
             } else if (input == ButtonAction.ACTION_COMPLETED) {
                 rario.setVelX(0);
-            } else if (input == ButtonAction.PAUSE_RESUME) {
+            } else if (input == ButtonAction.PAUZA) {
                 pauseGame();
             }
         } else if (gameStatus == GameStatus.PAUSED) {
-            if (input == ButtonAction.PAUSE_RESUME) {
+            if (input == ButtonAction.PAUZA) {
                 pauseGame();
             }
         } else if(gameStatus == GameStatus.GAME_OVER && input == ButtonAction.GO_TO_START_SCREEN){
