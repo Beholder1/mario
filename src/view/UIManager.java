@@ -161,7 +161,7 @@ public class UIManager extends JPanel{
     private void drawStartScreen(Graphics2D g2){
         int row = engine.getStartScreenSelection().getLineNumber();
         g2.drawImage(startScreenImage, 0, 0, null);
-        g2.drawImage(selectIcon, 375, row * 70 + 440, null);
+        g2.drawImage(selectIcon, 350, row * 60 + 445, null);
     }
 
     private void drawMapSelectionScreen(Graphics2D g2){
@@ -169,7 +169,7 @@ public class UIManager extends JPanel{
         g2.setColor(Color.WHITE);
         mapSelection.draw(g2);
         int row = engine.getSelectedMap();
-        int y_location = row*100+300-selectIcon.getHeight();
+        int y_location = row*100+305-selectIcon.getHeight();
         g2.drawImage(selectIcon, 375, y_location, null);
     }
 
