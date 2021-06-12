@@ -139,11 +139,8 @@ public class Map {
 
         for(Iterator<Blok> brickIterator = revealedBricks.iterator(); brickIterator.hasNext();){
             Cegla brick = (Cegla)brickIterator.next();
-            brick.animuj();
-            if(brick.getFrames() < 0){
-                bricks.remove(brick);
-                brickIterator.remove();
-            }
+            bricks.remove(brick);
+            brickIterator.remove();
         }
 
         endPoint.zmienPolozenie();

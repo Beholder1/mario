@@ -14,12 +14,10 @@ import java.awt.image.BufferedImage;
 class MapCreator {
 
     private ImageLoader imageLoader;
-
     private BufferedImage backgroundImage;
     private BufferedImage superMushroom, oneUpMushroom, coin;
     private BufferedImage ordinaryBrick, surpriseBrick, groundBrick, pipe;
     private BufferedImage goombaLeft, goombaRight, endFlag;
-
 
     MapCreator(ImageLoader imageLoader) {
 

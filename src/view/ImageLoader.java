@@ -7,11 +7,9 @@ import java.io.IOException;
 public class ImageLoader {
 
     private BufferedImage marioForms;
-    private BufferedImage brickAnimation;
 
     public ImageLoader(){
         marioForms = loadImage("/rario.png");
-        brickAnimation = loadImage("/brick-animation.png");
     }
 
     public BufferedImage loadImage(String path){
@@ -60,13 +58,5 @@ public class ImageLoader {
             rightFrames[i] = marioForms.getSubimage(col, (i)*height, width, height);
         }
         return rightFrames;
-    }
-
-    public BufferedImage[] getBrickFrames() {
-        BufferedImage[] frames = new BufferedImage[4];
-        for(int i = 0; i < 4; i++){
-            frames[i] = brickAnimation.getSubimage(i*105, 0, 105, 105);
-        }
-        return frames;
     }
 }
