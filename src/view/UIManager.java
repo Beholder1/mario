@@ -133,7 +133,7 @@ public class UIManager extends JPanel{
         g2.setColor(Color.WHITE);
         String displayedStr = "Punkty: " + engine.getScore();
         int stringLength = g2.getFontMetrics().stringWidth(displayedStr);
-        g2.drawString(displayedStr, 900, 50);
+        g2.drawString(displayedStr, 300, 50);
     }
 
     private void drawStartScreen(Graphics2D g2){
