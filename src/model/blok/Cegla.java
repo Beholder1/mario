@@ -3,8 +3,6 @@ package model.blok;
 import manager.GameEngine;
 import manager.MapManager;
 import model.nagroda.Nagroda;
-import view.Animation;
-import view.ImageLoader;
 
 import java.awt.image.BufferedImage;
 

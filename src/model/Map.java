@@ -186,12 +186,4 @@ public class Map {
     public void updateTime(double passed){
         remainingTime = remainingTime - passed;
     }
-
-    public boolean isTimeOver(){
-        return remainingTime <= 0;
-    }
-
-    public double getRemainingTime() {
-        return remainingTime;
-    }
 }
