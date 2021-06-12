@@ -2,10 +2,10 @@ package manager;
 
 import model.GameObject;
 import model.Map;
-import model.brick.Brick;
-import model.brick.OrdinaryBrick;
-import model.enemy.Enemy;
-import model.hero.Mario;
+import model.blok.Blok;
+import model.blok.Cegla;
+import model.postac.Przeciwnik;
+import model.postac.Rario;
 import model.prize.BoostItem;
 import model.prize.Coin;
 import model.prize.Prize;
@@ -28,11 +28,11 @@ public class MapManager {
     }
 
     public void resetCurrentMap(GameEngine engine) {
-        Mario mario = getMario();
-        mario.resetLocation();
+        Rario rario = getMario();
+        rario.zresetujPolozenie();
         engine.resetCamera();
         createMap(engine.getImageLoader(), map.getPath());
-        map.setMario(mario);
+        map.setMario(rario);
     }
 
     public boolean createMap(ImageLoader loader, String path) {
@@ -43,28 +43,24 @@ public class MapManager {
     }
 
     public void acquirePoints(int point) {
-        map.getMario().acquirePoints(point);
+        map.getMario().zyskajPunkty(point);
     }
 
-    public Mario getMario() {
+    public Rario getMario() {
         return map.getMario();
     }
 
 
     public boolean isGameOver() {
-        return getMario().getRemainingLives() == 0;
+        return getMario().getPozostaleSerca() == 0;
     }
 
     public int getScore() {
-        return getMario().getPoints();
+        return getMario().getPunkty();
     }
 
     public int getRemainingLives() {
-        return getMario().getRemainingLives();
-    }
-
-    public int getCoins() {
-        return getMario().getCoins();
+        return getMario().getPozostaleSerca();
     }
 
     public void drawMap(Graphics2D g2) {
@@ -99,53 +95,53 @@ public class MapManager {
     }
 
     private void checkBottomCollisions(GameEngine engine) {
-        Mario mario = getMario();
-        ArrayList<Brick> bricks = map.getAllBricks();
-        ArrayList<Enemy> enemies = map.getEnemies();
+        Rario rario = getMario();
+        ArrayList<Blok> bricks = map.getAllBricks();
+        ArrayList<Przeciwnik> enemies = map.getEnemies();
         ArrayList<GameObject> toBeRemoved = new ArrayList<>();
 
-        Rectangle marioBottomBounds = mario.getBottomBounds();
+        Rectangle marioBottomBounds = rario.getBottomBounds();
 
-        if (!mario.isJumping())
-            mario.setFalling(true);
+        if (!rario.isJumping())
+            rario.setFalling(true);
 
-        for (Brick brick : bricks) {
+        for (Blok brick : bricks) {
             Rectangle brickTopBounds = brick.getTopBounds();
             if (marioBottomBounds.intersects(brickTopBounds)) {
-                mario.setY(brick.getY() - mario.getDimension().height + 1);
-                mario.setFalling(false);
-                mario.setVelY(0);
+                rario.setY(brick.getY() - rario.getDimension().height + 1);
+                rario.setFalling(false);
+                rario.setVelY(0);
             }
         }
 
-        for (Enemy enemy : enemies) {
-            Rectangle enemyTopBounds = enemy.getTopBounds();
+        for (Przeciwnik przeciwnik : enemies) {
+            Rectangle enemyTopBounds = przeciwnik.getTopBounds();
             if (marioBottomBounds.intersects(enemyTopBounds)) {
-                mario.acquirePoints(100);
-                toBeRemoved.add(enemy);
+                rario.zyskajPunkty(100);
+                toBeRemoved.add(przeciwnik);
             }
         }
 
-        if (mario.getY() + mario.getDimension().height >= map.getBottomBorder()) {
-            mario.setY(map.getBottomBorder() - mario.getDimension().height);
-            mario.setFalling(false);
-            mario.setVelY(0);
+        if (rario.getY() + rario.getDimension().height >= map.getBottomBorder()) {
+            rario.setY(map.getBottomBorder() - rario.getDimension().height);
+            rario.setFalling(false);
+            rario.setVelY(0);
         }
 
         removeObjects(toBeRemoved);
     }
 
     private void checkTopCollisions(GameEngine engine) {
-        Mario mario = getMario();
-        ArrayList<Brick> bricks = map.getAllBricks();
+        Rario rario = getMario();
+        ArrayList<Blok> bricks = map.getAllBricks();
 
-        Rectangle marioTopBounds = mario.getTopBounds();
-        for (Brick brick : bricks) {
+        Rectangle marioTopBounds = rario.getTopBounds();
+        for (Blok brick : bricks) {
             Rectangle brickBottomBounds = brick.getBottomBounds();
             if (marioTopBounds.intersects(brickBottomBounds)) {
-                mario.setVelY(0);
-                mario.setY(brick.getY() + brick.getDimension().height);
-                Prize prize = brick.reveal(engine);
+                rario.setVelY(0);
+                rario.setY(brick.getY() + brick.getDimension().height);
+                Prize prize = brick.odkryj(engine);
                 if(prize != null)
                     map.addRevealedPrize(prize);
             }
@@ -153,40 +149,40 @@ public class MapManager {
     }
 
     private void checkMarioHorizontalCollision(GameEngine engine){
-        Mario mario = getMario();
-        ArrayList<Brick> bricks = map.getAllBricks();
-        ArrayList<Enemy> enemies = map.getEnemies();
+        Rario rario = getMario();
+        ArrayList<Blok> bricks = map.getAllBricks();
+        ArrayList<Przeciwnik> enemies = map.getEnemies();
         ArrayList<GameObject> toBeRemoved = new ArrayList<>();
 
         boolean marioDies = false;
-        boolean toRight = mario.getToRight();
+        boolean toRight = rario.getWPrawo();
 
-        Rectangle marioBounds = toRight ? mario.getRightBounds() : mario.getLeftBounds();
+        Rectangle marioBounds = toRight ? rario.getRightBounds() : rario.getLeftBounds();
 
-        for (Brick brick : bricks) {
+        for (Blok brick : bricks) {
             Rectangle brickBounds = !toRight ? brick.getRightBounds() : brick.getLeftBounds();
             if (marioBounds.intersects(brickBounds)) {
-                mario.setVelX(0);
+                rario.setVelX(0);
                 if(toRight)
-                    mario.setX(brick.getX() - mario.getDimension().width);
+                    rario.setX(brick.getX() - rario.getDimension().width);
                 else
-                    mario.setX(brick.getX() + brick.getDimension().width);
+                    rario.setX(brick.getX() + brick.getDimension().width);
             }
         }
 
-        for(Enemy enemy : enemies){
-            Rectangle enemyBounds = !toRight ? enemy.getRightBounds() : enemy.getLeftBounds();
+        for(Przeciwnik przeciwnik : enemies){
+            Rectangle enemyBounds = !toRight ? przeciwnik.getRightBounds() : przeciwnik.getLeftBounds();
             if (marioBounds.intersects(enemyBounds)) {
-                marioDies = mario.onTouchEnemy(engine);
-                toBeRemoved.add(enemy);
+                marioDies = rario.dotknieciePrzeciwnika(engine);
+                toBeRemoved.add(przeciwnik);
             }
         }
         removeObjects(toBeRemoved);
 
 
-        if (mario.getX() <= engine.getCameraLocation().getX() && mario.getVelX() < 0) {
-            mario.setVelX(0);
-            mario.setX(engine.getCameraLocation().getX());
+        if (rario.getX() <= engine.getCameraLocation().getX() && rario.getVelX() < 0) {
+            rario.setVelX(0);
+            rario.setX(engine.getCameraLocation().getX());
         }
 
         if(marioDies) {
@@ -195,51 +191,51 @@ public class MapManager {
     }
 
     private void checkEnemyCollisions() {
-        ArrayList<Brick> bricks = map.getAllBricks();
-        ArrayList<Enemy> enemies = map.getEnemies();
+        ArrayList<Blok> bricks = map.getAllBricks();
+        ArrayList<Przeciwnik> enemies = map.getEnemies();
 
-        for (Enemy enemy : enemies) {
+        for (Przeciwnik przeciwnik : enemies) {
             boolean standsOnBrick = false;
 
-            for (Brick brick : bricks) {
-                Rectangle enemyBounds = enemy.getLeftBounds();
+            for (Blok brick : bricks) {
+                Rectangle enemyBounds = przeciwnik.getLeftBounds();
                 Rectangle brickBounds = brick.getRightBounds();
 
-                Rectangle enemyBottomBounds = enemy.getBottomBounds();
+                Rectangle enemyBottomBounds = przeciwnik.getBottomBounds();
                 Rectangle brickTopBounds = brick.getTopBounds();
 
-                if (enemy.getVelX() > 0) {
-                    enemyBounds = enemy.getRightBounds();
+                if (przeciwnik.getVelX() > 0) {
+                    enemyBounds = przeciwnik.getRightBounds();
                     brickBounds = brick.getLeftBounds();
                 }
 
                 if (enemyBounds.intersects(brickBounds)) {
-                    enemy.setVelX(-enemy.getVelX());
+                    przeciwnik.setVelX(-przeciwnik.getVelX());
                 }
 
                 if (enemyBottomBounds.intersects(brickTopBounds)){
-                    enemy.setFalling(false);
-                    enemy.setVelY(0);
-                    enemy.setY(brick.getY()-enemy.getDimension().height);
+                    przeciwnik.setFalling(false);
+                    przeciwnik.setVelY(0);
+                    przeciwnik.setY(brick.getY()- przeciwnik.getDimension().height);
                     standsOnBrick = true;
                 }
             }
 
-            if(enemy.getY() + enemy.getDimension().height > map.getBottomBorder()){
-                enemy.setFalling(false);
-                enemy.setVelY(0);
-                enemy.setY(map.getBottomBorder()-enemy.getDimension().height);
+            if(przeciwnik.getY() + przeciwnik.getDimension().height > map.getBottomBorder()){
+                przeciwnik.setFalling(false);
+                przeciwnik.setVelY(0);
+                przeciwnik.setY(map.getBottomBorder()- przeciwnik.getDimension().height);
             }
 
-            if (!standsOnBrick && enemy.getY() < map.getBottomBorder()){
-                enemy.setFalling(true);
+            if (!standsOnBrick && przeciwnik.getY() < map.getBottomBorder()){
+                przeciwnik.setFalling(true);
             }
         }
     }
 
     private void checkPrizeCollision() {
         ArrayList<Prize> prizes = map.getRevealedPrizes();
-        ArrayList<Brick> bricks = map.getAllBricks();
+        ArrayList<Blok> bricks = map.getAllBricks();
 
         for (Prize prize : prizes) {
             if (prize instanceof BoostItem) {
@@ -249,7 +245,7 @@ public class MapManager {
                 Rectangle prizeLeftBounds = boost.getLeftBounds();
                 boost.setFalling(true);
 
-                for (Brick brick : bricks) {
+                for (Blok brick : bricks) {
                     Rectangle brickBounds;
 
                     if (boost.isFalling()) {
@@ -314,8 +310,8 @@ public class MapManager {
             return;
 
         for(GameObject object : list){
-            if(object instanceof Enemy){
-                map.removeEnemy((Enemy)object);
+            if(object instanceof Przeciwnik){
+                map.removeEnemy((Przeciwnik)object);
             }
             else if(object instanceof Coin || object instanceof BoostItem){
                 map.removePrize((Prize)object);
@@ -323,7 +319,7 @@ public class MapManager {
         }
     }
 
-    public void addRevealedBrick(OrdinaryBrick ordinaryBrick) {
+    public void addRevealedBrick(Cegla ordinaryBrick) {
         map.addRevealedBrick(ordinaryBrick);
     }
 

@@ -1,7 +1,7 @@
 package model.prize;
 
 import manager.GameEngine;
-import model.hero.Mario;
+import model.postac.Rario;
 
 import java.awt.image.BufferedImage;
 
@@ -13,8 +13,8 @@ public class OneUpMushroom extends BoostItem{
     }
 
     @Override
-    public void onTouch(Mario mario, GameEngine engine) {
-        mario.acquirePoints(getPoint());
-        mario.setRemainingLives(mario.getRemainingLives() + 1);
+    public void onTouch(Rario rario, GameEngine engine) {
+        rario.zyskajPunkty(getPoint());
+        rario.setPozostaleSerca(rario.getPozostaleSerca() + 1);
     }
 }

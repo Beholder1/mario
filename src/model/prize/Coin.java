@@ -2,7 +2,7 @@ package model.prize;
 
 import manager.GameEngine;
 import model.GameObject;
-import model.hero.Mario;
+import model.postac.Rario;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -33,11 +33,10 @@ public class Coin extends GameObject implements Prize{
     }
 
     @Override
-    public void onTouch(Mario mario, GameEngine engine) {
+    public void onTouch(Rario rario, GameEngine engine) {
         if(!acquired){
             acquired = true;
-            mario.acquirePoints(point);
-            mario.acquireCoin();
+            rario.zyskajPunkty(point);
         }
     }
 
@@ -49,7 +48,7 @@ public class Coin extends GameObject implements Prize{
     }
 
     @Override
-    public void draw(Graphics g){
+    public void wyswietl(Graphics g){
         if(revealed){
             g.drawImage(getStyle(), (int)getX(), (int)getY(), null);
         }

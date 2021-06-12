@@ -1,9 +1,9 @@
 package model;
 
-import model.brick.Brick;
-import model.brick.OrdinaryBrick;
-import model.enemy.Enemy;
-import model.hero.Mario;
+import model.blok.Blok;
+import model.blok.Cegla;
+import model.postac.Przeciwnik;
+import model.postac.Rario;
 import model.prize.BoostItem;
 import model.prize.Coin;
 import model.prize.Prize;
@@ -16,12 +16,12 @@ import java.util.Iterator;
 public class Map {
 
     private double remainingTime;
-    private Mario mario;
-    private ArrayList<Brick> bricks = new ArrayList<>();
-    private ArrayList<Enemy> enemies = new ArrayList<>();
-    private ArrayList<Brick> groundBricks = new ArrayList<>();
+    private Rario rario;
+    private ArrayList<Blok> bricks = new ArrayList<>();
+    private ArrayList<Przeciwnik> enemies = new ArrayList<>();
+    private ArrayList<Blok> groundBricks = new ArrayList<>();
     private ArrayList<Prize> revealedPrizes = new ArrayList<>();
-    private ArrayList<Brick> revealedBricks = new ArrayList<>();
+    private ArrayList<Blok> revealedBricks = new ArrayList<>();
     private EndFlag endPoint;
     private BufferedImage backgroundImage;
     private double bottomBorder = 720 - 70;
@@ -34,15 +34,15 @@ public class Map {
     }
 
 
-    public Mario getMario() {
-        return mario;
+    public Rario getMario() {
+        return rario;
     }
 
-    public void setMario(Mario mario) {
-        this.mario = mario;
+    public void setMario(Rario rario) {
+        this.rario = rario;
     }
 
-    public ArrayList<Enemy> getEnemies() {
+    public ArrayList<Przeciwnik> getEnemies() {
         return enemies;
     }
 
@@ -50,8 +50,8 @@ public class Map {
         return revealedPrizes;
     }
 
-    public ArrayList<Brick> getAllBricks() {
-        ArrayList<Brick> allBricks = new ArrayList<>();
+    public ArrayList<Blok> getAllBricks() {
+        ArrayList<Blok> allBricks = new ArrayList<>();
 
         allBricks.addAll(bricks);
         allBricks.addAll(groundBricks);
@@ -59,16 +59,16 @@ public class Map {
         return allBricks;
     }
 
-    public void addBrick(Brick brick) {
+    public void addBrick(Blok brick) {
         this.bricks.add(brick);
     }
 
-    public void addGroundBrick(Brick brick) {
+    public void addGroundBrick(Blok brick) {
         this.groundBricks.add(brick);
     }
 
-    public void addEnemy(Enemy enemy) {
-        this.enemies.add(enemy);
+    public void addEnemy(Przeciwnik przeciwnik) {
+        this.enemies.add(przeciwnik);
     }
 
     public void drawMap(Graphics2D g2){
@@ -77,17 +77,17 @@ public class Map {
         drawBricks(g2);
         drawEnemies(g2);
         drawMario(g2);
-        endPoint.draw(g2);
+        endPoint.wyswietl(g2);
     }
 
 
     private void drawPrizes(Graphics2D g2) {
         for(Prize prize : revealedPrizes){
             if(prize instanceof Coin){
-                ((Coin) prize).draw(g2);
+                ((Coin) prize).wyswietl(g2);
             }
             else if(prize instanceof  BoostItem){
-                ((BoostItem) prize).draw(g2);
+                ((BoostItem) prize).wyswietl(g2);
             }
         }
     }
@@ -97,31 +97,31 @@ public class Map {
     }
 
     private void drawBricks(Graphics2D g2) {
-        for(Brick brick : bricks){
+        for(Blok brick : bricks){
             if(brick != null)
-                brick.draw(g2);
+                brick.wyswietl(g2);
         }
 
-        for(Brick brick : groundBricks){
-            brick.draw(g2);
+        for(Blok brick : groundBricks){
+            brick.wyswietl(g2);
         }
     }
 
     private void drawEnemies(Graphics2D g2) {
-        for(Enemy enemy : enemies){
-            if(enemy != null)
-                enemy.draw(g2);
+        for(Przeciwnik przeciwnik : enemies){
+            if(przeciwnik != null)
+                przeciwnik.wyswietl(g2);
         }
     }
 
     private void drawMario(Graphics2D g2) {
-        mario.draw(g2);
+        rario.wyswietl(g2);
     }
 
     public void updateLocations() {
-        mario.updateLocation();
-        for(Enemy enemy : enemies){
-            enemy.updateLocation();
+        rario.updateLocation();
+        for(Przeciwnik przeciwnik : enemies){
+            przeciwnik.updateLocation();
         }
 
         for(Iterator<Prize> prizeIterator = revealedPrizes.iterator(); prizeIterator.hasNext();){
@@ -137,9 +137,9 @@ public class Map {
             }
         }
 
-        for(Iterator<Brick> brickIterator = revealedBricks.iterator(); brickIterator.hasNext();){
-            OrdinaryBrick brick = (OrdinaryBrick)brickIterator.next();
-            brick.animate();
+        for(Iterator<Blok> brickIterator = revealedBricks.iterator(); brickIterator.hasNext();){
+            Cegla brick = (Cegla)brickIterator.next();
+            brick.animuj();
             if(brick.getFrames() < 0){
                 bricks.remove(brick);
                 brickIterator.remove();
@@ -166,11 +166,11 @@ public class Map {
         return endPoint;
     }
 
-    public void addRevealedBrick(OrdinaryBrick ordinaryBrick) {
+    public void addRevealedBrick(Cegla ordinaryBrick) {
         revealedBricks.add(ordinaryBrick);
     }
 
-    public void removeEnemy(Enemy object) {
+    public void removeEnemy(Przeciwnik object) {
         enemies.remove(object);
     }
 

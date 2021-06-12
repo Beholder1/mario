@@ -1,8 +1,8 @@
 package model.prize;
 
 import manager.GameEngine;
-import model.hero.Mario;
-import model.hero.MarioForm;
+import model.postac.Rario;
+import model.postac.RarioDuzy;
 import view.Animation;
 import view.ImageLoader;
 
@@ -16,19 +16,19 @@ public class SuperMushroom extends BoostItem{
     }
 
     @Override
-    public void onTouch(Mario mario, GameEngine engine) {
-        mario.acquirePoints(getPoint());
+    public void onTouch(Rario rario, GameEngine engine) {
+        rario.zyskajPunkty(getPoint());
 
         ImageLoader imageLoader = new ImageLoader();
 
-        if(!mario.getMarioForm().isSuper()){
-            BufferedImage[] leftFrames = imageLoader.getLeftFrames(MarioForm.SUPER);
-            BufferedImage[] rightFrames = imageLoader.getRightFrames(MarioForm.SUPER);
+        if(!rario.getRarioDuzy().getCzyDuzy()){
+            BufferedImage[] leftFrames = imageLoader.getLeftFrames(RarioDuzy.DUZY);
+            BufferedImage[] rightFrames = imageLoader.getRightFrames(RarioDuzy.DUZY);
 
             Animation animation = new Animation(leftFrames, rightFrames);
-            MarioForm newForm = new MarioForm(animation, true);
-            mario.setMarioForm(newForm);
-            mario.setDimension(72, 72);
+            RarioDuzy newForm = new RarioDuzy(animation, true);
+            rario.setRarioDuzy(newForm);
+            rario.setDimension(72, 72);
         }
     }
 }
