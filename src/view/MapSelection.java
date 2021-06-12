@@ -38,11 +38,11 @@ public class MapSelection {
     }
 
     private void getMaps(){
-        maps.add("Map 1.png");
-        maps.add("Map 2.png");
-        //maps.add("Map 3.png");
-        //maps.add("Map 4.png");
-        //maps.add("Map 5.png");
+        maps.add("Poziom 1.png");
+        maps.add("Poziom 2.png");
+        maps.add("Poziom 3.png");
+        maps.add("Poziom 4.png");
+        maps.add("Poziom 5.png");
     }
 
     private MapSelectionItem[] createItems(ArrayList<String> maps){
