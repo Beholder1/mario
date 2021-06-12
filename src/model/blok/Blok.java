@@ -2,7 +2,7 @@ package model.blok;
 
 import manager.GameEngine;
 import model.GameObject;
-import model.prize.Prize;
+import model.nagroda.Nagroda;
 
 import java.awt.image.BufferedImage;
 
@@ -24,9 +24,9 @@ public abstract class Blok extends GameObject{
         this.czyPusty = czyPusty;
     }
 
-    public Prize odkryj(GameEngine silnik){ return null;}
+    public Nagroda odkryj(GameEngine silnik){ return null;}
 
-    public Prize getPrize() {
+    public Nagroda getPrize() {
         return null;
     }
 }

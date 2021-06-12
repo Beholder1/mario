@@ -11,14 +11,14 @@ public class EndFlag extends GameObject{
     }
 
     @Override
-    public void updateLocation() {
+    public void zmienPolozenie() {
         if(touched){
             if(getY() + getDimension().getHeight() >= 576){
                 setFalling(false);
                 setVelY(0);
                 setY(576 - getDimension().getHeight());
             }
-            super.updateLocation();
+            super.zmienPolozenie();
         }
     }
 

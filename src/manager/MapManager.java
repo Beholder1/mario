@@ -6,9 +6,9 @@ import model.blok.Blok;
 import model.blok.Cegla;
 import model.postac.Przeciwnik;
 import model.postac.Rario;
-import model.prize.BoostItem;
-import model.prize.Coin;
-import model.prize.Prize;
+import model.nagroda.PrzedmiotSpecjalny;
+import model.nagroda.Moneta;
+import model.nagroda.Nagroda;
 import view.ImageLoader;
 
 import java.awt.*;
@@ -141,9 +141,9 @@ public class MapManager {
             if (marioTopBounds.intersects(brickBottomBounds)) {
                 rario.setVelY(0);
                 rario.setY(brick.getY() + brick.getDimension().height);
-                Prize prize = brick.odkryj(engine);
-                if(prize != null)
-                    map.addRevealedPrize(prize);
+                Nagroda nagroda = brick.odkryj(engine);
+                if(nagroda != null)
+                    map.addRevealedPrize(nagroda);
             }
         }
     }
@@ -234,12 +234,12 @@ public class MapManager {
     }
 
     private void checkPrizeCollision() {
-        ArrayList<Prize> prizes = map.getRevealedPrizes();
+        ArrayList<Nagroda> nagrody = map.getRevealedPrizes();
         ArrayList<Blok> bricks = map.getAllBricks();
 
-        for (Prize prize : prizes) {
-            if (prize instanceof BoostItem) {
-                BoostItem boost = (BoostItem) prize;
+        for (Nagroda nagroda : nagrody) {
+            if (nagroda instanceof PrzedmiotSpecjalny) {
+                PrzedmiotSpecjalny boost = (PrzedmiotSpecjalny) nagroda;
                 Rectangle prizeBottomBounds = boost.getBottomBounds();
                 Rectangle prizeRightBounds = boost.getRightBounds();
                 Rectangle prizeLeftBounds = boost.getLeftBounds();
@@ -288,17 +288,17 @@ public class MapManager {
     }
 
     private void checkPrizeContact(GameEngine engine) {
-        ArrayList<Prize> prizes = map.getRevealedPrizes();
+        ArrayList<Nagroda> nagrody = map.getRevealedPrizes();
         ArrayList<GameObject> toBeRemoved = new ArrayList<>();
 
-        Rectangle marioBounds = getMario().getBounds();
-        for(Prize prize : prizes){
-            Rectangle prizeBounds = prize.getBounds();
+        Rectangle marioBounds = getMario().getGranice();
+        for(Nagroda nagroda : nagrody){
+            Rectangle prizeBounds = nagroda.getGranice();
             if (prizeBounds.intersects(marioBounds)) {
-                prize.onTouch(getMario(), engine);
-                toBeRemoved.add((GameObject) prize);
-            } else if(prize instanceof Coin){
-                prize.onTouch(getMario(), engine);
+                nagroda.przyDotknieciu(getMario());
+                toBeRemoved.add((GameObject) nagroda);
+            } else if(nagroda instanceof Moneta){
+                nagroda.przyDotknieciu(getMario());
             }
         }
 
@@ -313,8 +313,8 @@ public class MapManager {
             if(object instanceof Przeciwnik){
                 map.removeEnemy((Przeciwnik)object);
             }
-            else if(object instanceof Coin || object instanceof BoostItem){
-                map.removePrize((Prize)object);
+            else if(object instanceof Moneta || object instanceof PrzedmiotSpecjalny){
+                map.removePrize((Nagroda)object);
             }
         }
     }

@@ -4,9 +4,9 @@ import model.blok.Blok;
 import model.blok.Cegla;
 import model.postac.Przeciwnik;
 import model.postac.Rario;
-import model.prize.BoostItem;
-import model.prize.Coin;
-import model.prize.Prize;
+import model.nagroda.PrzedmiotSpecjalny;
+import model.nagroda.Moneta;
+import model.nagroda.Nagroda;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -20,7 +20,7 @@ public class Map {
     private ArrayList<Blok> bricks = new ArrayList<>();
     private ArrayList<Przeciwnik> enemies = new ArrayList<>();
     private ArrayList<Blok> groundBricks = new ArrayList<>();
-    private ArrayList<Prize> revealedPrizes = new ArrayList<>();
+    private ArrayList<Nagroda> revealedPrizes = new ArrayList<>();
     private ArrayList<Blok> revealedBricks = new ArrayList<>();
     private EndFlag endPoint;
     private BufferedImage backgroundImage;
@@ -46,7 +46,7 @@ public class Map {
         return enemies;
     }
 
-    public ArrayList<Prize> getRevealedPrizes() {
+    public ArrayList<Nagroda> getRevealedPrizes() {
         return revealedPrizes;
     }
 
@@ -82,12 +82,12 @@ public class Map {
 
 
     private void drawPrizes(Graphics2D g2) {
-        for(Prize prize : revealedPrizes){
-            if(prize instanceof Coin){
-                ((Coin) prize).wyswietl(g2);
+        for(Nagroda nagroda : revealedPrizes){
+            if(nagroda instanceof Moneta){
+                ((Moneta) nagroda).wyswietl(g2);
             }
-            else if(prize instanceof  BoostItem){
-                ((BoostItem) prize).wyswietl(g2);
+            else if(nagroda instanceof PrzedmiotSpecjalny){
+                ((PrzedmiotSpecjalny) nagroda).wyswietl(g2);
             }
         }
     }
@@ -119,21 +119,21 @@ public class Map {
     }
 
     public void updateLocations() {
-        rario.updateLocation();
+        rario.zmienPolozenie();
         for(Przeciwnik przeciwnik : enemies){
-            przeciwnik.updateLocation();
+            przeciwnik.zmienPolozenie();
         }
 
-        for(Iterator<Prize> prizeIterator = revealedPrizes.iterator(); prizeIterator.hasNext();){
-            Prize prize = prizeIterator.next();
-            if(prize instanceof Coin){
-                ((Coin) prize).updateLocation();
-                if(((Coin) prize).getRevealBoundary() > ((Coin) prize).getY()){
+        for(Iterator<Nagroda> prizeIterator = revealedPrizes.iterator(); prizeIterator.hasNext();){
+            Nagroda nagroda = prizeIterator.next();
+            if(nagroda instanceof Moneta){
+                ((Moneta) nagroda).zmienPolozenie();
+                if(((Moneta) nagroda).getGranicaOdkrycia() > ((Moneta) nagroda).getY()){
                     prizeIterator.remove();
                 }
             }
-            else if(prize instanceof BoostItem){
-                ((BoostItem) prize).updateLocation();
+            else if(nagroda instanceof PrzedmiotSpecjalny){
+                ((PrzedmiotSpecjalny) nagroda).zmienPolozenie();
             }
         }
 
@@ -146,15 +146,15 @@ public class Map {
             }
         }
 
-        endPoint.updateLocation();
+        endPoint.zmienPolozenie();
     }
 
     public double getBottomBorder() {
         return bottomBorder;
     }
 
-    public void addRevealedPrize(Prize prize) {
-        revealedPrizes.add(prize);
+    public void addRevealedPrize(Nagroda nagroda) {
+        revealedPrizes.add(nagroda);
     }
 
 
@@ -174,7 +174,7 @@ public class Map {
         enemies.remove(object);
     }
 
-    public void removePrize(Prize object) {
+    public void removePrize(Nagroda object) {
         revealedPrizes.remove(object);
     }
 

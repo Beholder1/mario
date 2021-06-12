@@ -75,7 +75,7 @@ public class Rario extends GameObject{
     }
 
     public void zyskajPunkty(int punkty){
-        punkty = punkty + punkty;
+        this.punkty = this.punkty + punkty;
     }
 
     public int getPozostaleSerca() {

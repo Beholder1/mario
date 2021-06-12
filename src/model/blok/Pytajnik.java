@@ -1,15 +1,15 @@
 package model.blok;
 
 import manager.GameEngine;
-import model.prize.Prize;
+import model.nagroda.Nagroda;
 
 import java.awt.image.BufferedImage;
 
 public class Pytajnik extends Blok{
 
-    private Prize nagroda;
+    private Nagroda nagroda;
 
-    public Pytajnik(double x, double y, BufferedImage styl, Prize nagroda) {
+    public Pytajnik(double x, double y, BufferedImage styl, Nagroda nagroda) {
         super(x, y, styl);
         setCzyZniszczalny(false);
         setCzyPusty(false);
@@ -17,24 +17,24 @@ public class Pytajnik extends Blok{
     }
 
     @Override
-    public Prize odkryj(GameEngine silnik){
+    public Nagroda odkryj(GameEngine silnik){
         BufferedImage nowyStyl = silnik.getImageLoader().loadImage("/sprite1.png");
         nowyStyl = silnik.getImageLoader().getSubImage(nowyStyl, 0, 50, 50, 50);
 
         if(nagroda != null){
-            nagroda.reveal();
+            nagroda.odkryj();
         }
 
         setCzyPusty(true);
         setStyle(nowyStyl);
 
-        Prize zwrocNagrode = this.nagroda;
+        Nagroda zwrocNagrode = this.nagroda;
         this.nagroda = null;
         return zwrocNagrode;
     }
 
     @Override
-    public Prize getPrize(){
+    public Nagroda getPrize(){
         return nagroda;
     }
 }

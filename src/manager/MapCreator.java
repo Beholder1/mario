@@ -2,7 +2,7 @@ package manager;
 
 import model.EndFlag;
 import model.blok.*;
-import model.prize.*;
+import model.nagroda.*;
 import view.ImageLoader;
 import model.Map;
 import model.postac.Przeciwnik;
@@ -74,8 +74,8 @@ class MapCreator {
                     createdMap.addBrick(brick);
                 }
                 else if (currentPixel == surpriseBrick) {
-                    Prize prize = generateRandomPrize(xLocation, yLocation);
-                    Blok brick = new Pytajnik(xLocation, yLocation, this.surpriseBrick, prize);
+                    Nagroda nagroda = generateRandomPrize(xLocation, yLocation);
+                    Blok brick = new Pytajnik(xLocation, yLocation, this.surpriseBrick, nagroda);
                     createdMap.addBrick(brick);
                 }
                 else if (currentPixel == pipe) {
@@ -106,18 +106,18 @@ class MapCreator {
         return createdMap;
     }
 
-    private Prize generateRandomPrize(double x, double y){
-        Prize generated;
+    private Nagroda generateRandomPrize(double x, double y){
+        Nagroda generated;
         int random = (int)(Math.random() * 12);
 
         if(random == 0){
-            generated = new SuperMushroom(x, y, this.superMushroom);
+            generated = new Pasek(x, y, this.superMushroom);
         }
         else if(random == 2){
-            generated = new OneUpMushroom(x, y, this.oneUpMushroom);
+            generated = new Serce(x, y, this.oneUpMushroom);
         }
         else{
-            generated = new Coin(x, y, this.coin, 50);
+            generated = new Moneta(x, y, this.coin, 50);
         }
 
         return generated;

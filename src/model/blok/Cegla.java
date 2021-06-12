@@ -2,7 +2,7 @@ package model.blok;
 
 import manager.GameEngine;
 import manager.MapManager;
-import model.prize.Prize;
+import model.nagroda.Nagroda;
 import view.Animation;
 import view.ImageLoader;
 
@@ -32,7 +32,7 @@ public class Cegla extends Blok {
     }
 
     @Override
-    public Prize odkryj(GameEngine silnik){
+    public Nagroda odkryj(GameEngine silnik){
         MapManager menedzer = silnik.getMapManager();
         if(!menedzer.getMario().isSuper())
             return null;
