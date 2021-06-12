@@ -1,7 +1,7 @@
 package manager;
 
 import model.EndFlag;
-import model.brick.*;
+import model.blok.*;
 import model.prize.*;
 import view.ImageLoader;
 import model.Map;

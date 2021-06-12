@@ -2,8 +2,8 @@ package manager;
 
 import model.GameObject;
 import model.Map;
-import model.brick.Blok;
-import model.brick.Cegla;
+import model.blok.Blok;
+import model.blok.Cegla;
 import model.enemy.Enemy;
 import model.hero.Mario;
 import model.prize.BoostItem;

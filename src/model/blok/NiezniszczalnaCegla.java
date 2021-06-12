@@ -1,4 +1,4 @@
-package model.brick;
+package model.blok;
 
 import java.awt.image.BufferedImage;
 
