@@ -139,11 +139,11 @@ public class Map {
 
         for(Iterator<Blok> brickIterator = revealedBricks.iterator(); brickIterator.hasNext();){
             Cegla brick = (Cegla)brickIterator.next();
-            brick.animuj();
-            if(brick.getFrames() < 0){
+
+
                 bricks.remove(brick);
                 brickIterator.remove();
-            }
+
         }
 
         endPoint.zmienPolozenie();
@@ -188,13 +188,5 @@ public class Map {
 
     public void updateTime(double passed){
         remainingTime = remainingTime - passed;
-    }
-
-    public boolean isTimeOver(){
-        return remainingTime <= 0;
-    }
-
-    public double getRemainingTime() {
-        return remainingTime;
     }
 }

@@ -61,7 +61,6 @@ public class ImageLoader {
         }
         return rightFrames;
     }
-
     public BufferedImage[] getBrickFrames() {
         BufferedImage[] frames = new BufferedImage[4];
         for(int i = 0; i < 4; i++){
