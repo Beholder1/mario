@@ -6,15 +6,10 @@ import java.awt.image.BufferedImage;
 public abstract class GameObject {
 
     private double x, y;
-
     private double velX, velY;
-
     private Dimension dimension;
-
     private BufferedImage style;
-
     private double gravityAcc;
-
     private boolean falling, jumping;
 
     public GameObject(double x, double y, BufferedImage style){

@@ -4,7 +4,7 @@ import model.Flaga;
 import model.blok.*;
 import model.nagroda.*;
 import view.ImageLoader;
-import model.Map;
+import model.Mapa;
 import model.postac.Przeciwnik;
 import model.postac.Rario;
 
@@ -38,7 +38,7 @@ class MapCreator {
 
     }
 
-    Map createMap(String mapPath, double timeLimit) {
+    Mapa createMap(String mapPath, double timeLimit) {
         BufferedImage mapImage = imageLoader.loadImage(mapPath);
 
         if (mapImage == null) {
@@ -46,9 +46,9 @@ class MapCreator {
             return null;
         }
 
-        Map createdMap = new Map(timeLimit, backgroundImage);
+        Mapa createdMap = new Mapa(backgroundImage);
         String[] paths = mapPath.split("/");
-        createdMap.setPath(paths[paths.length-1]);
+        createdMap.setSciezka(paths[paths.length-1]);
 
         int pixelMultiplier = 50;
 
@@ -69,33 +69,33 @@ class MapCreator {
 
                 if (currentPixel == ordinaryBrick) {
                     Blok brick = new Cegla(xLocation, yLocation, this.ordinaryBrick);
-                    createdMap.addBrick(brick);
+                    createdMap.dodajCegle(brick);
                 }
                 else if (currentPixel == surpriseBrick) {
                     Nagroda nagroda = generateRandomPrize(xLocation, yLocation);
                     Blok brick = new Pytajnik(xLocation, yLocation, this.surpriseBrick, nagroda);
-                    createdMap.addBrick(brick);
+                    createdMap.dodajCegle(brick);
                 }
                 else if (currentPixel == pipe) {
                     Blok brick = new Rura(xLocation, yLocation, this.pipe);
-                    createdMap.addGroundBrick(brick);
+                    createdMap.dodajNiezniszczalnaCegle(brick);
                 }
                 else if (currentPixel == groundBrick) {
                     Blok brick = new NiezniszczalnaCegla(xLocation, yLocation, this.groundBrick);
-                    createdMap.addGroundBrick(brick);
+                    createdMap.dodajNiezniszczalnaCegle(brick);
                 }
                 else if (currentPixel == goomba) {
                     Przeciwnik przeciwnik = new Przeciwnik(xLocation, yLocation, this.goombaLeft);
                     ((Przeciwnik) przeciwnik).setPrawyObraz(goombaRight);
-                    createdMap.addEnemy(przeciwnik);
+                    createdMap.dodajPrzeciwnika(przeciwnik);
                 }
                 else if (currentPixel == mario) {
                     Rario rarioObject = new Rario(xLocation, yLocation);
-                    createdMap.setMario(rarioObject);
+                    createdMap.setRario(rarioObject);
                 }
                 else if(currentPixel == end){
                     Flaga endPoint= new Flaga(xLocation+24, yLocation, endFlag);
-                    createdMap.setEndPoint(endPoint);
+                    createdMap.setKoniec(endPoint);
                 }
             }
         }

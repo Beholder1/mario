@@ -4,15 +4,15 @@ import java.awt.image.BufferedImage;
 
 public class Flaga extends GameObject{
 
-    private boolean touched = false;
+    private boolean czyDotknieta = false;
 
-    public Flaga(double x, double y, BufferedImage style) {
-        super(x, y, style);
+    public Flaga(double x, double y, BufferedImage styl) {
+        super(x, y, styl);
     }
 
     @Override
     public void zmienPolozenie() {
-        if(touched){
+        if(czyDotknieta){
             if(getY() + getDimension().getHeight() >= 576){
                 setFalling(false);
                 setVelY(0);
@@ -22,11 +22,11 @@ public class Flaga extends GameObject{
         }
     }
 
-    public boolean isTouched() {
-        return touched;
+    public boolean getCzyDotknieta() {
+        return czyDotknieta;
     }
 
-    public void setTouched(boolean touched) {
-        this.touched = touched;
+    public void setCzyDotknieta(boolean czyDotknieta) {
+        this.czyDotknieta = czyDotknieta;
     }
 }
