@@ -78,7 +78,6 @@ public class UIManager extends JPanel{
             drawPoints(g2);
             drawRemainingLives(g2);
             drawAcquiredCoins(g2);
-            drawRemainingTime(g2);
 
             if(gameStatus == GameStatus.PAUSED){
                 drawPauseScreen(g2);
@@ -89,13 +88,6 @@ public class UIManager extends JPanel{
         }
 
         g2.dispose();
-    }
-
-    private void drawRemainingTime(Graphics2D g2) {
-        g2.setFont(gameFont.deriveFont(25f));
-        g2.setColor(Color.WHITE);
-        String displayedStr = "Czas: " + engine.getRemainingTime();
-        g2.drawString(displayedStr, 750, 50);
     }
 
     private void drawVictoryScreen(Graphics2D g2) {

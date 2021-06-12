@@ -297,8 +297,4 @@ public class GameEngine implements Runnable {
     public static void main(String... args) {
         new GameEngine();
     }
-
-    public int getRemainingTime() {
-        return mapManager.getRemainingTime();
-    }
 }
