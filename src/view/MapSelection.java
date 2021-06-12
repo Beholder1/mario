@@ -25,7 +25,7 @@ public class MapSelection {
         String title = "Wybierz poziom";
         int x_location = (1280 - g.getFontMetrics().stringWidth(title))/2;
         g.setColor(Color.YELLOW);
-        g.drawString(title, x_location, 150);
+        g.drawString(title, x_location, 100);
 
         for(MapSelectionItem item : mapSelectionItems){
             g.setColor(Color.WHITE);
@@ -52,7 +52,7 @@ public class MapSelection {
         int defaultGridSize = 100;
         MapSelectionItem[] items = new MapSelectionItem[maps.size()];
         for (int i = 0; i < items.length; i++) {
-            Point location = new Point(0, (i+1)*defaultGridSize+200);
+            Point location = new Point(0, (i+1)*defaultGridSize+150);
             items[i] = new MapSelectionItem(maps.get(i), location);
         }
 

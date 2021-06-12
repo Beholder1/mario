@@ -94,7 +94,7 @@ public class UIManager extends JPanel{
     private void drawRemainingTime(Graphics2D g2) {
         g2.setFont(gameFont.deriveFont(25f));
         g2.setColor(Color.WHITE);
-        String displayedStr = "TIME: " + engine.getRemainingTime();
+        String displayedStr = "Czas: " + engine.getRemainingTime();
         g2.drawString(displayedStr, 750, 50);
     }
 
@@ -118,7 +118,7 @@ public class UIManager extends JPanel{
         g2.drawImage(gameOverScreen, 0, 0, null);
         g2.setFont(gameFont.deriveFont(50f));
         g2.setColor(new Color(130, 48, 48));
-        String acquiredPoints = "Score: " + engine.getScore();
+        String acquiredPoints = "Wynik: " + engine.getScore();
         int stringLength = g2.getFontMetrics().stringWidth(acquiredPoints);
         int stringHeight = g2.getFontMetrics().getHeight();
         g2.drawString(acquiredPoints, (getWidth()-stringLength)/2, getHeight()-stringHeight*2);
@@ -127,7 +127,7 @@ public class UIManager extends JPanel{
     private void drawPauseScreen(Graphics2D g2) {
         g2.setFont(gameFont.deriveFont(50f));
         g2.setColor(Color.WHITE);
-        String displayedStr = "PAUSED";
+        String displayedStr = "PAUZA";
         int stringLength = g2.getFontMetrics().stringWidth(displayedStr);
         g2.drawString(displayedStr, (getWidth()-stringLength)/2, getHeight()/2);
     }
@@ -151,9 +151,8 @@ public class UIManager extends JPanel{
     private void drawPoints(Graphics2D g2){
         g2.setFont(gameFont.deriveFont(25f));
         g2.setColor(Color.WHITE);
-        String displayedStr = "Points: " + engine.getScore();
-        int stringLength = g2.getFontMetrics().stringWidth(displayedStr);;
-        //g2.drawImage(coinIcon, 50, 10, null);
+        String displayedStr = "Punkty: " + engine.getScore();
+        int stringLength = g2.getFontMetrics().stringWidth(displayedStr);
         g2.drawString(displayedStr, 300, 50);
     }
 
@@ -168,8 +167,8 @@ public class UIManager extends JPanel{
         g2.setColor(Color.WHITE);
         mapSelection.draw(g2);
         int row = engine.getSelectedMap();
-        int y_location = row*100+305-selectIcon.getHeight();
-        g2.drawImage(selectIcon, 375, y_location, null);
+        int y_location = row*100+253-selectIcon.getHeight();
+        g2.drawImage(selectIcon, 350, y_location, null);
     }
 
     public String selectMapViaMouse(Point mouseLocation) {
