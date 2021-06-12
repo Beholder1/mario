@@ -29,8 +29,6 @@ public class SuperMushroom extends BoostItem{
             MarioForm newForm = new MarioForm(animation, true);
             mario.setMarioForm(newForm);
             mario.setDimension(72, 72);
-
-            engine.playSuperMushroom();
         }
     }
 }

@@ -46,11 +46,10 @@ public class Mario extends GameObject{
         super.draw(g);
     }
 
-    public void jump(GameEngine engine) {
+    public void jump() {
         if(!isJumping() && !isFalling()){
             setJumping(true);
             setVelY(10);
-            engine.playJump();
         }
     }
 
@@ -69,7 +68,6 @@ public class Mario extends GameObject{
 
         if(!marioForm.isSuper()){
             remainingLives--;
-            engine.playMarioDies();
             return true;
         }
         else{

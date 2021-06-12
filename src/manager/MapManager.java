@@ -123,7 +123,6 @@ public class MapManager {
             if (marioBottomBounds.intersects(enemyTopBounds)) {
                 mario.acquirePoints(100);
                 toBeRemoved.add(enemy);
-                engine.playStomp();
             }
         }
 

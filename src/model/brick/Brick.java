@@ -2,7 +2,6 @@ package model.brick;
 
 import manager.GameEngine;
 import model.GameObject;
-import model.Map;
 import model.prize.Prize;
 
 import java.awt.image.BufferedImage;
@@ -18,16 +17,8 @@ public abstract class Brick extends GameObject{
         setDimension(50, 50);
     }
 
-    public boolean isBreakable() {
-        return breakable;
-    }
-
     public void setBreakable(boolean breakable) {
         this.breakable = breakable;
-    }
-
-    public boolean isEmpty() {
-        return empty;
     }
 
     public void setEmpty(boolean empty) {

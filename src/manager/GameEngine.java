@@ -14,7 +14,6 @@ public class GameEngine implements Runnable {
 
     private MapManager mapManager;
     private UIManager uiManager;
-    private SoundManager soundManager;
     private GameStatus gameStatus;
     private boolean isRunning;
     private Camera camera;
@@ -33,7 +32,6 @@ public class GameEngine implements Runnable {
         gameStatus = GameStatus.START_SCREEN;
         camera = new Camera();
         uiManager = new UIManager(this, WIDTH, HEIGHT);
-        soundManager = new SoundManager();
         mapManager = new MapManager();
 
         JFrame frame = new JFrame("Rario");
@@ -63,9 +61,8 @@ public class GameEngine implements Runnable {
         setGameStatus(GameStatus.START_SCREEN);
     }
 
-    public void resetCamera(){
+    public void resetCamera() {
         camera = new Camera();
-        soundManager.restartBackground();
     }
 
     public void selectMapViaMouse() {
@@ -90,7 +87,6 @@ public class GameEngine implements Runnable {
         boolean loaded = mapManager.createMap(imageLoader, path);
         if(loaded){
             setGameStatus(GameStatus.RUNNING);
-            soundManager.restartBackground();
         }
 
         else
@@ -145,7 +141,6 @@ public class GameEngine implements Runnable {
         int missionPassed = passMission();
         if(missionPassed > -1){
             mapManager.acquirePoints(missionPassed);
-            //setGameStatus(GameStatus.MISSION_PASSED);
         } else if(mapManager.endLevel())
             setGameStatus(GameStatus.MISSION_PASSED);
     }
@@ -198,7 +193,7 @@ public class GameEngine implements Runnable {
         } else if (gameStatus == GameStatus.RUNNING) {
             Mario mario = mapManager.getMario();
             if (input == ButtonAction.JUMP) {
-                mario.jump(this);
+                mario.jump();
             } else if (input == ButtonAction.M_RIGHT) {
                 mario.move(true, camera);
             } else if (input == ButtonAction.M_LEFT) {
@@ -236,10 +231,8 @@ public class GameEngine implements Runnable {
     private void pauseGame() {
         if (gameStatus == GameStatus.RUNNING) {
             setGameStatus(GameStatus.PAUSED);
-            soundManager.pauseBackground();
         } else if (gameStatus == GameStatus.PAUSED) {
             setGameStatus(GameStatus.RUNNING);
-            soundManager.resumeBackground();
         }
     }
 
@@ -295,30 +288,6 @@ public class GameEngine implements Runnable {
 
     private int passMission(){
         return mapManager.passMission();
-    }
-
-    public void playCoin() {
-        soundManager.playCoin();
-    }
-
-    public void playOneUp() {
-        soundManager.playOneUp();
-    }
-
-    public void playSuperMushroom() {
-        soundManager.playSuperMushroom();
-    }
-
-    public void playMarioDies() {
-        soundManager.playMarioDies();
-    }
-
-    public void playJump() {
-        soundManager.playJump();
-    }
-
-    public void playStomp() {
-        soundManager.playStomp();
     }
 
     public MapManager getMapManager() {
