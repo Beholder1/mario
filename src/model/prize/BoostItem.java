@@ -2,7 +2,7 @@ package model.prize;
 
 import manager.GameEngine;
 import model.GameObject;
-import model.hero.Mario;
+import model.postac.Mario;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -32,7 +32,7 @@ public abstract class BoostItem extends GameObject implements Prize{
     }
 
     @Override
-    public void draw(Graphics g){
+    public void wyswietl(Graphics g){
         if(revealed){
             g.drawImage(getStyle(), (int)getX(), (int)getY(), null);
         }

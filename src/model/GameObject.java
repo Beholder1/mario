@@ -32,7 +32,7 @@ public abstract class GameObject {
         falling = true;
     }
 
-    public void draw(Graphics g) {
+    public void wyswietl(Graphics g) {
         BufferedImage style = getStyle();
 
         if(style != null){

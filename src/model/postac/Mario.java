@@ -1,4 +1,4 @@
-package model.hero;
+package model.postac;
 
 import manager.Camera;
 import manager.GameEngine;
@@ -14,7 +14,6 @@ public class Mario extends GameObject{
     private int remainingLives;
     private int coins;
     private int points;
-    private double invincibilityTimer;
     private MarioForm marioForm;
     private boolean toRight = true;
 
@@ -25,7 +24,6 @@ public class Mario extends GameObject{
         remainingLives = 3;
         points = 0;
         coins = 0;
-        invincibilityTimer = 0;
 
         ImageLoader imageLoader = new ImageLoader();
         BufferedImage[] leftFrames = imageLoader.getLeftFrames(MarioForm.SMALL);
@@ -37,13 +35,13 @@ public class Mario extends GameObject{
     }
 
     @Override
-    public void draw(Graphics g){
+    public void wyswietl(Graphics g){
         boolean movingInX = (getVelX() != 0);
         boolean movingInY = (getVelY() != 0);
 
         setStyle(marioForm.getCurrentStyle(toRight, movingInX, movingInY));
 
-        super.draw(g);
+        super.wyswietl(g);
     }
 
     public void jump() {

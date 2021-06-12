@@ -1,8 +1,8 @@
 package model.prize;
 
 import manager.GameEngine;
-import model.hero.Mario;
-import model.hero.MarioForm;
+import model.postac.Mario;
+import model.postac.MarioForm;
 import view.Animation;
 import view.ImageLoader;
 

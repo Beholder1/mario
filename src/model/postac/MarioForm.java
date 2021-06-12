@@ -1,4 +1,4 @@
-package model.hero;
+package model.postac;
 
 import view.Animation;
 import view.ImageLoader;

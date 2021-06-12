@@ -5,8 +5,8 @@ import model.blok.*;
 import model.prize.*;
 import view.ImageLoader;
 import model.Map;
-import model.enemy.Enemy;
-import model.hero.Mario;
+import model.postac.Przeciwnik;
+import model.postac.Mario;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -87,9 +87,9 @@ class MapCreator {
                     createdMap.addGroundBrick(brick);
                 }
                 else if (currentPixel == goomba) {
-                    Enemy enemy = new Enemy(xLocation, yLocation, this.goombaLeft);
-                    ((Enemy)enemy).setRightImage(goombaRight);
-                    createdMap.addEnemy(enemy);
+                    Przeciwnik przeciwnik = new Przeciwnik(xLocation, yLocation, this.goombaLeft);
+                    ((Przeciwnik) przeciwnik).setPrawyObraz(goombaRight);
+                    createdMap.addEnemy(przeciwnik);
                 }
                 else if (currentPixel == mario) {
                     Mario marioObject = new Mario(xLocation, yLocation);

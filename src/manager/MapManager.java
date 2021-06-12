@@ -4,8 +4,8 @@ import model.GameObject;
 import model.Map;
 import model.blok.Blok;
 import model.blok.Cegla;
-import model.enemy.Enemy;
-import model.hero.Mario;
+import model.postac.Przeciwnik;
+import model.postac.Mario;
 import model.prize.BoostItem;
 import model.prize.Coin;
 import model.prize.Prize;
@@ -101,7 +101,7 @@ public class MapManager {
     private void checkBottomCollisions(GameEngine engine) {
         Mario mario = getMario();
         ArrayList<Blok> bricks = map.getAllBricks();
-        ArrayList<Enemy> enemies = map.getEnemies();
+        ArrayList<Przeciwnik> enemies = map.getEnemies();
         ArrayList<GameObject> toBeRemoved = new ArrayList<>();
 
         Rectangle marioBottomBounds = mario.getBottomBounds();
@@ -118,11 +118,11 @@ public class MapManager {
             }
         }
 
-        for (Enemy enemy : enemies) {
-            Rectangle enemyTopBounds = enemy.getTopBounds();
+        for (Przeciwnik przeciwnik : enemies) {
+            Rectangle enemyTopBounds = przeciwnik.getTopBounds();
             if (marioBottomBounds.intersects(enemyTopBounds)) {
                 mario.acquirePoints(100);
-                toBeRemoved.add(enemy);
+                toBeRemoved.add(przeciwnik);
             }
         }
 
@@ -155,7 +155,7 @@ public class MapManager {
     private void checkMarioHorizontalCollision(GameEngine engine){
         Mario mario = getMario();
         ArrayList<Blok> bricks = map.getAllBricks();
-        ArrayList<Enemy> enemies = map.getEnemies();
+        ArrayList<Przeciwnik> enemies = map.getEnemies();
         ArrayList<GameObject> toBeRemoved = new ArrayList<>();
 
         boolean marioDies = false;
@@ -174,11 +174,11 @@ public class MapManager {
             }
         }
 
-        for(Enemy enemy : enemies){
-            Rectangle enemyBounds = !toRight ? enemy.getRightBounds() : enemy.getLeftBounds();
+        for(Przeciwnik przeciwnik : enemies){
+            Rectangle enemyBounds = !toRight ? przeciwnik.getRightBounds() : przeciwnik.getLeftBounds();
             if (marioBounds.intersects(enemyBounds)) {
                 marioDies = mario.onTouchEnemy(engine);
-                toBeRemoved.add(enemy);
+                toBeRemoved.add(przeciwnik);
             }
         }
         removeObjects(toBeRemoved);
@@ -196,43 +196,43 @@ public class MapManager {
 
     private void checkEnemyCollisions() {
         ArrayList<Blok> bricks = map.getAllBricks();
-        ArrayList<Enemy> enemies = map.getEnemies();
+        ArrayList<Przeciwnik> enemies = map.getEnemies();
 
-        for (Enemy enemy : enemies) {
+        for (Przeciwnik przeciwnik : enemies) {
             boolean standsOnBrick = false;
 
             for (Blok brick : bricks) {
-                Rectangle enemyBounds = enemy.getLeftBounds();
+                Rectangle enemyBounds = przeciwnik.getLeftBounds();
                 Rectangle brickBounds = brick.getRightBounds();
 
-                Rectangle enemyBottomBounds = enemy.getBottomBounds();
+                Rectangle enemyBottomBounds = przeciwnik.getBottomBounds();
                 Rectangle brickTopBounds = brick.getTopBounds();
 
-                if (enemy.getVelX() > 0) {
-                    enemyBounds = enemy.getRightBounds();
+                if (przeciwnik.getVelX() > 0) {
+                    enemyBounds = przeciwnik.getRightBounds();
                     brickBounds = brick.getLeftBounds();
                 }
 
                 if (enemyBounds.intersects(brickBounds)) {
-                    enemy.setVelX(-enemy.getVelX());
+                    przeciwnik.setVelX(-przeciwnik.getVelX());
                 }
 
                 if (enemyBottomBounds.intersects(brickTopBounds)){
-                    enemy.setFalling(false);
-                    enemy.setVelY(0);
-                    enemy.setY(brick.getY()-enemy.getDimension().height);
+                    przeciwnik.setFalling(false);
+                    przeciwnik.setVelY(0);
+                    przeciwnik.setY(brick.getY()- przeciwnik.getDimension().height);
                     standsOnBrick = true;
                 }
             }
 
-            if(enemy.getY() + enemy.getDimension().height > map.getBottomBorder()){
-                enemy.setFalling(false);
-                enemy.setVelY(0);
-                enemy.setY(map.getBottomBorder()-enemy.getDimension().height);
+            if(przeciwnik.getY() + przeciwnik.getDimension().height > map.getBottomBorder()){
+                przeciwnik.setFalling(false);
+                przeciwnik.setVelY(0);
+                przeciwnik.setY(map.getBottomBorder()- przeciwnik.getDimension().height);
             }
 
-            if (!standsOnBrick && enemy.getY() < map.getBottomBorder()){
-                enemy.setFalling(true);
+            if (!standsOnBrick && przeciwnik.getY() < map.getBottomBorder()){
+                przeciwnik.setFalling(true);
             }
         }
     }
@@ -314,8 +314,8 @@ public class MapManager {
             return;
 
         for(GameObject object : list){
-            if(object instanceof Enemy){
-                map.removeEnemy((Enemy)object);
+            if(object instanceof Przeciwnik){
+                map.removeEnemy((Przeciwnik)object);
             }
             else if(object instanceof Coin || object instanceof BoostItem){
                 map.removePrize((Prize)object);

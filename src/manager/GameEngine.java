@@ -1,6 +1,6 @@
 package manager;
 
-import model.hero.Mario;
+import model.postac.Mario;
 import view.ImageLoader;
 import view.StartScreenSelection;
 import view.UIManager;

@@ -1,7 +1,7 @@
 package model.prize;
 
 import manager.GameEngine;
-import model.hero.Mario;
+import model.postac.Mario;
 
 import java.awt.image.BufferedImage;
 
