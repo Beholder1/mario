@@ -22,7 +22,7 @@ public class MapSelection {
             return;
         }
 
-        String title = "Select a Map";
+        String title = "Wybierz poziom";
         int x_location = (1280 - g.getFontMetrics().stringWidth(title))/2;
         g.setColor(Color.YELLOW);
         g.drawString(title, x_location, 150);
@@ -38,9 +38,11 @@ public class MapSelection {
     }
 
     private void getMaps(){
-        //TODO: read from file
         maps.add("Map 1.png");
         maps.add("Map 2.png");
+        //maps.add("Map 3.png");
+        //maps.add("Map 4.png");
+        //maps.add("Map 5.png");
     }
 
     private MapSelectionItem[] createItems(ArrayList<String> maps){

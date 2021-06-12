@@ -2,7 +2,6 @@ package view;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class ImageLoader {
@@ -27,18 +26,6 @@ public class ImageLoader {
         return imageToReturn;
     }
 
-    public BufferedImage loadImage(File file){
-        BufferedImage imageToReturn = null;
-
-        try {
-            imageToReturn = ImageIO.read(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return imageToReturn;
-    }
-
     public BufferedImage getSubImage(BufferedImage image, int col, int row, int w, int h){
         return image.getSubimage(col, row, w, h);
     }
@@ -48,7 +35,7 @@ public class ImageLoader {
         int col = 0;
         int width = 50, height = 50;
 
-        if(marioForm == 1) { //super mario
+        if(marioForm == 1) {
             col = 100;
             width = 72;
             height = 72;
@@ -64,7 +51,7 @@ public class ImageLoader {
         int col = 50;
         int width = 50, height = 50;
 
-        if(marioForm == 1) { //super mario
+        if(marioForm == 1) {
             col = 172;
             width = 72;
             height = 72;
