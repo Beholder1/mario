@@ -1,6 +1,6 @@
 package manager;
 
-import model.EndFlag;
+import model.Flaga;
 import model.blok.*;
 import model.nagroda.*;
 import view.ImageLoader;
@@ -94,7 +94,7 @@ class MapCreator {
                     createdMap.setMario(rarioObject);
                 }
                 else if(currentPixel == end){
-                    EndFlag endPoint= new EndFlag(xLocation+24, yLocation, endFlag);
+                    Flaga endPoint= new Flaga(xLocation+24, yLocation, endFlag);
                     createdMap.setEndPoint(endPoint);
                 }
             }

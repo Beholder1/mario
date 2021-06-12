@@ -22,7 +22,7 @@ public class Map {
     private ArrayList<Blok> groundBricks = new ArrayList<>();
     private ArrayList<Nagroda> revealedPrizes = new ArrayList<>();
     private ArrayList<Blok> revealedBricks = new ArrayList<>();
-    private EndFlag endPoint;
+    private Flaga endPoint;
     private BufferedImage backgroundImage;
     private double bottomBorder = 720 - 70;
     private String path;
@@ -155,11 +155,11 @@ public class Map {
     }
 
 
-    public void setEndPoint(EndFlag endPoint) {
+    public void setEndPoint(Flaga endPoint) {
         this.endPoint = endPoint;
     }
 
-    public EndFlag getEndPoint() {
+    public Flaga getEndPoint() {
         return endPoint;
     }
 

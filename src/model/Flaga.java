@@ -2,11 +2,11 @@ package model;
 
 import java.awt.image.BufferedImage;
 
-public class EndFlag extends GameObject{
+public class Flaga extends GameObject{
 
     private boolean touched = false;
 
-    public EndFlag(double x, double y, BufferedImage style) {
+    public Flaga(double x, double y, BufferedImage style) {
         super(x, y, style);
     }
 
