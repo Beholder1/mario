@@ -6,7 +6,7 @@ import model.prize.*;
 import view.ImageLoader;
 import model.Map;
 import model.postac.Przeciwnik;
-import model.postac.Mario;
+import model.postac.Rario;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -75,7 +75,7 @@ class MapCreator {
                 }
                 else if (currentPixel == surpriseBrick) {
                     Prize prize = generateRandomPrize(xLocation, yLocation);
-                    Blok brick = new SurpriseBrick(xLocation, yLocation, this.surpriseBrick, prize);
+                    Blok brick = new Pytajnik(xLocation, yLocation, this.surpriseBrick, prize);
                     createdMap.addBrick(brick);
                 }
                 else if (currentPixel == pipe) {
@@ -92,8 +92,8 @@ class MapCreator {
                     createdMap.addEnemy(przeciwnik);
                 }
                 else if (currentPixel == mario) {
-                    Mario marioObject = new Mario(xLocation, yLocation);
-                    createdMap.setMario(marioObject);
+                    Rario rarioObject = new Rario(xLocation, yLocation);
+                    createdMap.setMario(rarioObject);
                 }
                 else if(currentPixel == end){
                     EndFlag endPoint= new EndFlag(xLocation+24, yLocation, endFlag);

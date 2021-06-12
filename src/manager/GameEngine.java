@@ -1,6 +1,6 @@
 package manager;
 
-import model.postac.Mario;
+import model.postac.Rario;
 import view.ImageLoader;
 import view.StartScreenSelection;
 import view.UIManager;
@@ -146,11 +146,11 @@ public class GameEngine implements Runnable {
     }
 
     private void updateCamera() {
-        Mario mario = mapManager.getMario();
-        double marioVelocityX = mario.getVelX();
+        Rario rario = mapManager.getMario();
+        double marioVelocityX = rario.getVelX();
         double shiftAmount = 0;
 
-        if (marioVelocityX > 0 && mario.getX() - 600 > camera.getX()) {
+        if (marioVelocityX > 0 && rario.getX() - 600 > camera.getX()) {
             shiftAmount = marioVelocityX;
         }
 
@@ -191,15 +191,15 @@ public class GameEngine implements Runnable {
                 changeSelectedMap(false);
             }
         } else if (gameStatus == GameStatus.RUNNING) {
-            Mario mario = mapManager.getMario();
+            Rario rario = mapManager.getMario();
             if (input == ButtonAction.JUMP) {
-                mario.jump();
+                rario.skok();
             } else if (input == ButtonAction.M_RIGHT) {
-                mario.move(true, camera);
+                rario.rusz(true, camera);
             } else if (input == ButtonAction.M_LEFT) {
-                mario.move(false, camera);
+                rario.rusz(false, camera);
             } else if (input == ButtonAction.ACTION_COMPLETED) {
-                mario.setVelX(0);
+                rario.setVelX(0);
             } else if (input == ButtonAction.PAUSE_RESUME) {
                 pauseGame();
             }
@@ -268,10 +268,6 @@ public class GameEngine implements Runnable {
 
     public int getRemainingLives() {
         return mapManager.getRemainingLives();
-    }
-
-    public int getCoins() {
-        return mapManager.getCoins();
     }
 
     public int getSelectedMap() {

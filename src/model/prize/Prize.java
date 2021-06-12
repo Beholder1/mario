@@ -1,7 +1,7 @@
 package model.prize;
 
 import manager.GameEngine;
-import model.postac.Mario;
+import model.postac.Rario;
 
 import java.awt.*;
 
@@ -13,6 +13,6 @@ public interface Prize {
 
     Rectangle getBounds();
 
-    void onTouch(Mario mario, GameEngine engine);
+    void onTouch(Rario rario, GameEngine engine);
 
 }

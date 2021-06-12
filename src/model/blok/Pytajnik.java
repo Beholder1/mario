@@ -5,11 +5,11 @@ import model.prize.Prize;
 
 import java.awt.image.BufferedImage;
 
-public class SurpriseBrick extends Blok{
+public class Pytajnik extends Blok{
 
     private Prize nagroda;
 
-    public SurpriseBrick(double x, double y, BufferedImage styl, Prize nagroda) {
+    public Pytajnik(double x, double y, BufferedImage styl, Prize nagroda) {
         super(x, y, styl);
         setCzyZniszczalny(false);
         setCzyPusty(false);

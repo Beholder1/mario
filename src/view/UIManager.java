@@ -15,7 +15,6 @@ public class UIManager extends JPanel{
     private Font gameFont;
     private BufferedImage startScreenImage, aboutScreenImage, helpScreenImage, gameOverScreen;
     private BufferedImage heartIcon;
-    private BufferedImage coinIcon;
     private BufferedImage selectIcon;
     private MapSelection mapSelection;
 
@@ -29,9 +28,7 @@ public class UIManager extends JPanel{
 
         mapSelection = new MapSelection();
 
-        BufferedImage sprite = loader.loadImage("/sprite1.png");
         this.heartIcon = loader.loadImage("/heart-icon.png");
-        this.coinIcon = loader.getSubImage(sprite, 0, 150, 50, 50);
         this.selectIcon = loader.loadImage("/select-icon.png");
         this.startScreenImage = loader.loadImage("/start-screen.png");
         this.helpScreenImage = loader.loadImage("/help-screen.png");
@@ -77,7 +74,6 @@ public class UIManager extends JPanel{
 
             drawPoints(g2);
             drawRemainingLives(g2);
-            drawAcquiredCoins(g2);
 
             if(gameStatus == GameStatus.PAUSED){
                 drawPauseScreen(g2);
@@ -122,14 +118,6 @@ public class UIManager extends JPanel{
         String displayedStr = "PAUZA";
         int stringLength = g2.getFontMetrics().stringWidth(displayedStr);
         g2.drawString(displayedStr, (getWidth()-stringLength)/2, getHeight()/2);
-    }
-
-    private void drawAcquiredCoins(Graphics2D g2) {
-        g2.setFont(gameFont.deriveFont(30f));
-        g2.setColor(Color.WHITE);
-        String displayedStr = "" + engine.getCoins();
-        g2.drawImage(coinIcon, getWidth()-115, 10, null);
-        g2.drawString(displayedStr, getWidth()-65, 50);
     }
 
     private void drawRemainingLives(Graphics2D g2) {

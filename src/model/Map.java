@@ -3,7 +3,7 @@ package model;
 import model.blok.Blok;
 import model.blok.Cegla;
 import model.postac.Przeciwnik;
-import model.postac.Mario;
+import model.postac.Rario;
 import model.prize.BoostItem;
 import model.prize.Coin;
 import model.prize.Prize;
@@ -16,7 +16,7 @@ import java.util.Iterator;
 public class Map {
 
     private double remainingTime;
-    private Mario mario;
+    private Rario rario;
     private ArrayList<Blok> bricks = new ArrayList<>();
     private ArrayList<Przeciwnik> enemies = new ArrayList<>();
     private ArrayList<Blok> groundBricks = new ArrayList<>();
@@ -34,12 +34,12 @@ public class Map {
     }
 
 
-    public Mario getMario() {
-        return mario;
+    public Rario getMario() {
+        return rario;
     }
 
-    public void setMario(Mario mario) {
-        this.mario = mario;
+    public void setMario(Rario rario) {
+        this.rario = rario;
     }
 
     public ArrayList<Przeciwnik> getEnemies() {
@@ -115,11 +115,11 @@ public class Map {
     }
 
     private void drawMario(Graphics2D g2) {
-        mario.wyswietl(g2);
+        rario.wyswietl(g2);
     }
 
     public void updateLocations() {
-        mario.updateLocation();
+        rario.updateLocation();
         for(Przeciwnik przeciwnik : enemies){
             przeciwnik.updateLocation();
         }
