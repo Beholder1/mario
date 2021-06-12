@@ -7,16 +7,11 @@ import model.nagroda.Nagroda;
 import java.awt.image.BufferedImage;
 
 public class Cegla extends Blok {
-    
-    private boolean niszczenie;
 
     public Cegla(double x, double y, BufferedImage styl){
         super(x, y, styl);
         setCzyZniszczalny(true);
         setCzyPusty(true);
-
-
-        niszczenie = false;
 
     }
 
@@ -26,7 +21,6 @@ public class Cegla extends Blok {
         if(!menedzer.getMario().isSuper())
             return null;
 
-        niszczenie = true;
         menedzer.addRevealedBrick(this);
 
         double x = getX() - 27, y = getY() - 27;
@@ -34,5 +28,4 @@ public class Cegla extends Blok {
 
         return null;
     }
-
 }
