@@ -36,7 +36,7 @@ class MapCreator {
         this.pipe = imageLoader.getSubImage(sprite, 100, 0, 100, 100);
         this.goombaLeft = imageLoader.getSubImage(sprite, 0, 100, 50, 50);
         this.goombaRight = imageLoader.getSubImage(sprite, 50, 100, 50, 50);
-        this.endFlag = imageLoader.getSubImage(sprite, 200, 0, 50, 50);
+        this.endFlag = imageLoader.getSubImage(sprite, 100, 100, 50, 50);
 
     }
 
