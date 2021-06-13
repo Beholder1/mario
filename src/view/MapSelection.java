@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class MapSelection {
 
-    private ArrayList<String> maps = new ArrayList<>();
+    private ArrayList<String> poziomy = new ArrayList<>();
     private MapSelectionItem[] mapSelectionItems;
 
     public MapSelection(){
         getMaps();
-        this.mapSelectionItems = createItems(this.maps);
+        this.mapSelectionItems = createItems(this.poziomy);
     }
 
     public void draw(Graphics g){
@@ -22,10 +22,10 @@ public class MapSelection {
             return;
         }
 
-        String title = "Wybierz poziom";
-        int x_location = (1280 - g.getFontMetrics().stringWidth(title))/2;
+        String tytul = "Wybierz poziom";
+        int x_location = (1280 - g.getFontMetrics().stringWidth(tytul))/2;
         g.setColor(Color.YELLOW);
-        g.drawString(title, x_location, 100);
+        g.drawString(tytul, x_location, 100);
 
         for(MapSelectionItem item : mapSelectionItems){
             g.setColor(Color.WHITE);
@@ -38,11 +38,11 @@ public class MapSelection {
     }
 
     private void getMaps(){
-        maps.add("Poziom 1.png");
-        maps.add("Poziom 2.png");
-        maps.add("Poziom 3.png");
-        maps.add("Poziom 4.png");
-        maps.add("Poziom 5.png");
+        poziomy.add("Poziom 1.png");
+        poziomy.add("Poziom 2.png");
+        poziomy.add("Poziom 3.png");
+        poziomy.add("Poziom 4.png");
+        poziomy.add("Poziom 5.png");
     }
 
     private MapSelectionItem[] createItems(ArrayList<String> maps){

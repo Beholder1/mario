@@ -14,9 +14,9 @@ public class GameEngine implements Runnable {
 
     private MapManager mapManager;
     private UIManager uiManager;
-    private GameStatus gameStatus;
+    private StatusGry statusGry;
     private boolean isRunning;
-    private Camera camera;
+    private Kamera kamera;
     private ImageLoader imageLoader;
     private Thread thread;
     private StartScreenSelection startScreenSelection = StartScreenSelection.START_GAME;
@@ -28,16 +28,15 @@ public class GameEngine implements Runnable {
 
     private void init() {
         imageLoader = new ImageLoader();
-        InputManager inputManager = new InputManager(this);
-        gameStatus = GameStatus.START_SCREEN;
-        camera = new Camera();
+        Wejscie wejscie = new Wejscie(this);
+        statusGry = StatusGry.MENU;
+        kamera = new Kamera();
         uiManager = new UIManager(this, WIDTH, HEIGHT);
         mapManager = new MapManager();
 
         JFrame frame = new JFrame("Rario");
         frame.add(uiManager);
-        frame.addKeyListener(inputManager);
-        frame.addMouseListener(inputManager);
+        frame.addKeyListener(wejscie);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -58,11 +57,11 @@ public class GameEngine implements Runnable {
 
     private void reset(){
         resetCamera();
-        setGameStatus(GameStatus.START_SCREEN);
+        setGameStatus(StatusGry.MENU);
     }
 
     public void resetCamera() {
-        camera = new Camera();
+        kamera = new Kamera();
     }
 
     public void selectMapViaMouse() {
@@ -86,11 +85,11 @@ public class GameEngine implements Runnable {
     private void createMap(String path) {
         boolean loaded = mapManager.createMap(imageLoader, path);
         if(loaded){
-            setGameStatus(GameStatus.RUNNING);
+            setGameStatus(StatusGry.W_TRAKCIE);
         }
 
         else
-            setGameStatus(GameStatus.START_SCREEN);
+            setGameStatus(StatusGry.MENU);
     }
 
     @Override
@@ -107,14 +106,14 @@ public class GameEngine implements Runnable {
             delta += (now - lastTime) / ns;
             lastTime = now;
             while (delta >= 1) {
-                if (gameStatus == GameStatus.RUNNING) {
+                if (statusGry == StatusGry.W_TRAKCIE) {
                     gameLoop();
                 }
                 delta--;
             }
             render();
 
-            if(gameStatus != GameStatus.RUNNING) {
+            if(statusGry != StatusGry.W_TRAKCIE) {
                 timer = System.currentTimeMillis();
             }
 
@@ -134,14 +133,14 @@ public class GameEngine implements Runnable {
         updateCamera();
 
         if (isGameOver()) {
-            setGameStatus(GameStatus.GAME_OVER);
+            setGameStatus(StatusGry.PRZEGRANA);
         }
 
         int missionPassed = passMission();
         if(missionPassed > -1){
             mapManager.acquirePoints(missionPassed);
         } else if(mapManager.endLevel())
-            setGameStatus(GameStatus.MISSION_PASSED);
+            setGameStatus(StatusGry.WYGRANA);
     }
 
     private void updateCamera() {
@@ -149,11 +148,11 @@ public class GameEngine implements Runnable {
         double marioVelocityX = rario.getVelX();
         double shiftAmount = 0;
 
-        if (marioVelocityX > 0 && rario.getX() - 600 > camera.getX()) {
+        if (marioVelocityX > 0 && rario.getX() - 600 > kamera.getX()) {
             shiftAmount = marioVelocityX;
         }
 
-        camera.moveCam(shiftAmount, 0);
+        kamera.moveCam(shiftAmount, 0);
     }
 
     private void updateLocations() {
@@ -164,56 +163,56 @@ public class GameEngine implements Runnable {
         mapManager.checkCollisions(this);
     }
 
-    public void receiveInput(ButtonAction input) {
+    public void receiveInput(AkcjeKlawiszy input) {
 
-        if (gameStatus == GameStatus.START_SCREEN) {
-            if (input == ButtonAction.SELECT && startScreenSelection == StartScreenSelection.START_GAME) {
+        if (statusGry == StatusGry.MENU) {
+            if (input == AkcjeKlawiszy.WYBIERZ && startScreenSelection == StartScreenSelection.START_GAME) {
                 startGame();
-            } else if (input == ButtonAction.SELECT && startScreenSelection == StartScreenSelection.VIEW_ABOUT) {
-                setGameStatus(GameStatus.ABOUT_SCREEN);
-            } else if (input == ButtonAction.SELECT && startScreenSelection == StartScreenSelection.VIEW_HELP) {
-                setGameStatus(GameStatus.HELP_SCREEN);
-            } else if (input == ButtonAction.GO_UP) {
+            } else if (input == AkcjeKlawiszy.WYBIERZ && startScreenSelection == StartScreenSelection.VIEW_ABOUT) {
+                setGameStatus(StatusGry.TWORCY);
+            } else if (input == AkcjeKlawiszy.WYBIERZ && startScreenSelection == StartScreenSelection.VIEW_HELP) {
+                setGameStatus(StatusGry.STEROWANIE);
+            } else if (input == AkcjeKlawiszy.W_GORE) {
                 selectOption(true);
-            } else if (input == ButtonAction.GO_DOWN) {
+            } else if (input == AkcjeKlawiszy.W_DOL) {
                 selectOption(false);
             }
         }
-        else if(gameStatus == GameStatus.MAP_SELECTION){
-            if(input == ButtonAction.SELECT){
+        else if(statusGry == StatusGry.POZIOMY){
+            if(input == AkcjeKlawiszy.WYBIERZ){
                 selectMapViaKeyboard();
             }
-            else if(input == ButtonAction.GO_UP){
+            else if(input == AkcjeKlawiszy.W_GORE){
                 changeSelectedMap(true);
             }
-            else if(input == ButtonAction.GO_DOWN){
+            else if(input == AkcjeKlawiszy.W_DOL){
                 changeSelectedMap(false);
             }
-        } else if (gameStatus == GameStatus.RUNNING) {
+        } else if (statusGry == StatusGry.W_TRAKCIE) {
             Rario rario = mapManager.getMario();
-            if (input == ButtonAction.SKOK) {
+            if (input == AkcjeKlawiszy.SKOK) {
                 rario.skok();
-            } else if (input == ButtonAction.W_PRAWO) {
-                rario.rusz(true, camera);
-            } else if (input == ButtonAction.W_LEWO) {
-                rario.rusz(false, camera);
-            } else if (input == ButtonAction.ACTION_COMPLETED) {
+            } else if (input == AkcjeKlawiszy.W_PRAWO) {
+                rario.rusz(true, kamera);
+            } else if (input == AkcjeKlawiszy.W_LEWO) {
+                rario.rusz(false, kamera);
+            } else if (input == AkcjeKlawiszy.PO_NACISNIECIU) {
                 rario.setVelX(0);
-            } else if (input == ButtonAction.PAUZA) {
+            } else if (input == AkcjeKlawiszy.PAUZA) {
                 pauseGame();
             }
-        } else if (gameStatus == GameStatus.PAUSED) {
-            if (input == ButtonAction.PAUZA) {
+        } else if (statusGry == StatusGry.ZATRZYMANO) {
+            if (input == AkcjeKlawiszy.PAUZA) {
                 pauseGame();
             }
-        } else if(gameStatus == GameStatus.GAME_OVER && input == ButtonAction.GO_TO_START_SCREEN){
+        } else if(statusGry == StatusGry.PRZEGRANA && input == AkcjeKlawiszy.POWROT){
             reset();
-        } else if(gameStatus == GameStatus.MISSION_PASSED && input == ButtonAction.GO_TO_START_SCREEN){
+        } else if(statusGry == StatusGry.WYGRANA && input == AkcjeKlawiszy.POWROT){
             reset();
         }
 
-        if(input == ButtonAction.GO_TO_START_SCREEN){
-            setGameStatus(GameStatus.START_SCREEN);
+        if(input == AkcjeKlawiszy.POWROT){
+            setGameStatus(StatusGry.MENU);
         }
     }
 
@@ -222,25 +221,21 @@ public class GameEngine implements Runnable {
     }
 
     private void startGame() {
-        if (gameStatus != GameStatus.GAME_OVER) {
-            setGameStatus(GameStatus.MAP_SELECTION);
+        if (statusGry != StatusGry.PRZEGRANA) {
+            setGameStatus(StatusGry.POZIOMY);
         }
     }
 
     private void pauseGame() {
-        if (gameStatus == GameStatus.RUNNING) {
-            setGameStatus(GameStatus.PAUSED);
-        } else if (gameStatus == GameStatus.PAUSED) {
-            setGameStatus(GameStatus.RUNNING);
+        if (statusGry == StatusGry.W_TRAKCIE) {
+            setGameStatus(StatusGry.ZATRZYMANO);
+        } else if (statusGry == StatusGry.ZATRZYMANO) {
+            setGameStatus(StatusGry.W_TRAKCIE);
         }
     }
 
-    public void shakeCamera(){
-        camera.shakeCamera();
-    }
-
     private boolean isGameOver() {
-        if(gameStatus == GameStatus.RUNNING)
+        if(statusGry == StatusGry.W_TRAKCIE)
             return mapManager.isGameOver();
         return false;
     }
@@ -249,16 +244,16 @@ public class GameEngine implements Runnable {
         return imageLoader;
     }
 
-    public GameStatus getGameStatus() {
-        return gameStatus;
+    public StatusGry getGameStatus() {
+        return statusGry;
     }
 
     public StartScreenSelection getStartScreenSelection() {
         return startScreenSelection;
     }
 
-    public void setGameStatus(GameStatus gameStatus) {
-        this.gameStatus = gameStatus;
+    public void setGameStatus(StatusGry statusGry) {
+        this.statusGry = statusGry;
     }
 
     public int getScore() {
@@ -278,7 +273,7 @@ public class GameEngine implements Runnable {
     }
 
     public Point getCameraLocation() {
-        return new Point((int)camera.getX(), (int)camera.getY());
+        return new Point((int) kamera.getX(), (int) kamera.getY());
     }
 
     private int passMission(){

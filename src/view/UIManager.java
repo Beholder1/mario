@@ -1,7 +1,7 @@
 package view;
 
 import manager.GameEngine;
-import manager.GameStatus;
+import manager.StatusGry;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,21 +49,21 @@ public class UIManager extends JPanel{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g.create();
-        GameStatus gameStatus = engine.getGameStatus();
+        StatusGry statusGry = engine.getGameStatus();
 
-        if(gameStatus == GameStatus.START_SCREEN){
+        if(statusGry == StatusGry.MENU){
             drawStartScreen(g2);
         }
-        else if(gameStatus == GameStatus.MAP_SELECTION){
+        else if(statusGry == StatusGry.POZIOMY){
             drawMapSelectionScreen(g2);
         }
-        else if(gameStatus == GameStatus.ABOUT_SCREEN){
+        else if(statusGry == StatusGry.TWORCY){
             drawAboutScreen(g2);
         }
-        else if(gameStatus == GameStatus.HELP_SCREEN){
+        else if(statusGry == StatusGry.STEROWANIE){
             drawHelpScreen(g2);
         }
-        else if(gameStatus == GameStatus.GAME_OVER){
+        else if(statusGry == StatusGry.PRZEGRANA){
             drawGameOverScreen(g2);
         }
         else {
@@ -75,10 +75,10 @@ public class UIManager extends JPanel{
             drawPoints(g2);
             drawRemainingLives(g2);
 
-            if(gameStatus == GameStatus.PAUSED){
+            if(statusGry == StatusGry.ZATRZYMANO){
                 drawPauseScreen(g2);
             }
-            else if(gameStatus == GameStatus.MISSION_PASSED){
+            else if(statusGry == StatusGry.WYGRANA){
                 drawVictoryScreen(g2);
             }
         }

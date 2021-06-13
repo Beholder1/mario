@@ -1,6 +1,6 @@
 package model.postac;
 
-import manager.Camera;
+import manager.Kamera;
 import manager.GameEngine;
 import view.Animation;
 import model.GameObject;
@@ -49,7 +49,7 @@ public class Rario extends GameObject{
         }
     }
 
-    public void rusz(boolean wPrawo, Camera kamera) {
+    public void rusz(boolean wPrawo, Kamera kamera) {
         if(wPrawo){
             setVelX(5);
         }
@@ -67,7 +67,6 @@ public class Rario extends GameObject{
             return true;
         }
         else{
-            silnik.shakeCamera();
             rarioDuzy = rarioDuzy.dotknieciePrzeciwnika(silnik.getImageLoader());
             setDimension(50, 50);
             return false;
