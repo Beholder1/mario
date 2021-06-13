@@ -64,13 +64,6 @@ public class GameEngine implements Runnable {
         kamera = new Kamera();
     }
 
-    public void selectMapViaMouse() {
-        String path = uiManager.selectMapViaMouse(uiManager.getMousePosition());
-        if (path != null) {
-            createMap(path);
-        }
-    }
-
     public void selectMapViaKeyboard(){
         String path = uiManager.selectMapViaKeyboard(selectedMap);
         if (path != null) {

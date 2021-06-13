@@ -11,35 +11,35 @@ import java.io.InputStream;
 
 public class UIManager extends JPanel{
 
-    private GameEngine engine;
-    private Font gameFont;
-    private BufferedImage startScreenImage, aboutScreenImage, helpScreenImage, gameOverScreen;
-    private BufferedImage heartIcon;
-    private BufferedImage selectIcon;
+    private GameEngine silnik;
+    private Font font;
+    private BufferedImage menu, tworcy, sterowanie, przegrana;
+    private BufferedImage serce;
+    private BufferedImage wybor;
     private MapSelection mapSelection;
 
-    public UIManager(GameEngine engine, int width, int height) {
-        setPreferredSize(new Dimension(width, height));
-        setMaximumSize(new Dimension(width, height));
-        setMinimumSize(new Dimension(width, height));
+    public UIManager(GameEngine silnik, int szerokosc, int wysokosc) {
+        setPreferredSize(new Dimension(szerokosc, wysokosc));
+        setMaximumSize(new Dimension(szerokosc, wysokosc));
+        setMinimumSize(new Dimension(szerokosc, wysokosc));
 
-        this.engine = engine;
-        ImageLoader loader = engine.getImageLoader();
+        this.silnik = silnik;
+        ImageLoader obraz = silnik.getImageLoader();
 
         mapSelection = new MapSelection();
 
-        this.heartIcon = loader.loadImage("/heart-icon.png");
-        this.selectIcon = loader.loadImage("/select-icon.png");
-        this.startScreenImage = loader.loadImage("/start-screen.png");
-        this.helpScreenImage = loader.loadImage("/help-screen.png");
-        this.aboutScreenImage = loader.loadImage("/about-screen.png");
-        this.gameOverScreen = loader.loadImage("/game-over.png");
+        this.serce = obraz.loadImage("/serce.png");
+        this.wybor = obraz.loadImage("/wybor.png");
+        this.menu = obraz.loadImage("/menu.png");
+        this.sterowanie = obraz.loadImage("/sterowanie.png");
+        this.tworcy = obraz.loadImage("/tworcy.png");
+        this.przegrana = obraz.loadImage("/przegrana.png");
 
         try {
-            InputStream in = getClass().getResourceAsStream("/media/font/mario-font.ttf");
-            gameFont = Font.createFont(Font.TRUETYPE_FONT, in);
+            InputStream in = getClass().getResourceAsStream("/media/font/font.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, in);
         } catch (FontFormatException | IOException e) {
-            gameFont = new Font("Verdana", Font.PLAIN, 12);
+            font = new Font("Verdana", Font.PLAIN, 12);
             e.printStackTrace();
         }
     }
@@ -49,7 +49,7 @@ public class UIManager extends JPanel{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g.create();
-        StatusGry statusGry = engine.getGameStatus();
+        StatusGry statusGry = silnik.getGameStatus();
 
         if(statusGry == StatusGry.MENU){
             drawStartScreen(g2);
@@ -58,18 +58,18 @@ public class UIManager extends JPanel{
             drawMapSelectionScreen(g2);
         }
         else if(statusGry == StatusGry.TWORCY){
-            drawAboutScreen(g2);
+            wyswietlTworcow(g2);
         }
         else if(statusGry == StatusGry.STEROWANIE){
-            drawHelpScreen(g2);
+            wyswietlSterowanie(g2);
         }
         else if(statusGry == StatusGry.PRZEGRANA){
-            drawGameOverScreen(g2);
+            wyswietlPrzegrana(g2);
         }
         else {
-            Point camLocation = engine.getCameraLocation();
+            Point camLocation = silnik.getCameraLocation();
             g2.translate(-camLocation.x, -camLocation.y);
-            engine.drawMap(g2);
+            silnik.drawMap(g2);
             g2.translate(camLocation.x, camLocation.y);
 
             drawPoints(g2);
@@ -79,41 +79,41 @@ public class UIManager extends JPanel{
                 drawPauseScreen(g2);
             }
             else if(statusGry == StatusGry.WYGRANA){
-                drawVictoryScreen(g2);
+                wyswietlWygrana(g2);
             }
         }
 
         g2.dispose();
     }
 
-    private void drawVictoryScreen(Graphics2D g2) {
-        g2.setFont(gameFont.deriveFont(50f));
-        g2.setColor(Color.WHITE);
-        String displayedStr = "Wygrana!";
-        int stringLength = g2.getFontMetrics().stringWidth(displayedStr);
-        g2.drawString(displayedStr, (getWidth()-stringLength)/2, getHeight()/2);
+    private void wyswietlWygrana(Graphics2D grafika) {
+        grafika.setFont(font.deriveFont(50f));
+        grafika.setColor(Color.WHITE);
+        String napis = "Wygrana!";
+        int dlugosc = grafika.getFontMetrics().stringWidth(napis);
+        grafika.drawString(napis, (getWidth()-dlugosc)/2, getHeight()/2);
     }
 
-    private void drawHelpScreen(Graphics2D g2) {
-        g2.drawImage(helpScreenImage, 0, 0, null);
+    private void wyswietlSterowanie(Graphics2D grafika) {
+        grafika.drawImage(sterowanie, 0, 0, null);
     }
 
-    private void drawAboutScreen(Graphics2D g2) {
-        g2.drawImage(aboutScreenImage, 0, 0, null);
+    private void wyswietlTworcow(Graphics2D grafika) {
+        grafika.drawImage(tworcy, 0, 0, null);
     }
 
-    private void drawGameOverScreen(Graphics2D g2) {
-        g2.drawImage(gameOverScreen, 0, 0, null);
-        g2.setFont(gameFont.deriveFont(50f));
-        g2.setColor(new Color(130, 48, 48));
-        String acquiredPoints = "Wynik: " + engine.getScore();
-        int stringLength = g2.getFontMetrics().stringWidth(acquiredPoints);
-        int stringHeight = g2.getFontMetrics().getHeight();
-        g2.drawString(acquiredPoints, (getWidth()-stringLength)/2, getHeight()-stringHeight*2);
+    private void wyswietlPrzegrana(Graphics2D grafika) {
+        grafika.drawImage(przegrana, 0, 0, null);
+        grafika.setFont(font.deriveFont(50f));
+        grafika.setColor(new Color(130, 48, 48));
+        String uzyskanePunkty = "Wynik: " + silnik.getScore();
+        int dlugosc = grafika.getFontMetrics().stringWidth(uzyskanePunkty);
+        int wysokosc = grafika.getFontMetrics().getHeight();
+        grafika.drawString(uzyskanePunkty, (getWidth()-dlugosc)/2, getHeight()-wysokosc*2);
     }
 
     private void drawPauseScreen(Graphics2D g2) {
-        g2.setFont(gameFont.deriveFont(50f));
+        g2.setFont(font.deriveFont(50f));
         g2.setColor(Color.WHITE);
         String displayedStr = "PAUZA";
         int stringLength = g2.getFontMetrics().stringWidth(displayedStr);
@@ -121,34 +121,33 @@ public class UIManager extends JPanel{
     }
 
     private void drawRemainingLives(Graphics2D g2) {
-        g2.setFont(gameFont.deriveFont(30f));
+        g2.setFont(font.deriveFont(30f));
         g2.setColor(Color.WHITE);
-        String displayedStr = "" + engine.getRemainingLives();
-        g2.drawImage(heartIcon, 50, 10, null);
+        String displayedStr = "" + silnik.getRemainingLives();
+        g2.drawImage(serce, 50, 10, null);
         g2.drawString(displayedStr, 100, 50);
     }
 
     private void drawPoints(Graphics2D g2){
-        g2.setFont(gameFont.deriveFont(25f));
+        g2.setFont(font.deriveFont(25f));
         g2.setColor(Color.WHITE);
-        String displayedStr = "Punkty: " + engine.getScore();
-        int stringLength = g2.getFontMetrics().stringWidth(displayedStr);
+        String displayedStr = "Punkty: " + silnik.getScore();
         g2.drawString(displayedStr, 900, 50);
     }
 
     private void drawStartScreen(Graphics2D g2){
-        int row = engine.getStartScreenSelection().getLineNumber();
-        g2.drawImage(startScreenImage, 0, 0, null);
-        g2.drawImage(selectIcon, 350, row * 60 + 445, null);
+        int row = silnik.getStartScreenSelection().getLineNumber();
+        g2.drawImage(menu, 0, 0, null);
+        g2.drawImage(wybor, 350, row * 60 + 445, null);
     }
 
     private void drawMapSelectionScreen(Graphics2D g2){
-        g2.setFont(gameFont.deriveFont(50f));
+        g2.setFont(font.deriveFont(50f));
         g2.setColor(Color.WHITE);
         mapSelection.draw(g2);
-        int row = engine.getSelectedMap();
-        int y_location = row*100+253-selectIcon.getHeight();
-        g2.drawImage(selectIcon, 350, y_location, null);
+        int row = silnik.getSelectedMap();
+        int y_location = row*100+253-wybor.getHeight();
+        g2.drawImage(wybor, 350, y_location, null);
     }
 
     public String selectMapViaMouse(Point mouseLocation) {
