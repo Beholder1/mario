@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Mapa {
+public class Poziom {
 
     private Rario rario;
     private ArrayList<Blok> cegly = new ArrayList<>();
@@ -27,7 +27,7 @@ public class Mapa {
     private String sciezka;
 
 
-    public Mapa(BufferedImage tlo) {
+    public Poziom(BufferedImage tlo) {
         this.tlo = tlo;
     }
 

@@ -6,36 +6,36 @@ import java.util.ArrayList;
 public class MapSelection {
 
     private ArrayList<String> poziomy = new ArrayList<>();
-    private MapSelectionItem[] mapSelectionItems;
+    private ElementWyboruPoziomu[] ElementyWyboruPoziomu;
 
     public MapSelection(){
-        getMaps();
-        this.mapSelectionItems = createItems(this.poziomy);
+        dodajPoziomy();
+        this.ElementyWyboruPoziomu = stworzElementy(this.poziomy);
     }
 
-    public void draw(Graphics g){
-        g.setColor(Color.BLACK);
-        g.fillRect(0,0, 1280, 720);
+    public void wyswietl(Graphics grafika){
+        grafika.setColor(Color.BLACK);
+        grafika.fillRect(0,0, 1280, 720);
 
-        if(mapSelectionItems == null){
+        if(ElementyWyboruPoziomu == null){
             System.out.println(1);
             return;
         }
 
         String tytul = "Wybierz poziom";
-        int x_location = (1280 - g.getFontMetrics().stringWidth(tytul))/2;
-        g.setColor(Color.YELLOW);
-        g.drawString(tytul, x_location, 100);
+        int polozenieWX = (1280 - grafika.getFontMetrics().stringWidth(tytul))/2;
+        grafika.setColor(Color.YELLOW);
+        grafika.drawString(tytul, polozenieWX, 100);
 
-        for(MapSelectionItem item : mapSelectionItems){
-            g.setColor(Color.WHITE);
-            int width = g.getFontMetrics().stringWidth(item.getName().split("[.]")[0]);
-            item.setLocation( new Point((1280-width)/2, item.getLocation().y));
-            g.drawString(item.getName().split("[.]")[0], item.getLocation().x, item.getLocation().y);
+        for(ElementWyboruPoziomu element : ElementyWyboruPoziomu){
+            grafika.setColor(Color.WHITE);
+            int szerokosc = grafika.getFontMetrics().stringWidth(element.getNazwaPoziomu().split("[.]")[0]);
+            element.setPolozenie( new Point((1280-szerokosc)/2, element.getPolozenie().y));
+            grafika.drawString(element.getNazwaPoziomu().split("[.]")[0], element.getPolozenie().x, element.getPolozenie().y);
         }
     }
 
-    private void getMaps(){
+    private void dodajPoziomy(){
         poziomy.add("Poziom 1.png");
         poziomy.add("Poziom 2.png");
         poziomy.add("Poziom 3.png");
@@ -43,38 +43,37 @@ public class MapSelection {
         poziomy.add("Poziom 5.png");
     }
 
-    private MapSelectionItem[] createItems(ArrayList<String> maps){
-        if(maps == null)
+    private ElementWyboruPoziomu[] stworzElementy(ArrayList<String> poziomy){
+        if(poziomy == null)
             return null;
 
-        int defaultGridSize = 100;
-        MapSelectionItem[] items = new MapSelectionItem[maps.size()];
-        for (int i = 0; i < items.length; i++) {
-            Point location = new Point(0, (i+1)*defaultGridSize+150);
-            items[i] = new MapSelectionItem(maps.get(i), location);
+        ElementWyboruPoziomu[] elementy = new ElementWyboruPoziomu[poziomy.size()];
+        for (int i = 0; i < elementy.length; i++) {
+            Point polozenie = new Point(0, (i+1)*100+150);
+            elementy[i] = new ElementWyboruPoziomu(poziomy.get(i), polozenie);
         }
 
-        return items;
+        return elementy;
     }
 
-    public String selectMap(int index){
-        if(index < mapSelectionItems.length && index > -1)
-            return mapSelectionItems[index].getName();
+    public String wybierzPoziom(int indeks){
+        if(indeks < ElementyWyboruPoziomu.length && indeks > -1)
+            return ElementyWyboruPoziomu[indeks].getNazwaPoziomu();
         return null;
     }
 
-    public int changeSelectedMap(int index, boolean up) {
-        if(up){
-            if(index <= 0)
-                return mapSelectionItems.length - 1;
+    public int zmienPoziom(int indeks, boolean czyWGore) {
+        if(czyWGore){
+            if(indeks <= 0)
+                return ElementyWyboruPoziomu.length - 1;
             else
-                return index - 1;
+                return indeks - 1;
         }
         else{
-            if(index >= mapSelectionItems.length - 1)
+            if(indeks >= ElementyWyboruPoziomu.length - 1)
                 return 0;
             else
-                return index + 1;
+                return indeks + 1;
         }
     }
 }

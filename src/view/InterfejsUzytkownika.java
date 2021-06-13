@@ -143,17 +143,17 @@ public class InterfejsUzytkownika extends JPanel{
     private void wyswietlWyborPoziomu(Graphics2D grafika){
         grafika.setFont(font.deriveFont(50f));
         grafika.setColor(Color.WHITE);
-        wyborPoziomu.draw(grafika);
+        wyborPoziomu.wyswietl(grafika);
         int wiersz = silnik.getSelectedMap();
         int y = wiersz*100+253-wybor.getHeight();
         grafika.drawImage(wybor, 350, y, null);
     }
 
     public String wybierzPoziom(int index){
-        return wyborPoziomu.selectMap(index);
+        return wyborPoziomu.wybierzPoziom(index);
     }
 
     public int zmienPoziom(int index, boolean up){
-        return wyborPoziomu.changeSelectedMap(index, up);
+        return wyborPoziomu.zmienPoziom(index, up);
     }
 }
