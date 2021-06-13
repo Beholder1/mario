@@ -30,8 +30,6 @@ public class MapSelection {
         for(MapSelectionItem item : mapSelectionItems){
             g.setColor(Color.WHITE);
             int width = g.getFontMetrics().stringWidth(item.getName().split("[.]")[0]);
-            int height = g.getFontMetrics().getHeight();
-            item.setDimension( new Dimension(width, height));
             item.setLocation( new Point((1280-width)/2, item.getLocation().y));
             g.drawString(item.getName().split("[.]")[0], item.getLocation().x, item.getLocation().y);
         }
@@ -57,19 +55,6 @@ public class MapSelection {
         }
 
         return items;
-    }
-
-    public String selectMap(Point mouseLocation) {
-        for(MapSelectionItem item : mapSelectionItems) {
-            Dimension dimension = item.getDimension();
-            Point location = item.getLocation();
-            boolean inX = location.x <= mouseLocation.x && location.x + dimension.width >= mouseLocation.x;
-            boolean inY = location.y >= mouseLocation.y && location.y - dimension.height <= mouseLocation.y;
-            if(inX && inY){
-                return item.getName();
-            }
-        }
-        return null;
     }
 
     public String selectMap(int index){
