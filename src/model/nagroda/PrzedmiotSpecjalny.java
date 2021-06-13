@@ -33,7 +33,7 @@ public abstract class PrzedmiotSpecjalny extends GameObject implements Nagroda {
     @Override
     public void wyswietl(Graphics grafika){
         if(czyOdkryty){
-            grafika.drawImage(getStyle(), (int)getX(), (int)getY(), null);
+            grafika.drawImage(getStyl(), (int)getX(), (int)getY(), null);
         }
     }
 

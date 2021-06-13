@@ -7,14 +7,14 @@ public abstract class GameObject {
 
     private double x, y;
     private double velX, velY;
-    private Dimension dimension;
-    private BufferedImage style;
+    private Dimension wymiar;
+    private BufferedImage styl;
     private double gravityAcc;
     private boolean falling, jumping;
 
     public GameObject(double x, double y, BufferedImage style){
         setLocation(x, y);
-        setStyle(style);
+        setStyl(style);
 
         if(style != null){
             setDimension(style.getWidth(), style.getHeight());
@@ -28,7 +28,7 @@ public abstract class GameObject {
     }
 
     public void wyswietl(Graphics g) {
-        BufferedImage style = getStyle();
+        BufferedImage style = getStyl();
 
         if(style != null){
             g.drawImage(style, (int)x, (int)y, null);
@@ -74,18 +74,18 @@ public abstract class GameObject {
         this.y = y;
     }
 
-    public Dimension getDimension(){
-        return dimension;
+    public Dimension getWymiar(){
+        return wymiar;
     }
 
-    public void setDimension(int width, int height){ this.dimension =  new Dimension(width, height); }
+    public void setDimension(int width, int height){ this.wymiar =  new Dimension(width, height); }
 
-    public BufferedImage getStyle() {
-        return style;
+    public BufferedImage getStyl() {
+        return styl;
     }
 
-    public void setStyle(BufferedImage style) {
-        this.style = style;
+    public void setStyl(BufferedImage styl) {
+        this.styl = styl;
     }
 
     public double getVelX() {
@@ -109,23 +109,23 @@ public abstract class GameObject {
     }
 
     public Rectangle getTopBounds(){
-        return new Rectangle((int)x+dimension.width/6, (int)y, 2*dimension.width/3, dimension.height/2);
+        return new Rectangle((int)x+wymiar.width/6, (int)y, 2*wymiar.width/3, wymiar.height/2);
     }
 
     public Rectangle getBottomBounds(){
-        return new Rectangle((int)x+dimension.width/6, (int)y + dimension.height/2, 2*dimension.width/3, dimension.height/2);
+        return new Rectangle((int)x+wymiar.width/6, (int)y + wymiar.height/2, 2*wymiar.width/3, wymiar.height/2);
     }
 
     public Rectangle getLeftBounds(){
-        return new Rectangle((int)x, (int)y + dimension.height/4, dimension.width/4, dimension.height/2);
+        return new Rectangle((int)x, (int)y + wymiar.height/4, wymiar.width/4, wymiar.height/2);
     }
 
     public Rectangle getRightBounds(){
-        return new Rectangle((int)x + 3*dimension.width/4, (int)y + dimension.height/4, dimension.width/4, dimension.height/2);
+        return new Rectangle((int)x + 3*wymiar.width/4, (int)y + wymiar.height/4, wymiar.width/4, wymiar.height/2);
     }
 
     public Rectangle getGranice(){
-        return new Rectangle((int)x, (int)y, dimension.width, dimension.height);
+        return new Rectangle((int)x, (int)y, wymiar.width, wymiar.height);
     }
 
     public boolean isFalling() {

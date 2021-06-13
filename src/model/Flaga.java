@@ -13,10 +13,10 @@ public class Flaga extends GameObject{
     @Override
     public void zmienPolozenie() {
         if(czyDotknieta){
-            if(getY() + getDimension().getHeight() >= 576){
+            if(getY() + getWymiar().getHeight() >= 576){
                 setFalling(false);
                 setVelY(0);
-                setY(576 - getDimension().getHeight());
+                setY(576 - getWymiar().getHeight());
             }
             super.zmienPolozenie();
         }

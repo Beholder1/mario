@@ -26,7 +26,7 @@ public class Pytajnik extends Blok{
         }
 
         setCzyPusty(true);
-        setStyle(nowyStyl);
+        setStyl(nowyStyl);
 
         Nagroda zwrocNagrode = this.nagroda;
         this.nagroda = null;

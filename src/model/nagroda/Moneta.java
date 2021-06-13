@@ -18,7 +18,7 @@ public class Moneta extends GameObject implements Nagroda {
         this.punkt = punkt;
         czyOdkryty = false;
         setDimension(30, 42);
-        granicaOdkrycia = (int)getY() - getDimension().height;
+        granicaOdkrycia = (int)getY() - getWymiar().height;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Moneta extends GameObject implements Nagroda {
     @Override
     public void wyswietl(Graphics g){
         if(czyOdkryty){
-            g.drawImage(getStyle(), (int)getX(), (int)getY(), null);
+            g.drawImage(getStyl(), (int)getX(), (int)getY(), null);
         }
     }
 

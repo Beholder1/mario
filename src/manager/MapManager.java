@@ -108,7 +108,7 @@ public class MapManager {
         for (Blok brick : bricks) {
             Rectangle brickTopBounds = brick.getTopBounds();
             if (marioBottomBounds.intersects(brickTopBounds)) {
-                rario.setY(brick.getY() - rario.getDimension().height + 1);
+                rario.setY(brick.getY() - rario.getWymiar().height + 1);
                 rario.setFalling(false);
                 rario.setVelY(0);
             }
@@ -122,8 +122,8 @@ public class MapManager {
             }
         }
 
-        if (rario.getY() + rario.getDimension().height >= poziom.getDolnaGranica()) {
-            rario.setY(poziom.getDolnaGranica() - rario.getDimension().height);
+        if (rario.getY() + rario.getWymiar().height >= poziom.getDolnaGranica()) {
+            rario.setY(poziom.getDolnaGranica() - rario.getWymiar().height);
             rario.setFalling(false);
             rario.setVelY(0);
         }
@@ -140,7 +140,7 @@ public class MapManager {
             Rectangle brickBottomBounds = brick.getBottomBounds();
             if (marioTopBounds.intersects(brickBottomBounds)) {
                 rario.setVelY(0);
-                rario.setY(brick.getY() + brick.getDimension().height);
+                rario.setY(brick.getY() + brick.getWymiar().height);
                 Nagroda nagroda = brick.odkryj(engine);
                 if(nagroda != null)
                     poziom.dodajNagrode(nagroda);
@@ -164,9 +164,9 @@ public class MapManager {
             if (marioBounds.intersects(brickBounds)) {
                 rario.setVelX(0);
                 if(toRight)
-                    rario.setX(brick.getX() - rario.getDimension().width);
+                    rario.setX(brick.getX() - rario.getWymiar().width);
                 else
-                    rario.setX(brick.getX() + brick.getDimension().width);
+                    rario.setX(brick.getX() + brick.getWymiar().width);
             }
         }
 
@@ -216,15 +216,15 @@ public class MapManager {
                 if (enemyBottomBounds.intersects(brickTopBounds)){
                     przeciwnik.setFalling(false);
                     przeciwnik.setVelY(0);
-                    przeciwnik.setY(brick.getY()- przeciwnik.getDimension().height);
+                    przeciwnik.setY(brick.getY()- przeciwnik.getWymiar().height);
                     standsOnBrick = true;
                 }
             }
 
-            if(przeciwnik.getY() + przeciwnik.getDimension().height > poziom.getDolnaGranica()){
+            if(przeciwnik.getY() + przeciwnik.getWymiar().height > poziom.getDolnaGranica()){
                 przeciwnik.setFalling(false);
                 przeciwnik.setVelY(0);
-                przeciwnik.setY(poziom.getDolnaGranica()- przeciwnik.getDimension().height);
+                przeciwnik.setY(poziom.getDolnaGranica()- przeciwnik.getWymiar().height);
             }
 
             if (!standsOnBrick && przeciwnik.getY() < poziom.getDolnaGranica()){
@@ -254,7 +254,7 @@ public class MapManager {
                         if (brickBounds.intersects(prizeBottomBounds)) {
                             boost.setFalling(false);
                             boost.setVelY(0);
-                            boost.setY(brick.getY() - boost.getDimension().height + 1);
+                            boost.setY(brick.getY() - boost.getWymiar().height + 1);
                             if (boost.getVelX() == 0)
                                 boost.setVelX(2);
                         }
@@ -275,10 +275,10 @@ public class MapManager {
                     }
                 }
 
-                if (boost.getY() + boost.getDimension().height > poziom.getDolnaGranica()) {
+                if (boost.getY() + boost.getWymiar().height > poziom.getDolnaGranica()) {
                     boost.setFalling(false);
                     boost.setVelY(0);
-                    boost.setY(poziom.getDolnaGranica() - boost.getDimension().height);
+                    boost.setY(poziom.getDolnaGranica() - boost.getWymiar().height);
                     if (boost.getVelX() == 0)
                         boost.setVelX(2);
                 }

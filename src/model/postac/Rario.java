@@ -29,7 +29,7 @@ public class Rario extends GameObject{
 
         Animation animacja = new Animation(leweKlatki, praweKlatki);
         rarioDuzy = new RarioDuzy(animacja, false);
-        setStyle(rarioDuzy.getCurrentStyle(wPrawo, false, false));
+        setStyl(rarioDuzy.getCurrentStyle(wPrawo, false, false));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Rario extends GameObject{
         boolean ruszX = (getVelX() != 0);
         boolean ruszY = (getVelY() != 0);
 
-        setStyle(rarioDuzy.getCurrentStyle(wPrawo, ruszX, ruszY));
+        setStyl(rarioDuzy.getCurrentStyle(wPrawo, ruszX, ruszY));
 
         super.wyswietl(g);
     }
