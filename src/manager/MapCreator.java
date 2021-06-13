@@ -22,9 +22,9 @@ class MapCreator {
     MapCreator(ImageLoader imageLoader) {
 
         this.imageLoader = imageLoader;
-        BufferedImage sprite = imageLoader.loadImage("/sprite1.png");
+        BufferedImage sprite = imageLoader.loadImage("/obiekty.png");
 
-        this.backgroundImage = imageLoader.loadImage("/background.png");
+        this.backgroundImage = imageLoader.loadImage("/tlo.png");
         this.superMushroom = imageLoader.getSubImage(sprite, 100, 150, 50, 50);
         this.oneUpMushroom= imageLoader.getSubImage(sprite, 50, 150, 50, 50);
         this.coin = imageLoader.getSubImage(sprite, 0, 150, 50, 50);

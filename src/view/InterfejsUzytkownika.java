@@ -9,16 +9,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class UIManager extends JPanel{
+public class InterfejsUzytkownika extends JPanel{
 
     private GameEngine silnik;
     private Font font;
     private BufferedImage menu, tworcy, sterowanie, przegrana;
     private BufferedImage serce;
     private BufferedImage wybor;
-    private MapSelection mapSelection;
+    private MapSelection wyborPoziomu;
 
-    public UIManager(GameEngine silnik, int szerokosc, int wysokosc) {
+    public InterfejsUzytkownika(GameEngine silnik, int szerokosc, int wysokosc) {
         setPreferredSize(new Dimension(szerokosc, wysokosc));
         setMaximumSize(new Dimension(szerokosc, wysokosc));
         setMinimumSize(new Dimension(szerokosc, wysokosc));
@@ -26,7 +26,7 @@ public class UIManager extends JPanel{
         this.silnik = silnik;
         ImageLoader obraz = silnik.getImageLoader();
 
-        mapSelection = new MapSelection();
+        wyborPoziomu = new MapSelection();
 
         this.serce = obraz.loadImage("/serce.png");
         this.wybor = obraz.loadImage("/wybor.png");
@@ -36,8 +36,8 @@ public class UIManager extends JPanel{
         this.przegrana = obraz.loadImage("/przegrana.png");
 
         try {
-            InputStream in = getClass().getResourceAsStream("/media/font/font.ttf");
-            font = Font.createFont(Font.TRUETYPE_FONT, in);
+            InputStream wejscie = getClass().getResourceAsStream("/media/font/font.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, wejscie);
         } catch (FontFormatException | IOException e) {
             font = new Font("Verdana", Font.PLAIN, 12);
             e.printStackTrace();
@@ -45,45 +45,44 @@ public class UIManager extends JPanel{
     }
 
     @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
+    public void paintComponent(Graphics grafika){
+        super.paintComponent(grafika);
 
-        Graphics2D g2 = (Graphics2D) g.create();
+        Graphics2D grafika1 = (Graphics2D) grafika.create();
         StatusGry statusGry = silnik.getGameStatus();
 
         if(statusGry == StatusGry.MENU){
-            drawStartScreen(g2);
+            wyswietlMenu(grafika1);
         }
         else if(statusGry == StatusGry.POZIOMY){
-            drawMapSelectionScreen(g2);
+            wyswietlWyborPoziomu(grafika1);
         }
         else if(statusGry == StatusGry.TWORCY){
-            wyswietlTworcow(g2);
+            wyswietlTworcow(grafika1);
         }
         else if(statusGry == StatusGry.STEROWANIE){
-            wyswietlSterowanie(g2);
+            wyswietlSterowanie(grafika1);
         }
         else if(statusGry == StatusGry.PRZEGRANA){
-            wyswietlPrzegrana(g2);
+            wyswietlPrzegrana(grafika1);
         }
         else {
-            Point camLocation = silnik.getCameraLocation();
-            g2.translate(-camLocation.x, -camLocation.y);
-            silnik.drawMap(g2);
-            g2.translate(camLocation.x, camLocation.y);
+            Point kamera = silnik.getCameraLocation();
+            grafika1.translate(-kamera.x, -kamera.y);
+            silnik.drawMap(grafika1);
+            grafika1.translate(kamera.x, kamera.y);
 
-            drawPoints(g2);
-            drawRemainingLives(g2);
+            wyswietlPunkty(grafika1);
+            wyswietlPozostaleSerca(grafika1);
 
             if(statusGry == StatusGry.ZATRZYMANO){
-                drawPauseScreen(g2);
+                wyswietlPauze(grafika1);
             }
             else if(statusGry == StatusGry.WYGRANA){
-                wyswietlWygrana(g2);
+                wyswietlWygrana(grafika1);
             }
         }
-
-        g2.dispose();
+        grafika1.dispose();
     }
 
     private void wyswietlWygrana(Graphics2D grafika) {
@@ -112,53 +111,49 @@ public class UIManager extends JPanel{
         grafika.drawString(uzyskanePunkty, (getWidth()-dlugosc)/2, getHeight()-wysokosc*2);
     }
 
-    private void drawPauseScreen(Graphics2D g2) {
-        g2.setFont(font.deriveFont(50f));
-        g2.setColor(Color.WHITE);
-        String displayedStr = "PAUZA";
-        int stringLength = g2.getFontMetrics().stringWidth(displayedStr);
-        g2.drawString(displayedStr, (getWidth()-stringLength)/2, getHeight()/2);
+    private void wyswietlPauze(Graphics2D grafika) {
+        grafika.setFont(font.deriveFont(50f));
+        grafika.setColor(Color.WHITE);
+        String napis = "PAUZA";
+        int stringLength = grafika.getFontMetrics().stringWidth(napis);
+        grafika.drawString(napis, (getWidth()-stringLength)/2, getHeight()/2);
     }
 
-    private void drawRemainingLives(Graphics2D g2) {
-        g2.setFont(font.deriveFont(30f));
-        g2.setColor(Color.WHITE);
-        String displayedStr = "" + silnik.getRemainingLives();
-        g2.drawImage(serce, 50, 10, null);
-        g2.drawString(displayedStr, 100, 50);
+    private void wyswietlPozostaleSerca(Graphics2D grafika) {
+        grafika.setFont(font.deriveFont(30f));
+        grafika.setColor(Color.WHITE);
+        String pozostaleSerca = "" + silnik.getRemainingLives();
+        grafika.drawImage(serce, 50, 10, null);
+        grafika.drawString(pozostaleSerca, 100, 50);
     }
 
-    private void drawPoints(Graphics2D g2){
-        g2.setFont(font.deriveFont(25f));
-        g2.setColor(Color.WHITE);
-        String displayedStr = "Punkty: " + silnik.getScore();
-        g2.drawString(displayedStr, 900, 50);
+    private void wyswietlPunkty(Graphics2D grafika){
+        grafika.setFont(font.deriveFont(25f));
+        grafika.setColor(Color.WHITE);
+        String napis = "Punkty: " + silnik.getScore();
+        grafika.drawString(napis, 900, 50);
     }
 
-    private void drawStartScreen(Graphics2D g2){
-        int row = silnik.getStartScreenSelection().getLineNumber();
-        g2.drawImage(menu, 0, 0, null);
-        g2.drawImage(wybor, 350, row * 60 + 445, null);
+    private void wyswietlMenu(Graphics2D grafika){
+        int rzad = silnik.getStartScreenSelection().getLineNumber();
+        grafika.drawImage(menu, 0, 0, null);
+        grafika.drawImage(wybor, 350, rzad * 60 + 445, null);
     }
 
-    private void drawMapSelectionScreen(Graphics2D g2){
-        g2.setFont(font.deriveFont(50f));
-        g2.setColor(Color.WHITE);
-        mapSelection.draw(g2);
-        int row = silnik.getSelectedMap();
-        int y_location = row*100+253-wybor.getHeight();
-        g2.drawImage(wybor, 350, y_location, null);
+    private void wyswietlWyborPoziomu(Graphics2D grafika){
+        grafika.setFont(font.deriveFont(50f));
+        grafika.setColor(Color.WHITE);
+        wyborPoziomu.draw(grafika);
+        int rzad = silnik.getSelectedMap();
+        int y = rzad*100+253-wybor.getHeight();
+        grafika.drawImage(wybor, 350, y, null);
     }
 
-    public String selectMapViaMouse(Point mouseLocation) {
-        return mapSelection.selectMap(mouseLocation);
+    public String wybierzPoziom(int index){
+        return wyborPoziomu.selectMap(index);
     }
 
-    public String selectMapViaKeyboard(int index){
-        return mapSelection.selectMap(index);
-    }
-
-    public int changeSelectedMap(int index, boolean up){
-        return mapSelection.changeSelectedMap(index, up);
+    public int zmienPoziom(int index, boolean up){
+        return wyborPoziomu.changeSelectedMap(index, up);
     }
 }

@@ -25,8 +25,4 @@ public abstract class Blok extends GameObject{
     }
 
     public Nagroda odkryj(GameEngine silnik){ return null;}
-
-    public Nagroda getPrize() {
-        return null;
-    }
 }

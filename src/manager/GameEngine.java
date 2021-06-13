@@ -3,7 +3,7 @@ package manager;
 import model.postac.Rario;
 import view.ImageLoader;
 import view.StartScreenSelection;
-import view.UIManager;
+import view.InterfejsUzytkownika;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ public class GameEngine implements Runnable {
     private final static int WIDTH = 1268, HEIGHT = 708;
 
     private MapManager mapManager;
-    private UIManager uiManager;
+    private InterfejsUzytkownika interfejsUzytkownika;
     private StatusGry statusGry;
     private boolean isRunning;
     private Kamera kamera;
@@ -31,11 +31,11 @@ public class GameEngine implements Runnable {
         Wejscie wejscie = new Wejscie(this);
         statusGry = StatusGry.MENU;
         kamera = new Kamera();
-        uiManager = new UIManager(this, WIDTH, HEIGHT);
+        interfejsUzytkownika = new InterfejsUzytkownika(this, WIDTH, HEIGHT);
         mapManager = new MapManager();
 
         JFrame frame = new JFrame("Rario");
-        frame.add(uiManager);
+        frame.add(interfejsUzytkownika);
         frame.addKeyListener(wejscie);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -65,14 +65,14 @@ public class GameEngine implements Runnable {
     }
 
     public void selectMapViaKeyboard(){
-        String path = uiManager.selectMapViaKeyboard(selectedMap);
+        String path = interfejsUzytkownika.wybierzPoziom(selectedMap);
         if (path != null) {
             createMap(path);
         }
     }
 
     public void changeSelectedMap(boolean up){
-        selectedMap = uiManager.changeSelectedMap(selectedMap, up);
+        selectedMap = interfejsUzytkownika.zmienPoziom(selectedMap, up);
     }
 
     private void createMap(String path) {
@@ -117,7 +117,7 @@ public class GameEngine implements Runnable {
     }
 
     private void render() {
-        uiManager.repaint();
+        interfejsUzytkownika.repaint();
     }
 
     private void gameLoop() {

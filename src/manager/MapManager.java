@@ -37,7 +37,7 @@ public class MapManager {
 
     public boolean createMap(ImageLoader loader, String path) {
         MapCreator mapCreator = new MapCreator(loader);
-        mapa = mapCreator.createMap("/maps/" + path, 400);
+        mapa = mapCreator.createMap("/poziomy/" + path, 400);
 
         return mapa != null;
     }

@@ -15,7 +15,7 @@ public class MapSelectionItem {
         this.name = map;
 
         ImageLoader loader = new ImageLoader();
-        this.image = loader.loadImage("/maps/" + map);
+        this.image = loader.loadImage("/poziomy/" + map);
 
         this.dimension = new Dimension();
     }
