@@ -2,6 +2,7 @@ package manager;
 
 import obiekty.postac.Rario;
 import view.ImageLoader;
+import view.Ranking;
 import view.WyborWMenu;
 import view.InterfejsUzytkownika;
 
@@ -21,6 +22,7 @@ public class GameEngine implements Runnable {
     private Thread thread;
     private WyborWMenu wyborWMenu = WyborWMenu.GRAJ;
     private int selectedMap = 0;
+    private Ranking ranking;
 
     private GameEngine() {
         init();
@@ -33,6 +35,10 @@ public class GameEngine implements Runnable {
         kamera = new Kamera();
         interfejsUzytkownika = new InterfejsUzytkownika(this, WIDTH, HEIGHT);
         mapManager = new MapManager();
+        if ranking == null
+        {
+            ranking = new Ranking();
+        }
 
         JFrame frame = new JFrame("Rario");
         frame.add(interfejsUzytkownika);
@@ -117,6 +123,10 @@ public class GameEngine implements Runnable {
         updateCamera();
 
         if (isGameOver()) {
+            if (ranking.getRekord(0) < getScore());
+            {
+                ranking.dodajRekord(getScore(), 0);
+            }
             setGameStatus(StatusGry.PRZEGRANA);
         }
 
@@ -264,6 +274,10 @@ public class GameEngine implements Runnable {
 
     public MapManager getMapManager() {
         return mapManager;
+    }
+
+    public Ranking getRanking(){
+        return ranking;
     }
 
     public static void main(String... args) {

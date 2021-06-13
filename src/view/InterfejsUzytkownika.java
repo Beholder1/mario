@@ -25,7 +25,6 @@ public class InterfejsUzytkownika extends JPanel{
 
         this.silnik = silnik;
         ImageLoader obraz = silnik.getImageLoader();
-
         wyborPoziomu = new WyborPoziomu();
 
         this.serce = obraz.loadImage("/serce.png");
@@ -64,7 +63,7 @@ public class InterfejsUzytkownika extends JPanel{
             wyswietlSterowanie(grafika1);
         }
         else if(statusGry == StatusGry.RANKING){
-            wyswietlSterowanie(grafika1);
+            wyswietlRanking(grafika1);
         }
         else if(statusGry == StatusGry.PRZEGRANA){
             wyswietlPrzegrana(grafika1);
@@ -102,6 +101,12 @@ public class InterfejsUzytkownika extends JPanel{
 
     private void wyswietlTworcow(Graphics2D grafika) {
         grafika.drawImage(tworcy, 0, 0, null);
+    }
+
+    void wyswietlRanking(Graphics2D grafika){
+        grafika.setFont(font.deriveFont(50f));
+        grafika.setColor(Color.WHITE);
+        silnik.getRanking().wyswietl(grafika);
     }
 
     private void wyswietlPrzegrana(Graphics2D grafika) {
