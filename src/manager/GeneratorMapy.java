@@ -1,12 +1,12 @@
 package manager;
 
-import model.Flaga;
-import model.blok.*;
-import model.nagroda.*;
+import obiekty.Flaga;
+import obiekty.blok.*;
+import obiekty.nagroda.*;
 import view.ImageLoader;
-import model.Poziom;
-import model.postac.Przeciwnik;
-import model.postac.Rario;
+import obiekty.Poziom;
+import obiekty.postac.Przeciwnik;
+import obiekty.postac.Rario;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

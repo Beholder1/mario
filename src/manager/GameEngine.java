@@ -1,6 +1,6 @@
 package manager;
 
-import model.postac.Rario;
+import obiekty.postac.Rario;
 import view.ImageLoader;
 import view.WyborWMenu;
 import view.InterfejsUzytkownika;
@@ -138,7 +138,7 @@ public class GameEngine implements Runnable {
 
     private void updateCamera() {
         Rario rario = mapManager.getMario();
-        double marioVelocityX = rario.getVelX();
+        double marioVelocityX = rario.getPredkoscWX();
         double shiftAmount = 0;
 
         if (marioVelocityX > 0 && rario.getX() - 600 > kamera.getX()) {
@@ -190,7 +190,7 @@ public class GameEngine implements Runnable {
             } else if (input == AkcjeKlawiszy.W_LEWO) {
                 rario.rusz(false, kamera);
             } else if (input == AkcjeKlawiszy.PO_NACISNIECIU) {
-                rario.setVelX(0);
+                rario.setPredkoscWX(0);
             } else if (input == AkcjeKlawiszy.PAUZA) {
                 pauseGame();
             }

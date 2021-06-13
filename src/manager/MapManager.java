@@ -1,14 +1,14 @@
 package manager;
 
-import model.GameObject;
-import model.Poziom;
-import model.blok.Blok;
-import model.blok.Cegla;
-import model.postac.Przeciwnik;
-import model.postac.Rario;
-import model.nagroda.PrzedmiotSpecjalny;
-import model.nagroda.Moneta;
-import model.nagroda.Nagroda;
+import obiekty.ObiektGry;
+import obiekty.Poziom;
+import obiekty.blok.Blok;
+import obiekty.blok.Cegla;
+import obiekty.postac.Przeciwnik;
+import obiekty.postac.Rario;
+import obiekty.nagroda.PrzedmiotSpecjalny;
+import obiekty.nagroda.Moneta;
+import obiekty.nagroda.Nagroda;
 import view.ImageLoader;
 
 import java.awt.*;
@@ -98,24 +98,24 @@ public class MapManager {
         Rario rario = getMario();
         ArrayList<Blok> bricks = poziom.getWszystkieCegly();
         ArrayList<Przeciwnik> enemies = poziom.getPrzeciwnicy();
-        ArrayList<GameObject> toBeRemoved = new ArrayList<>();
+        ArrayList<ObiektGry> toBeRemoved = new ArrayList<>();
 
-        Rectangle marioBottomBounds = rario.getBottomBounds();
+        Rectangle marioBottomBounds = rario.dolnaGranica();
 
-        if (!rario.isJumping())
-            rario.setFalling(true);
+        if (!rario.getCzySkacze())
+            rario.setCzySpada(true);
 
         for (Blok brick : bricks) {
-            Rectangle brickTopBounds = brick.getTopBounds();
+            Rectangle brickTopBounds = brick.gornaGranica();
             if (marioBottomBounds.intersects(brickTopBounds)) {
                 rario.setY(brick.getY() - rario.getWymiar().height + 1);
-                rario.setFalling(false);
-                rario.setVelY(0);
+                rario.setCzySpada(false);
+                rario.setPredkoscWY(0);
             }
         }
 
         for (Przeciwnik przeciwnik : enemies) {
-            Rectangle enemyTopBounds = przeciwnik.getTopBounds();
+            Rectangle enemyTopBounds = przeciwnik.gornaGranica();
             if (marioBottomBounds.intersects(enemyTopBounds)) {
                 rario.zyskajPunkty(100);
                 toBeRemoved.add(przeciwnik);
@@ -124,8 +124,8 @@ public class MapManager {
 
         if (rario.getY() + rario.getWymiar().height >= poziom.getDolnaGranica()) {
             rario.setY(poziom.getDolnaGranica() - rario.getWymiar().height);
-            rario.setFalling(false);
-            rario.setVelY(0);
+            rario.setCzySpada(false);
+            rario.setPredkoscWY(0);
         }
 
         removeObjects(toBeRemoved);
@@ -135,11 +135,11 @@ public class MapManager {
         Rario rario = getMario();
         ArrayList<Blok> bricks = poziom.getWszystkieCegly();
 
-        Rectangle marioTopBounds = rario.getTopBounds();
+        Rectangle marioTopBounds = rario.gornaGranica();
         for (Blok brick : bricks) {
-            Rectangle brickBottomBounds = brick.getBottomBounds();
+            Rectangle brickBottomBounds = brick.dolnaGranica();
             if (marioTopBounds.intersects(brickBottomBounds)) {
-                rario.setVelY(0);
+                rario.setPredkoscWY(0);
                 rario.setY(brick.getY() + brick.getWymiar().height);
                 Nagroda nagroda = brick.odkryj(engine);
                 if(nagroda != null)
@@ -152,17 +152,17 @@ public class MapManager {
         Rario rario = getMario();
         ArrayList<Blok> bricks = poziom.getWszystkieCegly();
         ArrayList<Przeciwnik> enemies = poziom.getPrzeciwnicy();
-        ArrayList<GameObject> toBeRemoved = new ArrayList<>();
+        ArrayList<ObiektGry> toBeRemoved = new ArrayList<>();
 
         boolean marioDies = false;
         boolean toRight = rario.getWPrawo();
 
-        Rectangle marioBounds = toRight ? rario.getRightBounds() : rario.getLeftBounds();
+        Rectangle marioBounds = toRight ? rario.prawaGranica() : rario.lewaGranica();
 
         for (Blok brick : bricks) {
-            Rectangle brickBounds = !toRight ? brick.getRightBounds() : brick.getLeftBounds();
+            Rectangle brickBounds = !toRight ? brick.prawaGranica() : brick.lewaGranica();
             if (marioBounds.intersects(brickBounds)) {
-                rario.setVelX(0);
+                rario.setPredkoscWX(0);
                 if(toRight)
                     rario.setX(brick.getX() - rario.getWymiar().width);
                 else
@@ -171,7 +171,7 @@ public class MapManager {
         }
 
         for(Przeciwnik przeciwnik : enemies){
-            Rectangle enemyBounds = !toRight ? przeciwnik.getRightBounds() : przeciwnik.getLeftBounds();
+            Rectangle enemyBounds = !toRight ? przeciwnik.prawaGranica() : przeciwnik.lewaGranica();
             if (marioBounds.intersects(enemyBounds)) {
                 marioDies = rario.dotknieciePrzeciwnika(engine);
                 toBeRemoved.add(przeciwnik);
@@ -180,8 +180,8 @@ public class MapManager {
         removeObjects(toBeRemoved);
 
 
-        if (rario.getX() <= engine.getCameraLocation().getX() && rario.getVelX() < 0) {
-            rario.setVelX(0);
+        if (rario.getX() <= engine.getCameraLocation().getX() && rario.getPredkoscWX() < 0) {
+            rario.setPredkoscWX(0);
             rario.setX(engine.getCameraLocation().getX());
         }
 
@@ -198,37 +198,37 @@ public class MapManager {
             boolean standsOnBrick = false;
 
             for (Blok brick : bricks) {
-                Rectangle enemyBounds = przeciwnik.getLeftBounds();
-                Rectangle brickBounds = brick.getRightBounds();
+                Rectangle enemyBounds = przeciwnik.lewaGranica();
+                Rectangle brickBounds = brick.prawaGranica();
 
-                Rectangle enemyBottomBounds = przeciwnik.getBottomBounds();
-                Rectangle brickTopBounds = brick.getTopBounds();
+                Rectangle enemyBottomBounds = przeciwnik.dolnaGranica();
+                Rectangle brickTopBounds = brick.gornaGranica();
 
-                if (przeciwnik.getVelX() > 0) {
-                    enemyBounds = przeciwnik.getRightBounds();
-                    brickBounds = brick.getLeftBounds();
+                if (przeciwnik.getPredkoscWX() > 0) {
+                    enemyBounds = przeciwnik.prawaGranica();
+                    brickBounds = brick.lewaGranica();
                 }
 
                 if (enemyBounds.intersects(brickBounds)) {
-                    przeciwnik.setVelX(-przeciwnik.getVelX());
+                    przeciwnik.setPredkoscWX(-przeciwnik.getPredkoscWX());
                 }
 
                 if (enemyBottomBounds.intersects(brickTopBounds)){
-                    przeciwnik.setFalling(false);
-                    przeciwnik.setVelY(0);
+                    przeciwnik.setCzySpada(false);
+                    przeciwnik.setPredkoscWY(0);
                     przeciwnik.setY(brick.getY()- przeciwnik.getWymiar().height);
                     standsOnBrick = true;
                 }
             }
 
             if(przeciwnik.getY() + przeciwnik.getWymiar().height > poziom.getDolnaGranica()){
-                przeciwnik.setFalling(false);
-                przeciwnik.setVelY(0);
+                przeciwnik.setCzySpada(false);
+                przeciwnik.setPredkoscWY(0);
                 przeciwnik.setY(poziom.getDolnaGranica()- przeciwnik.getWymiar().height);
             }
 
             if (!standsOnBrick && przeciwnik.getY() < poziom.getDolnaGranica()){
-                przeciwnik.setFalling(true);
+                przeciwnik.setCzySpada(true);
             }
         }
     }
@@ -240,47 +240,47 @@ public class MapManager {
         for (Nagroda nagroda : nagrody) {
             if (nagroda instanceof PrzedmiotSpecjalny) {
                 PrzedmiotSpecjalny boost = (PrzedmiotSpecjalny) nagroda;
-                Rectangle prizeBottomBounds = boost.getBottomBounds();
-                Rectangle prizeRightBounds = boost.getRightBounds();
-                Rectangle prizeLeftBounds = boost.getLeftBounds();
-                boost.setFalling(true);
+                Rectangle prizeBottomBounds = boost.dolnaGranica();
+                Rectangle prizeRightBounds = boost.prawaGranica();
+                Rectangle prizeLeftBounds = boost.lewaGranica();
+                boost.setCzySpada(true);
 
                 for (Blok brick : bricks) {
                     Rectangle brickBounds;
 
-                    if (boost.isFalling()) {
-                        brickBounds = brick.getTopBounds();
+                    if (boost.getCzySpada()) {
+                        brickBounds = brick.gornaGranica();
 
                         if (brickBounds.intersects(prizeBottomBounds)) {
-                            boost.setFalling(false);
-                            boost.setVelY(0);
+                            boost.setCzySpada(false);
+                            boost.setPredkoscWY(0);
                             boost.setY(brick.getY() - boost.getWymiar().height + 1);
-                            if (boost.getVelX() == 0)
-                                boost.setVelX(2);
+                            if (boost.getPredkoscWX() == 0)
+                                boost.setPredkoscWX(2);
                         }
                     }
 
-                    if (boost.getVelX() > 0) {
-                        brickBounds = brick.getLeftBounds();
+                    if (boost.getPredkoscWX() > 0) {
+                        brickBounds = brick.lewaGranica();
 
                         if (brickBounds.intersects(prizeRightBounds)) {
-                            boost.setVelX(-boost.getVelX());
+                            boost.setPredkoscWX(-boost.getPredkoscWX());
                         }
-                    } else if (boost.getVelX() < 0) {
-                        brickBounds = brick.getRightBounds();
+                    } else if (boost.getPredkoscWX() < 0) {
+                        brickBounds = brick.prawaGranica();
 
                         if (brickBounds.intersects(prizeLeftBounds)) {
-                            boost.setVelX(-boost.getVelX());
+                            boost.setPredkoscWX(-boost.getPredkoscWX());
                         }
                     }
                 }
 
                 if (boost.getY() + boost.getWymiar().height > poziom.getDolnaGranica()) {
-                    boost.setFalling(false);
-                    boost.setVelY(0);
+                    boost.setCzySpada(false);
+                    boost.setPredkoscWY(0);
                     boost.setY(poziom.getDolnaGranica() - boost.getWymiar().height);
-                    if (boost.getVelX() == 0)
-                        boost.setVelX(2);
+                    if (boost.getPredkoscWX() == 0)
+                        boost.setPredkoscWX(2);
                 }
 
             }
@@ -289,14 +289,14 @@ public class MapManager {
 
     private void checkPrizeContact() {
         ArrayList<Nagroda> nagrody = poziom.getNagrody();
-        ArrayList<GameObject> toBeRemoved = new ArrayList<>();
+        ArrayList<ObiektGry> toBeRemoved = new ArrayList<>();
 
         Rectangle marioBounds = getMario().getGranice();
         for(Nagroda nagroda : nagrody){
             Rectangle prizeBounds = nagroda.getGranice();
             if (prizeBounds.intersects(marioBounds)) {
                 nagroda.przyDotknieciu(getMario());
-                toBeRemoved.add((GameObject) nagroda);
+                toBeRemoved.add((ObiektGry) nagroda);
             } else if(nagroda instanceof Moneta){
                 nagroda.przyDotknieciu(getMario());
             }
@@ -305,11 +305,11 @@ public class MapManager {
         removeObjects(toBeRemoved);
     }
 
-    private void removeObjects(ArrayList<GameObject> list){
+    private void removeObjects(ArrayList<ObiektGry> list){
         if(list == null)
             return;
 
-        for(GameObject object : list){
+        for(ObiektGry object : list){
             if(object instanceof Przeciwnik){
                 poziom.usunPrzeciwnika((Przeciwnik)object);
             }
