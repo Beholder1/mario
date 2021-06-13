@@ -16,7 +16,7 @@ public class ImageLoader {
         BufferedImage imageToReturn = null;
 
         try {
-            imageToReturn = ImageIO.read(getClass().getResource("/media" + path));
+            imageToReturn = ImageIO.read(getClass().getResource("/grafika" + path));
         } catch (IOException e) {
             e.printStackTrace();
         }

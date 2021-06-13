@@ -36,7 +36,7 @@ public class InterfejsUzytkownika extends JPanel{
         this.przegrana = obraz.loadImage("/przegrana.png");
 
         try {
-            InputStream wejscie = getClass().getResourceAsStream("/media/font/font.ttf");
+            InputStream wejscie = getClass().getResourceAsStream("/grafika/font/font.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, wejscie);
         } catch (FontFormatException | IOException e) {
             font = new Font("Verdana", Font.PLAIN, 12);
