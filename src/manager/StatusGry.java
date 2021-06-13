@@ -8,5 +8,6 @@ public enum StatusGry {
     POZIOMY,
     STEROWANIE,
     WYGRANA,
-    TWORCY
+    TWORCY,
+    RANKING
 }
