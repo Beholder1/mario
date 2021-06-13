@@ -2,7 +2,7 @@ package manager;
 
 import model.postac.Rario;
 import view.ImageLoader;
-import view.StartScreenSelection;
+import view.WyborWMenu;
 import view.InterfejsUzytkownika;
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ public class GameEngine implements Runnable {
     private Kamera kamera;
     private ImageLoader imageLoader;
     private Thread thread;
-    private StartScreenSelection startScreenSelection = StartScreenSelection.START_GAME;
+    private WyborWMenu wyborWMenu = WyborWMenu.GRAJ;
     private int selectedMap = 0;
 
     private GameEngine() {
@@ -159,11 +159,11 @@ public class GameEngine implements Runnable {
     public void receiveInput(AkcjeKlawiszy input) {
 
         if (statusGry == StatusGry.MENU) {
-            if (input == AkcjeKlawiszy.WYBIERZ && startScreenSelection == StartScreenSelection.START_GAME) {
+            if (input == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.GRAJ) {
                 startGame();
-            } else if (input == AkcjeKlawiszy.WYBIERZ && startScreenSelection == StartScreenSelection.VIEW_ABOUT) {
+            } else if (input == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.TWORCY) {
                 setGameStatus(StatusGry.TWORCY);
-            } else if (input == AkcjeKlawiszy.WYBIERZ && startScreenSelection == StartScreenSelection.VIEW_HELP) {
+            } else if (input == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.STEROWANIE) {
                 setGameStatus(StatusGry.STEROWANIE);
             } else if (input == AkcjeKlawiszy.W_GORE) {
                 selectOption(true);
@@ -210,7 +210,7 @@ public class GameEngine implements Runnable {
     }
 
     private void selectOption(boolean selectUp) {
-        startScreenSelection = startScreenSelection.select(selectUp);
+        wyborWMenu = wyborWMenu.wybierz(selectUp);
     }
 
     private void startGame() {
@@ -241,8 +241,8 @@ public class GameEngine implements Runnable {
         return statusGry;
     }
 
-    public StartScreenSelection getStartScreenSelection() {
-        return startScreenSelection;
+    public WyborWMenu getStartScreenSelection() {
+        return wyborWMenu;
     }
 
     public void setGameStatus(StatusGry statusGry) {

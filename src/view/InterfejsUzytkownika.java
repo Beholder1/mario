@@ -135,17 +135,17 @@ public class InterfejsUzytkownika extends JPanel{
     }
 
     private void wyswietlMenu(Graphics2D grafika){
-        int rzad = silnik.getStartScreenSelection().getLineNumber();
+        int wiersz = silnik.getStartScreenSelection().getLineNumber();
         grafika.drawImage(menu, 0, 0, null);
-        grafika.drawImage(wybor, 350, rzad * 60 + 445, null);
+        grafika.drawImage(wybor, 350, wiersz * 60 + 445, null);
     }
 
     private void wyswietlWyborPoziomu(Graphics2D grafika){
         grafika.setFont(font.deriveFont(50f));
         grafika.setColor(Color.WHITE);
         wyborPoziomu.draw(grafika);
-        int rzad = silnik.getSelectedMap();
-        int y = rzad*100+253-wybor.getHeight();
+        int wiersz = silnik.getSelectedMap();
+        int y = wiersz*100+253-wybor.getHeight();
         grafika.drawImage(wybor, 350, y, null);
     }
 
