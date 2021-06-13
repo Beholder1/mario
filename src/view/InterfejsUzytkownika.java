@@ -63,7 +63,13 @@ public class InterfejsUzytkownika extends JPanel{
             wyswietlSterowanie(grafika1);
         }
         else if(statusGry == StatusGry.RANKING){
-            wyswietlRanking(grafika1);
+            try {
+                wyswietlRanking(grafika1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         else if(statusGry == StatusGry.PRZEGRANA){
             wyswietlPrzegrana(grafika1);
@@ -103,7 +109,7 @@ public class InterfejsUzytkownika extends JPanel{
         grafika.drawImage(tworcy, 0, 0, null);
     }
 
-    void wyswietlRanking(Graphics2D grafika){
+    void wyswietlRanking(Graphics2D grafika) throws IOException, ClassNotFoundException {
         grafika.setFont(font.deriveFont(50f));
         grafika.setColor(Color.WHITE);
         silnik.getRanking().wyswietl(grafika);

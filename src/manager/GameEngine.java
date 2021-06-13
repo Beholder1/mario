@@ -1,13 +1,15 @@
 package manager;
 
 import obiekty.postac.Rario;
-import view.ImageLoader;
-import view.Ranking;
-import view.WyborWMenu;
-import view.InterfejsUzytkownika;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 public class GameEngine implements Runnable {
 
@@ -23,22 +25,53 @@ public class GameEngine implements Runnable {
     private WyborWMenu wyborWMenu = WyborWMenu.GRAJ;
     private int selectedMap = 0;
     private Ranking ranking;
+    ArrayList<Rekord> rekordy;
 
-    private GameEngine() {
+    private GameEngine() throws IOException, ClassNotFoundException {
         init();
     }
+    public ArrayList<Rekord> read(String fileName) throws IOException, ClassNotFoundException {
+        ArrayList<Rekord> tmpArrayList = new ArrayList<>();
+        File file = new File(fileName);
 
-    private void init() {
+        if(file.exists() && file.length() != 0) {
+            FileInputStream fis = new FileInputStream(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            tmpArrayList = (ArrayList<Rekord>) ois.readObject();
+            ois.close();
+        }
+
+        return tmpArrayList;
+    }
+    private void init() throws IOException, ClassNotFoundException {
         imageLoader = new ImageLoader();
         Wejscie wejscie = new Wejscie(this);
         statusGry = StatusGry.MENU;
         kamera = new Kamera();
         interfejsUzytkownika = new InterfejsUzytkownika(this, WIDTH, HEIGHT);
         mapManager = new MapManager();
-        if ranking == null
+        ranking = new Ranking();
+        ArrayList<Rekord> tmpArrayList = new ArrayList<>();
+        File file = new File(".\\rekordy.dat");
+        if(!file.exists())
         {
-            ranking = new Ranking();
+            try {
+                ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
+                tmpArrayList.add(new Rekord("Poziom1", 0));
+                tmpArrayList.add(new Rekord("Poziom2", 0));
+                tmpArrayList.add(new Rekord("Poziom3", 0));
+                tmpArrayList.add(new Rekord("Poziom4", 0));
+                tmpArrayList.add(new Rekord("Poziom5", 0));
+                wy.writeObject(tmpArrayList);
+            }
+            catch (Exception e) {
+
+            }
         }
+
+        rekordy = read(".\\rekordy.dat");
+
+
 
         JFrame frame = new JFrame("Rario");
         frame.add(interfejsUzytkownika);
@@ -105,7 +138,11 @@ public class GameEngine implements Runnable {
             lastTime = now;
             while (delta >= 1) {
                 if (statusGry == StatusGry.W_TRAKCIE) {
-                    gameLoop();
+                    try {
+                        gameLoop();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 delta--;
             }
@@ -117,16 +154,19 @@ public class GameEngine implements Runnable {
         interfejsUzytkownika.repaint();
     }
 
-    private void gameLoop() {
+    private void gameLoop() throws IOException {
         mapManager.zmienPolozenia();
         checkCollisions();
         updateCamera();
 
         if (isGameOver()) {
-            if (ranking.getRekord(0) < getScore());
-            {
-                ranking.dodajRekord(getScore(), 0);
+
+            if (rekordy.get(0).getRekord() < getScore()){
+                ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
+                rekordy.set(0, new Rekord("Poziom1", getScore()));
+                wy.writeObject(rekordy);
             }
+
             setGameStatus(StatusGry.PRZEGRANA);
         }
 
@@ -280,7 +320,7 @@ public class GameEngine implements Runnable {
         return ranking;
     }
 
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException, ClassNotFoundException {
         new GameEngine();
     }
 }

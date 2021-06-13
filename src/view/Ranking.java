@@ -3,25 +3,40 @@ package view;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-public class Ranking {
+import java.io.*;
+import java.io.Serializable;
 
-    private ArrayList<Integer> rekordy = new ArrayList<>();
+public class Ranking implements Serializable {
+    private ArrayList<Rekord> rekordy;
     private ArrayList<String> poziomy = new ArrayList<>();
     private ElementWyboruPoziomu[] ElementyWyboruPoziomu;
 
-    public Ranking(){
-        rekordy.add(0);
-        rekordy.add(0);
-        rekordy.add(0);
-        rekordy.add(0);
-        rekordy.add(0);
+    public Ranking() throws IOException, ClassNotFoundException {
+
         dodajPoziomy();
         this.ElementyWyboruPoziomu = stworzElementy(this.poziomy);
 
     }
+    public ArrayList<Rekord> read(String fileName) throws IOException, ClassNotFoundException {
+        ArrayList<Rekord> tmpArrayList = new ArrayList<>();
+        File file = new File(fileName);
 
-    public void wyswietl(Graphics grafika){
+        if(file.exists() && file.length() != 0) {
+            FileInputStream fis = new FileInputStream(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            tmpArrayList = (ArrayList<Rekord>) ois.readObject();
+            ois.close();
+        }
+
+        return tmpArrayList;
+    }
+    public void wyswietl(Graphics grafika) throws IOException, ClassNotFoundException {
         grafika.setColor(Color.BLACK);
         grafika.fillRect(0,0, 1280, 720);
 
@@ -29,7 +44,7 @@ public class Ranking {
             System.out.println(1);
             return;
         }
-
+        ArrayList<Rekord> rekordy = read(".\\rekordy.dat");
         String tytul = "Najlepsze wyniki";
         int polozenieWX = (1280 - grafika.getFontMetrics().stringWidth(tytul))/2;
         grafika.setColor(Color.YELLOW);
@@ -39,16 +54,9 @@ public class Ranking {
             grafika.setColor(Color.WHITE);
             int szerokosc = grafika.getFontMetrics().stringWidth(element.getNazwaPoziomu().split("[.]")[0]);
             element.setPolozenie( new Point((1280-szerokosc)/2, element.getPolozenie().y));
-            grafika.drawString(element.getNazwaPoziomu().split("[.]")[0] + ": " + rekordy.get(licznik), element.getPolozenie().x - 70, element.getPolozenie().y);
+            grafika.drawString(rekordy.get(licznik).toString(), element.getPolozenie().x - 70, element.getPolozenie().y);
             licznik++;
         }
-    }
-    public void dodajRekord(int rekord, int poziom){
-        rekordy.set(poziom, rekord);
-    }
-
-    public int getRekord(int poziom){
-        return rekordy.get(poziom);
     }
 
     private void dodajPoziomy(){
