@@ -152,6 +152,8 @@ public class GameEngine implements Runnable {
                 setGameStatus(StatusGry.TWORCY);
             } else if (input == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.STEROWANIE) {
                 setGameStatus(StatusGry.STEROWANIE);
+            } else if (input == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.RANKING) {
+                setGameStatus(StatusGry.RANKING);
             } else if (input == AkcjeKlawiszy.W_GORE) {
                 selectOption(true);
             } else if (input == AkcjeKlawiszy.W_DOL) {

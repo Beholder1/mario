@@ -63,6 +63,9 @@ public class InterfejsUzytkownika extends JPanel{
         else if(statusGry == StatusGry.STEROWANIE){
             wyswietlSterowanie(grafika1);
         }
+        else if(statusGry == StatusGry.RANKING){
+            wyswietlSterowanie(grafika1);
+        }
         else if(statusGry == StatusGry.PRZEGRANA){
             wyswietlPrzegrana(grafika1);
         }
@@ -137,7 +140,7 @@ public class InterfejsUzytkownika extends JPanel{
     private void wyswietlMenu(Graphics2D grafika){
         int wiersz = silnik.getStartScreenSelection().getLineNumber();
         grafika.drawImage(menu, 0, 0, null);
-        grafika.drawImage(wybor, 350, wiersz * 60 + 445, null);
+        grafika.drawImage(wybor, 350, wiersz * 60 + 405, null);
     }
 
     private void wyswietlWyborPoziomu(Graphics2D grafika){

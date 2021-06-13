@@ -79,14 +79,14 @@ public class MapManager {
         return getRario().getX() >= poziom.getKoniec().getX() + 320;
     }
 
-    public void checkCollisions(GameEngine engine) {
+    public void checkCollisions(GameEngine silnik) {
         if (poziom == null) {
             return;
         }
 
         checkBottomCollisions();
-        checkTopCollisions(engine);
-        checkMarioHorizontalCollision(engine);
+        checkTopCollisions(silnik);
+        checkMarioHorizontalCollision(silnik);
         checkEnemyCollisions();
         checkPrizeCollision();
         checkPrizeContact();
