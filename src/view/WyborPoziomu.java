@@ -3,12 +3,12 @@ package view;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MapSelection {
+public class WyborPoziomu {
 
     private ArrayList<String> poziomy = new ArrayList<>();
     private ElementWyboruPoziomu[] ElementyWyboruPoziomu;
 
-    public MapSelection(){
+    public WyborPoziomu(){
         dodajPoziomy();
         this.ElementyWyboruPoziomu = stworzElementy(this.poziomy);
     }

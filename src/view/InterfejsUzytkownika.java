@@ -16,7 +16,7 @@ public class InterfejsUzytkownika extends JPanel{
     private BufferedImage menu, tworcy, sterowanie, przegrana;
     private BufferedImage serce;
     private BufferedImage wybor;
-    private MapSelection wyborPoziomu;
+    private WyborPoziomu wyborPoziomu;
 
     public InterfejsUzytkownika(GameEngine silnik, int szerokosc, int wysokosc) {
         setPreferredSize(new Dimension(szerokosc, wysokosc));
@@ -26,7 +26,7 @@ public class InterfejsUzytkownika extends JPanel{
         this.silnik = silnik;
         ImageLoader obraz = silnik.getImageLoader();
 
-        wyborPoziomu = new MapSelection();
+        wyborPoziomu = new WyborPoziomu();
 
         this.serce = obraz.loadImage("/serce.png");
         this.wybor = obraz.loadImage("/wybor.png");
