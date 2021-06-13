@@ -91,7 +91,6 @@ public class GameEngine implements Runnable {
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
-        long timer = System.currentTimeMillis();
 
         while (isRunning && !thread.isInterrupted()) {
 
@@ -105,14 +104,6 @@ public class GameEngine implements Runnable {
                 delta--;
             }
             render();
-
-            if(statusGry != StatusGry.W_TRAKCIE) {
-                timer = System.currentTimeMillis();
-            }
-
-            if (System.currentTimeMillis() - timer > 1000) {
-                timer += 1000;
-            }
         }
     }
 

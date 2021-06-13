@@ -2,7 +2,7 @@ package obiekty.postac;
 
 import manager.Kamera;
 import manager.GameEngine;
-import view.Animation;
+import view.Animacja;
 import obiekty.ObiektGry;
 import view.ImageLoader;
 
@@ -13,7 +13,7 @@ public class Rario extends ObiektGry {
 
     private int PozostaleSerca;
     private int punkty;
-    private RarioDuzy rarioDuzy;
+    private RarioForma rarioForma;
     private boolean wPrawo = true;
 
     public Rario(double x, double y){
@@ -24,12 +24,12 @@ public class Rario extends ObiektGry {
         punkty = 0;
 
         ImageLoader obraz = new ImageLoader();
-        BufferedImage[] leweKlatki = obraz.getLeftFrames(RarioDuzy.MALY);
-        BufferedImage[] praweKlatki = obraz.getRightFrames(RarioDuzy.MALY);
+        BufferedImage[] leweKlatki = obraz.getLeftFrames(RarioForma.MALY);
+        BufferedImage[] praweKlatki = obraz.getRightFrames(RarioForma.MALY);
 
-        Animation animacja = new Animation(leweKlatki, praweKlatki);
-        rarioDuzy = new RarioDuzy(animacja, false);
-        setStyl(rarioDuzy.getCurrentStyle(wPrawo, false, false));
+        Animacja animacja = new Animacja(leweKlatki, praweKlatki);
+        rarioForma = new RarioForma(animacja, false);
+        setStyl(rarioForma.getCurrentStyle(wPrawo, false, false));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Rario extends ObiektGry {
         boolean ruszX = (getPredkoscWX() != 0);
         boolean ruszY = (getPredkoscWY() != 0);
 
-        setStyl(rarioDuzy.getCurrentStyle(wPrawo, ruszX, ruszY));
+        setStyl(rarioForma.getCurrentStyle(wPrawo, ruszX, ruszY));
 
         super.wyswietl(g);
     }
@@ -62,12 +62,12 @@ public class Rario extends ObiektGry {
 
     public boolean dotknieciePrzeciwnika(GameEngine silnik){
 
-        if(!rarioDuzy.getCzyDuzy()){
+        if(!rarioForma.getCzyDuzy()){
             PozostaleSerca--;
             return true;
         }
         else{
-            rarioDuzy = rarioDuzy.dotknieciePrzeciwnika(silnik.getImageLoader());
+            rarioForma = rarioForma.dotknieciePrzeciwnika(silnik.getImageLoader());
             setWymiar(50, 50);
             return false;
         }
@@ -89,16 +89,16 @@ public class Rario extends ObiektGry {
         return punkty;
     }
 
-    public RarioDuzy getRarioDuzy() {
-        return rarioDuzy;
+    public RarioForma getRarioDuzy() {
+        return rarioForma;
     }
 
-    public void setRarioDuzy(RarioDuzy rarioDuzy) {
-        this.rarioDuzy = rarioDuzy;
+    public void setRarioDuzy(RarioForma rarioForma) {
+        this.rarioForma = rarioForma;
     }
 
     public boolean isSuper() {
-        return rarioDuzy.getCzyDuzy();
+        return rarioForma.getCzyDuzy();
     }
 
     public boolean getWPrawo() {

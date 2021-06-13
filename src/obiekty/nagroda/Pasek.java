@@ -1,8 +1,8 @@
 package obiekty.nagroda;
 
 import obiekty.postac.Rario;
-import obiekty.postac.RarioDuzy;
-import view.Animation;
+import obiekty.postac.RarioForma;
+import view.Animacja;
 import view.ImageLoader;
 
 import java.awt.image.BufferedImage;
@@ -21,11 +21,11 @@ public class Pasek extends PrzedmiotSpecjalny {
         ImageLoader obraz = new ImageLoader();
 
         if(!rario.getRarioDuzy().getCzyDuzy()){
-            BufferedImage[] leweKlatki = obraz.getLeftFrames(RarioDuzy.DUZY);
-            BufferedImage[] praweKlatki = obraz.getRightFrames(RarioDuzy.DUZY);
+            BufferedImage[] leweKlatki = obraz.getLeftFrames(RarioForma.DUZY);
+            BufferedImage[] praweKlatki = obraz.getRightFrames(RarioForma.DUZY);
 
-            Animation animation = new Animation(leweKlatki, praweKlatki);
-            RarioDuzy nowyRario = new RarioDuzy(animation, true);
+            Animacja animacja = new Animacja(leweKlatki, praweKlatki);
+            RarioForma nowyRario = new RarioForma(animacja, true);
             rario.setRarioDuzy(nowyRario);
             rario.setWymiar(72, 72);
         }
