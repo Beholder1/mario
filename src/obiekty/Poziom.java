@@ -67,7 +67,7 @@ public class Poziom {
         this.przeciwnicy.add(przeciwnik);
     }
 
-    public void drawMap(Graphics2D g2){
+    public void wyswietlPoziom(Graphics2D g2){
         wyswietlTlo(g2);
         wyswietlNagrody(g2);
         wyswietlCegly(g2);
@@ -112,7 +112,7 @@ public class Poziom {
         rario.wyswietl(grafika);
     }
 
-    public void zmienPolozenie() {
+    public void zmienPolozenia() {
         rario.zmienPolozenie();
         for(Przeciwnik przeciwnik : przeciwnicy){
             przeciwnik.zmienPolozenie();

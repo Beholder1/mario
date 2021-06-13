@@ -28,6 +28,5 @@ public class Kamera {
     public void moveCam(double ileX, double ileY){
         x = x + ileX;
         y = y + ileY;
-
     }
 }

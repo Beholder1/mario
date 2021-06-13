@@ -76,7 +76,7 @@ public class GameEngine implements Runnable {
     }
 
     private void createMap(String path) {
-        boolean loaded = mapManager.createMap(imageLoader, path);
+        boolean loaded = mapManager.stworzPoziom(imageLoader, path);
         if(loaded){
             setGameStatus(StatusGry.W_TRAKCIE);
         }
@@ -112,7 +112,7 @@ public class GameEngine implements Runnable {
     }
 
     private void gameLoop() {
-        updateLocations();
+        mapManager.zmienPolozenia();
         checkCollisions();
         updateCamera();
 
@@ -120,15 +120,15 @@ public class GameEngine implements Runnable {
             setGameStatus(StatusGry.PRZEGRANA);
         }
 
-        int missionPassed = passMission();
+        int missionPassed = getWygrana();
         if(missionPassed > -1){
-            mapManager.acquirePoints(missionPassed);
-        } else if(mapManager.endLevel())
+            mapManager.zyskajPunkty(missionPassed);
+        } else if(mapManager.koniecPoziomu())
             setGameStatus(StatusGry.WYGRANA);
     }
 
     private void updateCamera() {
-        Rario rario = mapManager.getMario();
+        Rario rario = mapManager.getRario();
         double marioVelocityX = rario.getPredkoscWX();
         double shiftAmount = 0;
 
@@ -137,10 +137,6 @@ public class GameEngine implements Runnable {
         }
 
         kamera.moveCam(shiftAmount, 0);
-    }
-
-    private void updateLocations() {
-        mapManager.updateLocations();
     }
 
     private void checkCollisions() {
@@ -173,7 +169,7 @@ public class GameEngine implements Runnable {
                 changeSelectedMap(false);
             }
         } else if (statusGry == StatusGry.W_TRAKCIE) {
-            Rario rario = mapManager.getMario();
+            Rario rario = mapManager.getRario();
             if (input == AkcjeKlawiszy.SKOK) {
                 rario.skok();
             } else if (input == AkcjeKlawiszy.W_PRAWO) {
@@ -220,7 +216,7 @@ public class GameEngine implements Runnable {
 
     private boolean isGameOver() {
         if(statusGry == StatusGry.W_TRAKCIE)
-            return mapManager.isGameOver();
+            return mapManager.czyPrzegrano();
         return false;
     }
 
@@ -241,11 +237,11 @@ public class GameEngine implements Runnable {
     }
 
     public int getScore() {
-        return mapManager.getScore();
+        return mapManager.getPunkty();
     }
 
     public int getRemainingLives() {
-        return mapManager.getRemainingLives();
+        return mapManager.getPozostaleSerca();
     }
 
     public int getSelectedMap() {
@@ -253,15 +249,15 @@ public class GameEngine implements Runnable {
     }
 
     public void drawMap(Graphics2D g2) {
-        mapManager.drawMap(g2);
+        mapManager.wyswietlPoziom(g2);
     }
 
     public Point getCameraLocation() {
         return new Point((int) kamera.getX(), (int) kamera.getY());
     }
 
-    private int passMission(){
-        return mapManager.passMission();
+    private int getWygrana(){
+        return mapManager.wygrana();
     }
 
     public MapManager getMapManager() {

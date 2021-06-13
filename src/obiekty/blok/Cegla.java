@@ -18,7 +18,7 @@ public class Cegla extends Blok {
     @Override
     public Nagroda odkryj(GameEngine silnik){
         MapManager menedzer = silnik.getMapManager();
-        if(!menedzer.getMario().isSuper())
+        if(!menedzer.getRario().isSuper())
             return null;
 
         menedzer.addRevealedBrick(this);

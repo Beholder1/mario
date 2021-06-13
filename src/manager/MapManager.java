@@ -20,65 +20,63 @@ public class MapManager {
 
     public MapManager() {}
 
-    public void updateLocations() {
+    public void zmienPolozenia() {
         if (poziom == null)
             return;
-
-        poziom.zmienPolozenie();
+        poziom.zmienPolozenia();
     }
 
-    public void resetCurrentMap(GameEngine engine) {
-        Rario rario = getMario();
+    public void zresetujPoziom(GameEngine silnik) {
+        Rario rario = getRario();
         rario.zresetujPolozenie();
-        engine.resetCamera();
-        createMap(engine.getImageLoader(), poziom.getSciezka());
+        silnik.resetCamera();
+        stworzPoziom(silnik.getImageLoader(), poziom.getSciezka());
         poziom.setRario(rario);
     }
 
-    public boolean createMap(ImageLoader loader, String path) {
-        GeneratorMapy generatorMapy = new GeneratorMapy(loader);
-        poziom = generatorMapy.utworzPoziom("/poziomy/" + path);
+    public boolean stworzPoziom(ImageLoader obraz, String sciezka) {
+        GeneratorMapy generatorMapy = new GeneratorMapy(obraz);
+        poziom = generatorMapy.utworzPoziom("/poziomy/" + sciezka);
 
         return poziom != null;
     }
 
-    public void acquirePoints(int point) {
+    public void zyskajPunkty(int point) {
         poziom.getRario().zyskajPunkty(point);
     }
 
-    public Rario getMario() {
+    public Rario getRario() {
         return poziom.getRario();
     }
 
-
-    public boolean isGameOver() {
-        return getMario().getPozostaleSerca() == 0;
+    public boolean czyPrzegrano() {
+        return getRario().getPozostaleSerca() == 0;
     }
 
-    public int getScore() {
-        return getMario().getPunkty();
+    public int getPunkty() {
+        return getRario().getPunkty();
     }
 
-    public int getRemainingLives() {
-        return getMario().getPozostaleSerca();
+    public int getPozostaleSerca() {
+        return getRario().getPozostaleSerca();
     }
 
-    public void drawMap(Graphics2D g2) {
-        poziom.drawMap(g2);
+    public void wyswietlPoziom(Graphics2D grafika) {
+        poziom.wyswietlPoziom(grafika);
     }
 
-    public int passMission() {
-        if(getMario().getX() >= poziom.getKoniec().getX() && !poziom.getKoniec().getCzyDotknieta()){
+    public int wygrana() {
+        if(getRario().getX() >= poziom.getKoniec().getX() && !poziom.getKoniec().getCzyDotknieta()){
             poziom.getKoniec().setCzyDotknieta(true);
-            int height = (int)getMario().getY();
-            return height * 2;
+            int wysokosc = (int)getRario().getY();
+            return wysokosc * 2;
         }
         else
             return -1;
     }
 
-    public boolean endLevel(){
-        return getMario().getX() >= poziom.getKoniec().getX() + 320;
+    public boolean koniecPoziomu(){
+        return getRario().getX() >= poziom.getKoniec().getX() + 320;
     }
 
     public void checkCollisions(GameEngine engine) {
@@ -95,7 +93,7 @@ public class MapManager {
     }
 
     private void checkBottomCollisions() {
-        Rario rario = getMario();
+        Rario rario = getRario();
         ArrayList<Blok> bricks = poziom.getWszystkieCegly();
         ArrayList<Przeciwnik> enemies = poziom.getPrzeciwnicy();
         ArrayList<ObiektGry> toBeRemoved = new ArrayList<>();
@@ -132,7 +130,7 @@ public class MapManager {
     }
 
     private void checkTopCollisions(GameEngine engine) {
-        Rario rario = getMario();
+        Rario rario = getRario();
         ArrayList<Blok> bricks = poziom.getWszystkieCegly();
 
         Rectangle marioTopBounds = rario.gornaGranica();
@@ -149,7 +147,7 @@ public class MapManager {
     }
 
     private void checkMarioHorizontalCollision(GameEngine engine){
-        Rario rario = getMario();
+        Rario rario = getRario();
         ArrayList<Blok> bricks = poziom.getWszystkieCegly();
         ArrayList<Przeciwnik> enemies = poziom.getPrzeciwnicy();
         ArrayList<ObiektGry> toBeRemoved = new ArrayList<>();
@@ -157,11 +155,12 @@ public class MapManager {
         boolean marioDies = false;
         boolean toRight = rario.getWPrawo();
 
-        Rectangle marioBounds = toRight ? rario.prawaGranica() : rario.lewaGranica();
+        Rectangle marioBounds1 = rario.prawaGranica();
+        Rectangle marioBounds2 = rario.lewaGranica();
 
         for (Blok brick : bricks) {
             Rectangle brickBounds = !toRight ? brick.prawaGranica() : brick.lewaGranica();
-            if (marioBounds.intersects(brickBounds)) {
+            if (marioBounds1.intersects(brickBounds)||marioBounds2.intersects(brickBounds)) {
                 rario.setPredkoscWX(0);
                 if(toRight)
                     rario.setX(brick.getX() - rario.getWymiar().width);
@@ -172,7 +171,7 @@ public class MapManager {
 
         for(Przeciwnik przeciwnik : enemies){
             Rectangle enemyBounds = !toRight ? przeciwnik.prawaGranica() : przeciwnik.lewaGranica();
-            if (marioBounds.intersects(enemyBounds)) {
+            if (marioBounds1.intersects(enemyBounds)||marioBounds2.intersects(enemyBounds)) {
                 marioDies = rario.dotknieciePrzeciwnika(engine);
                 toBeRemoved.add(przeciwnik);
             }
@@ -186,7 +185,7 @@ public class MapManager {
         }
 
         if(marioDies) {
-            resetCurrentMap(engine);
+            zresetujPoziom(engine);
         }
     }
 
@@ -291,14 +290,14 @@ public class MapManager {
         ArrayList<Nagroda> nagrody = poziom.getNagrody();
         ArrayList<ObiektGry> toBeRemoved = new ArrayList<>();
 
-        Rectangle marioBounds = getMario().getGranice();
+        Rectangle marioBounds = getRario().getGranice();
         for(Nagroda nagroda : nagrody){
             Rectangle prizeBounds = nagroda.getGranice();
             if (prizeBounds.intersects(marioBounds)) {
-                nagroda.przyDotknieciu(getMario());
+                nagroda.przyDotknieciu(getRario());
                 toBeRemoved.add((ObiektGry) nagroda);
             } else if(nagroda instanceof Moneta){
-                nagroda.przyDotknieciu(getMario());
+                nagroda.przyDotknieciu(getRario());
             }
         }
 
