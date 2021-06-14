@@ -2,35 +2,75 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="831facf1-4ea7-41b2-815a-ad6b7eacbc5e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1G.Super-Mario-Bros.iml" beforeDir="false" afterPath="$PROJECT_DIR$/1G.rario.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Super-Mario-Bros-master.iml" beforeDir="false" afterPath="$PROJECT_DIR$/rario.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/GeneratorPoziomu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/SilnikGry.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/Flaga.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/ObiektGry.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/Poziom.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/Blok.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/Cegla.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/NiezniszczalnaCegla.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/Pytajnik.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/Rura.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/Moneta.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/Nagroda.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/Pasek.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/PrzedmiotSpecjalny.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/Serce.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/postac/Przeciwnik.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/postac/Rario.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/postac/RarioForma.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/Animacja.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/ElementWyboruPoziomu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/InterfejsUzytkownika.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/Ranking.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/Rekord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/WyborPoziomu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/WyborWMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/ZaladowanieObrazu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/font/font.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/menu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/obiekty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/poziomy/Poziom 1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/poziomy/Poziom 2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/poziomy/Poziom 3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/poziomy/Poziom 4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/poziomy/Poziom 5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/przegrana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/rario.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/serce.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/sterowanie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/tlo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/tworcy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/grafika/wybor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/AkcjeKlawiszy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/GameEngine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/GeneratorMapy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/Kamera.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/StatusGry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/Wejscie.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/ZarzadzaniePoziomem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/font/font.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/menu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/obiekty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/poziomy/Poziom 1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/poziomy/Poziom 2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/poziomy/Poziom 3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/poziomy/Poziom 4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/poziomy/Poziom 5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/przegrana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/rario.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/serce.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/sterowanie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/tlo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/tworcy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/grafika/wybor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/Flaga.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/ObiektGry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/Poziom.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/blok/Blok.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/blok/Cegla.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/blok/NiezniszczalnaCegla.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/blok/Pytajnik.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/blok/Rura.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/nagroda/Moneta.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/nagroda/Nagroda.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/nagroda/Pasek.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/nagroda/PrzedmiotSpecjalny.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/nagroda/Serce.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/postac/Przeciwnik.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/postac/Rario.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/obiekty/postac/RarioForma.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/view/Animacja.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/view/ElementWyboruPoziomu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/view/InterfejsUzytkownika.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/view/Ranking.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/view/Rekord.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/view/WyborPoziomu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/view/WyborWMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/view/ZaladowanieObrazu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/zarzadzanie/AkcjeKlawiszy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/zarzadzanie/GeneratorPoziomu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/zarzadzanie/Kamera.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/zarzadzanie/SilnikGry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/zarzadzanie/StatusGry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/zarzadzanie/Wejscie.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rario/zarzadzanie/ZarzadzaniePoziomem.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +135,7 @@
       <workItem from="1623660672378" duration="4580000" />
       <workItem from="1623665732665" duration="78000" />
       <workItem from="1623665871397" duration="314000" />
+      <workItem from="1623666226079" duration="417000" />
     </task>
     <servers />
   </component>
