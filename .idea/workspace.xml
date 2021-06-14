@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="831facf1-4ea7-41b2-815a-ad6b7eacbc5e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1G.Super-Mario-Bros.iml" beforeDir="false" afterPath="$PROJECT_DIR$/1G.rario.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Super-Mario-Bros-master.iml" beforeDir="false" afterPath="$PROJECT_DIR$/rario.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/GeneratorPoziomu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/manager/SilnikGry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/Flaga.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/ObiektGry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/Poziom.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/Blok.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/Cegla.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/NiezniszczalnaCegla.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/Pytajnik.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/blok/Rura.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/Moneta.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/Nagroda.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/Pasek.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/PrzedmiotSpecjalny.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/nagroda/Serce.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/postac/Przeciwnik.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/postac/Rario.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/obiekty/postac/RarioForma.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/Animacja.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/ElementWyboruPoziomu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/InterfejsUzytkownika.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/Ranking.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/Rekord.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/WyborPoziomu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/WyborWMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Super-Mario-Bros-master/view/ZaladowanieObrazu.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1tvrzPJioiia46MEgCHkcLBKPfQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="SilnikGry" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="zarzadzanie.SilnikGry" />
+      <module name="rario" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="zarzadzanie.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.SilnikGry" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="831facf1-4ea7-41b2-815a-ad6b7eacbc5e" name="Default Changelist" comment="" />
+      <created>1623660668016</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623660668016</updated>
+      <workItem from="1623660672378" duration="4580000" />
+      <workItem from="1623665732665" duration="78000" />
+      <workItem from="1623665871397" duration="314000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>
