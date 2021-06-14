@@ -66,8 +66,8 @@ public class ZarzadzaniePoziomem {
     }
 
     public int wygrana() {
-        if(getRario().getX() >= poziom.getKoniec().getX() && !poziom.getKoniec().getCzyDotknieta()){
-            poziom.getKoniec().setCzyDotknieta(true);
+        if(getRario().getX() >= poziom.koniec().getX() && !poziom.koniec().getCzyDotknieta()){
+            poziom.koniec().setCzyDotknieta(true);
             int wysokosc = (int)getRario().getY();
             return wysokosc * 2;
         }
@@ -76,7 +76,7 @@ public class ZarzadzaniePoziomem {
     }
 
     public boolean koniecPoziomu(){
-        return getRario().getX() >= poziom.getKoniec().getX() + 320;
+        return getRario().getX() >= poziom.koniec().getX() + 320;
     }
 
     public void sprawdzKolizje(SilnikGry silnik) {

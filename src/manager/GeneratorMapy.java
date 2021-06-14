@@ -93,7 +93,7 @@ class GeneratorMapy {
                 }
                 else if(piksel == flagaPiksel){
                     Flaga flaga= new Flaga(odstepX+24, odstepY, this.flaga);
-                    poziom.setKoniec(flaga);
+                    poziom.koniec(flaga);
                 }
             }
         }

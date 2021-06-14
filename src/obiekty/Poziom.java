@@ -148,11 +148,11 @@ public class Poziom {
         nagrody.add(nagroda);
     }
 
-    public void setKoniec(Flaga koniec) {
+    public void koniec(Flaga koniec) {
         this.koniec = koniec;
     }
 
-    public Flaga getKoniec() {
+    public Flaga koniec() {
         return koniec;
     }
 
