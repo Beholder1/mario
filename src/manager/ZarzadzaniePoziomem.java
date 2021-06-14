@@ -26,11 +26,11 @@ public class ZarzadzaniePoziomem {
         poziom.zmienPolozenia();
     }
 
-    public void zresetujPoziom(GameEngine silnik) {
+    public void zresetujPoziom(SilnikGry silnik) {
         Rario rario = getRario();
         rario.zresetujPolozenie();
         silnik.resetKamery();
-        stworzPoziom(silnik.getImageLoader(), poziom.getSciezka());
+        stworzPoziom(silnik.getZaladowanieObrazu(), poziom.getSciezka());
         poziom.setRario(rario);
     }
 
@@ -79,7 +79,7 @@ public class ZarzadzaniePoziomem {
         return getRario().getX() >= poziom.getKoniec().getX() + 320;
     }
 
-    public void sprawdzKolizje(GameEngine silnik) {
+    public void sprawdzKolizje(SilnikGry silnik) {
         if (poziom == null) {
             return;
         }
@@ -129,7 +129,7 @@ public class ZarzadzaniePoziomem {
         usunObiektyGry(doUsuniecia);
     }
 
-    private void sprawdzGorneKolizje(GameEngine silnik) {
+    private void sprawdzGorneKolizje(SilnikGry silnik) {
         Rario rario = getRario();
         ArrayList<Blok> cegly = poziom.getWszystkieCegly();
 
@@ -146,7 +146,7 @@ public class ZarzadzaniePoziomem {
         }
     }
 
-    private void sprawdzBoczneKolizjeRario(GameEngine engine){
+    private void sprawdzBoczneKolizjeRario(SilnikGry engine){
         Rario rario = getRario();
         ArrayList<Blok> cegly = poziom.getWszystkieCegly();
         ArrayList<Przeciwnik> przeciwnicy = poziom.getPrzeciwnicy();
@@ -179,9 +179,9 @@ public class ZarzadzaniePoziomem {
         usunObiektyGry(doUsuniecia);
 
 
-        if (rario.getX() <= engine.getCameraLocation().getX() && rario.getPredkoscWX() < 0) {
+        if (rario.getX() <= engine.getPozycjaKamery().getX() && rario.getPredkoscWX() < 0) {
             rario.setPredkoscWX(0);
-            rario.setX(engine.getCameraLocation().getX());
+            rario.setX(engine.getPozycjaKamery().getX());
         }
 
         if(smierc) {

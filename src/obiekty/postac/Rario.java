@@ -1,7 +1,7 @@
 package obiekty.postac;
 
 import manager.Kamera;
-import manager.GameEngine;
+import manager.SilnikGry;
 import view.Animacja;
 import obiekty.ObiektGry;
 import view.ZaladowanieObrazu;
@@ -60,14 +60,14 @@ public class Rario extends ObiektGry {
         this.wPrawo = wPrawo;
     }
 
-    public boolean dotknieciePrzeciwnika(GameEngine silnik){
+    public boolean dotknieciePrzeciwnika(SilnikGry silnik){
 
         if(!rarioForma.getCzyDuzy()){
             PozostaleSerca--;
             return true;
         }
         else{
-            rarioForma = rarioForma.dotknieciePrzeciwnika(silnik.getImageLoader());
+            rarioForma = rarioForma.dotknieciePrzeciwnika(silnik.getZaladowanieObrazu());
             setWymiar(50, 50);
             return false;
         }

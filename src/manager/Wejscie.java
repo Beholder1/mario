@@ -5,15 +5,15 @@ import java.awt.event.KeyListener;
 
 public class Wejscie implements KeyListener {
 
-    private GameEngine silnik;
+    private SilnikGry silnik;
 
-    Wejscie(GameEngine silnik) {
+    Wejscie(SilnikGry silnik) {
         this.silnik = silnik; }
 
     @Override
     public void keyPressed(KeyEvent akcja) {
         int klawisz = akcja.getKeyCode();
-        StatusGry status = silnik.getGameStatus();
+        StatusGry status = silnik.getStatusGry();
         AkcjeKlawiszy obecnaAkcja = AkcjeKlawiszy.BRAK;
 
         if (klawisz == KeyEvent.VK_UP) {
@@ -53,7 +53,7 @@ public class Wejscie implements KeyListener {
 
     private void przeslijWejscie(AkcjeKlawiszy akcja) {
         if(akcja != AkcjeKlawiszy.BRAK)
-            silnik.receiveInput(akcja);
+            silnik.uzyskajWejscie(akcja);
     }
 
     @Override

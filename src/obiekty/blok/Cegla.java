@@ -1,6 +1,6 @@
 package obiekty.blok;
 
-import manager.GameEngine;
+import manager.SilnikGry;
 import manager.ZarzadzaniePoziomem;
 import obiekty.nagroda.Nagroda;
 
@@ -16,8 +16,8 @@ public class Cegla extends Blok {
     }
 
     @Override
-    public Nagroda odkryj(GameEngine silnik){
-        ZarzadzaniePoziomem menedzer = silnik.getMapManager();
+    public Nagroda odkryj(SilnikGry silnik){
+        ZarzadzaniePoziomem menedzer = silnik.getZarzadzaniePoziomem();
         if(!menedzer.getRario().czyDuzy())
             return null;
         menedzer.odkrycieCegly(this);

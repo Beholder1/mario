@@ -1,6 +1,6 @@
 package obiekty.blok;
 
-import manager.GameEngine;
+import manager.SilnikGry;
 import obiekty.nagroda.Nagroda;
 
 import java.awt.image.BufferedImage;
@@ -17,9 +17,9 @@ public class Pytajnik extends Blok{
     }
 
     @Override
-    public Nagroda odkryj(GameEngine silnik){
-        BufferedImage nowyStyl = silnik.getImageLoader().zaladujObraz("/obiekty.png");
-        nowyStyl = silnik.getImageLoader().getMniejszyObraz(nowyStyl, 0, 50, 50, 50);
+    public Nagroda odkryj(SilnikGry silnik){
+        BufferedImage nowyStyl = silnik.getZaladowanieObrazu().zaladujObraz("/obiekty.png");
+        nowyStyl = silnik.getZaladowanieObrazu().getMniejszyObraz(nowyStyl, 0, 50, 50, 50);
 
         if(nagroda != null){
             nagroda.odkryj();

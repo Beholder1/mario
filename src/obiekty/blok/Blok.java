@@ -1,6 +1,6 @@
 package obiekty.blok;
 
-import manager.GameEngine;
+import manager.SilnikGry;
 import obiekty.ObiektGry;
 import obiekty.nagroda.Nagroda;
 
@@ -24,5 +24,5 @@ public abstract class Blok extends ObiektGry {
         this.czyPusty = czyPusty;
     }
 
-    public Nagroda odkryj(GameEngine silnik){ return null;}
+    public Nagroda odkryj(SilnikGry silnik){ return null;}
 }

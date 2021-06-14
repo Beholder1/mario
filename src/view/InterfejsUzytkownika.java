@@ -1,6 +1,6 @@
 package view;
 
-import manager.GameEngine;
+import manager.SilnikGry;
 import manager.StatusGry;
 
 import javax.swing.*;
@@ -11,20 +11,20 @@ import java.io.InputStream;
 
 public class InterfejsUzytkownika extends JPanel{
 
-    private GameEngine silnik;
+    private SilnikGry silnik;
     private Font font;
     private BufferedImage menu, tworcy, sterowanie, przegrana;
     private BufferedImage serce;
     private BufferedImage wybor;
     private WyborPoziomu wyborPoziomu;
 
-    public InterfejsUzytkownika(GameEngine silnik, int szerokosc, int wysokosc) {
+    public InterfejsUzytkownika(SilnikGry silnik, int szerokosc, int wysokosc) {
         setPreferredSize(new Dimension(szerokosc, wysokosc));
         setMaximumSize(new Dimension(szerokosc, wysokosc));
         setMinimumSize(new Dimension(szerokosc, wysokosc));
 
         this.silnik = silnik;
-        ZaladowanieObrazu obraz = silnik.getImageLoader();
+        ZaladowanieObrazu obraz = silnik.getZaladowanieObrazu();
         wyborPoziomu = new WyborPoziomu();
 
         this.serce = obraz.zaladujObraz("/serce.png");
@@ -48,7 +48,7 @@ public class InterfejsUzytkownika extends JPanel{
         super.paintComponent(grafika);
 
         Graphics2D grafika1 = (Graphics2D) grafika.create();
-        StatusGry statusGry = silnik.getGameStatus();
+        StatusGry statusGry = silnik.getStatusGry();
 
         if(statusGry == StatusGry.MENU){
             wyswietlMenu(grafika1);
@@ -75,9 +75,9 @@ public class InterfejsUzytkownika extends JPanel{
             wyswietlPrzegrana(grafika1);
         }
         else {
-            Point kamera = silnik.getCameraLocation();
+            Point kamera = silnik.getPozycjaKamery();
             grafika1.translate(-kamera.x, -kamera.y);
-            silnik.drawMap(grafika1);
+            silnik.wyswietlPoziom(grafika1);
             grafika1.translate(kamera.x, kamera.y);
 
             wyswietlPunkty(grafika1);
@@ -121,7 +121,7 @@ public class InterfejsUzytkownika extends JPanel{
         grafika.drawImage(przegrana, 0, 0, null);
         grafika.setFont(font.deriveFont(50f));
         grafika.setColor(new Color(130, 48, 48));
-        String uzyskanePunkty = "Wynik: " + silnik.getScore();
+        String uzyskanePunkty = "Wynik: " + silnik.getPunkty();
         int dlugosc = grafika.getFontMetrics().stringWidth(uzyskanePunkty);
         int wysokosc = grafika.getFontMetrics().getHeight();
         grafika.drawString(uzyskanePunkty, (getWidth()-dlugosc)/2, getHeight()-wysokosc*2);
@@ -138,7 +138,7 @@ public class InterfejsUzytkownika extends JPanel{
     private void wyswietlPozostaleSerca(Graphics2D grafika) {
         grafika.setFont(font.deriveFont(30f));
         grafika.setColor(Color.WHITE);
-        String pozostaleSerca = "" + silnik.getRemainingLives();
+        String pozostaleSerca = "" + silnik.getPozostaleSerca();
         grafika.drawImage(serce, 50, 10, null);
         grafika.drawString(pozostaleSerca, 100, 50);
     }
@@ -146,12 +146,12 @@ public class InterfejsUzytkownika extends JPanel{
     private void wyswietlPunkty(Graphics2D grafika){
         grafika.setFont(font.deriveFont(25f));
         grafika.setColor(Color.WHITE);
-        String napis = "Punkty: " + silnik.getScore();
+        String napis = "Punkty: " + silnik.getPunkty();
         grafika.drawString(napis, 900, 50);
     }
 
     private void wyswietlMenu(Graphics2D grafika){
-        int wiersz = silnik.getStartScreenSelection().getLineNumber();
+        int wiersz = silnik.getWyborWMenu().getLineNumber();
         grafika.drawImage(menu, 0, 0, null);
         grafika.drawImage(wybor, 350, wiersz * 60 + 405, null);
     }

@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-public class GameEngine implements Runnable {
+public class SilnikGry implements Runnable {
 
     private final static int SZEROKOSC = 1268, WYSOKOSC = 708;
 
@@ -27,7 +27,7 @@ public class GameEngine implements Runnable {
 
     ArrayList<Rekord> rekordy;
 
-    private GameEngine() throws IOException, ClassNotFoundException {
+    private SilnikGry() throws IOException, ClassNotFoundException {
         rozpoczecie();
     }
 
@@ -55,7 +55,7 @@ public class GameEngine implements Runnable {
 
             }
         }
-        rekordy = read(".\\rekordy.dat");
+        rekordy = wczytajZPliku(".\\rekordy.dat");
         JFrame klatka = new JFrame("Rario");
         klatka.add(interfejsUzytkownika);
         klatka.addKeyListener(wejscie);
@@ -79,7 +79,7 @@ public class GameEngine implements Runnable {
 
     private void reset(){
         resetKamery();
-        setGameStatus(StatusGry.MENU);
+        setStatusGry(StatusGry.MENU);
     }
 
     public void resetKamery() {
@@ -89,29 +89,29 @@ public class GameEngine implements Runnable {
     public void wybierzPoziom(){
         String sciezka = interfejsUzytkownika.wybierzPoziom(wybranyPoziom);
         if (sciezka != null) {
-            createMap(sciezka);
+            stworzPoziom(sciezka);
         }
     }
 
-    public void changeSelectedMap(boolean up){
-        wybranyPoziom = interfejsUzytkownika.zmienPoziom(wybranyPoziom, up);
+    public void zmienPoziom(boolean czyWGore){
+        wybranyPoziom = interfejsUzytkownika.zmienPoziom(wybranyPoziom, czyWGore);
     }
 
-    private void createMap(String path) {
-        boolean loaded = zarzadzaniePoziomem.stworzPoziom(zaladowanieObrazu, path);
-        if(loaded){
-            setGameStatus(StatusGry.W_TRAKCIE);
+    private void stworzPoziom(String sciezka) {
+        boolean czyZaladowany = zarzadzaniePoziomem.stworzPoziom(zaladowanieObrazu, sciezka);
+        if(czyZaladowany){
+            setStatusGry(StatusGry.W_TRAKCIE);
         }
 
         else
-            setGameStatus(StatusGry.MENU);
+            setStatusGry(StatusGry.MENU);
     }
 
     @Override
     public void run() {
         long lastTime = System.nanoTime();
-        double amountOfTicks = 60.0;
-        double ns = 1000000000 / amountOfTicks;
+        double liczbaTikow = 60.0;
+        double ns = 1000000000 / liczbaTikow;
         double delta = 0;
 
         while (czyDziala && !thread.isInterrupted()) {
@@ -122,37 +122,37 @@ public class GameEngine implements Runnable {
             while (delta >= 1) {
                 if (statusGry == StatusGry.W_TRAKCIE) {
                     try {
-                        gameLoop();
+                        petlaGry();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 delta--;
             }
-            render();
+            renderuj();
         }
     }
 
-    private void render() {
+    private void renderuj() {
         interfejsUzytkownika.repaint();
     }
 
     private void aktualizujRanking() throws IOException {
-        if (rekordy.get(wybranyPoziom).getRekord() < getScore()){
-            ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
-            rekordy.set(wybranyPoziom, new Rekord("Poziom " + (wybranyPoziom +1), getScore()));
-            wy.writeObject(rekordy);
+        if (rekordy.get(wybranyPoziom).getRekord() < getPunkty()){
+            ObjectOutputStream wyjscie = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
+            rekordy.set(wybranyPoziom, new Rekord("Poziom " + (wybranyPoziom +1), getPunkty()));
+            wyjscie.writeObject(rekordy);
         }
     }
 
-    private void gameLoop() throws IOException {
+    private void petlaGry() throws IOException {
         zarzadzaniePoziomem.zmienPolozenia();
-        checkCollisions();
-        updateCamera();
+        sprawdzKolizje();
+        aktualizujKamere();
 
-        if (isGameOver()) {
+        if (czyPrzegrano()) {
             aktualizujRanking();
-            setGameStatus(StatusGry.PRZEGRANA);
+            setStatusGry(StatusGry.PRZEGRANA);
         }
 
         int missionPassed = getWygrana();
@@ -160,140 +160,140 @@ public class GameEngine implements Runnable {
             zarzadzaniePoziomem.zyskajPunkty(missionPassed);
         } else if(zarzadzaniePoziomem.koniecPoziomu()) {
             aktualizujRanking();
-            setGameStatus(StatusGry.WYGRANA);
+            setStatusGry(StatusGry.WYGRANA);
         }
     }
 
-    private void updateCamera() {
+    private void aktualizujKamere() {
         Rario rario = zarzadzaniePoziomem.getRario();
-        double marioVelocityX = rario.getPredkoscWX();
-        double shiftAmount = 0;
+        double predkoscRarioWX = rario.getPredkoscWX();
+        double shiftPrzesuniecia = 0;
 
-        if (marioVelocityX > 0 && rario.getX() - 600 > kamera.getX()) {
-            shiftAmount = marioVelocityX;
+        if (predkoscRarioWX > 0 && rario.getX() - 600 > kamera.getX()) {
+            shiftPrzesuniecia = predkoscRarioWX;
         }
 
-        kamera.moveCam(shiftAmount, 0);
+        kamera.moveCam(shiftPrzesuniecia, 0);
     }
 
-    private void checkCollisions() {
+    private void sprawdzKolizje() {
         zarzadzaniePoziomem.sprawdzKolizje(this);
     }
 
-    public void receiveInput(AkcjeKlawiszy input) {
+    public void uzyskajWejscie(AkcjeKlawiszy wejscie) {
 
         if (statusGry == StatusGry.MENU) {
-            if (input == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.GRAJ) {
-                startGame();
-            } else if (input == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.TWORCY) {
-                setGameStatus(StatusGry.TWORCY);
-            } else if (input == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.STEROWANIE) {
-                setGameStatus(StatusGry.STEROWANIE);
-            } else if (input == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.RANKING) {
-                setGameStatus(StatusGry.RANKING);
-            } else if (input == AkcjeKlawiszy.W_GORE) {
-                selectOption(true);
-            } else if (input == AkcjeKlawiszy.W_DOL) {
-                selectOption(false);
+            if (wejscie == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.GRAJ) {
+                startGry();
+            } else if (wejscie == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.TWORCY) {
+                setStatusGry(StatusGry.TWORCY);
+            } else if (wejscie == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.STEROWANIE) {
+                setStatusGry(StatusGry.STEROWANIE);
+            } else if (wejscie == AkcjeKlawiszy.WYBIERZ && wyborWMenu == WyborWMenu.RANKING) {
+                setStatusGry(StatusGry.RANKING);
+            } else if (wejscie == AkcjeKlawiszy.W_GORE) {
+                wybierzOpcje(true);
+            } else if (wejscie == AkcjeKlawiszy.W_DOL) {
+                wybierzOpcje(false);
             }
         }
         else if(statusGry == StatusGry.POZIOMY){
-            if(input == AkcjeKlawiszy.WYBIERZ){
+            if(wejscie == AkcjeKlawiszy.WYBIERZ){
                 wybierzPoziom();
             }
-            else if(input == AkcjeKlawiszy.W_GORE){
-                changeSelectedMap(true);
+            else if(wejscie == AkcjeKlawiszy.W_GORE){
+                zmienPoziom(true);
             }
-            else if(input == AkcjeKlawiszy.W_DOL){
-                changeSelectedMap(false);
+            else if(wejscie == AkcjeKlawiszy.W_DOL){
+                zmienPoziom(false);
             }
         } else if (statusGry == StatusGry.W_TRAKCIE) {
             Rario rario = zarzadzaniePoziomem.getRario();
-            if (input == AkcjeKlawiszy.SKOK) {
+            if (wejscie == AkcjeKlawiszy.SKOK) {
                 rario.skok();
-            } else if (input == AkcjeKlawiszy.W_PRAWO) {
+            } else if (wejscie == AkcjeKlawiszy.W_PRAWO) {
                 rario.rusz(true, kamera);
-            } else if (input == AkcjeKlawiszy.W_LEWO) {
+            } else if (wejscie == AkcjeKlawiszy.W_LEWO) {
                 rario.rusz(false, kamera);
-            } else if (input == AkcjeKlawiszy.PO_NACISNIECIU) {
+            } else if (wejscie == AkcjeKlawiszy.PO_NACISNIECIU) {
                 rario.setPredkoscWX(0);
-            } else if (input == AkcjeKlawiszy.PAUZA) {
-                pauseGame();
+            } else if (wejscie == AkcjeKlawiszy.PAUZA) {
+                zapauzuj();
             }
         } else if (statusGry == StatusGry.ZATRZYMANO) {
-            if (input == AkcjeKlawiszy.PAUZA) {
-                pauseGame();
+            if (wejscie == AkcjeKlawiszy.PAUZA) {
+                zapauzuj();
             }
-        } else if(statusGry == StatusGry.PRZEGRANA && input == AkcjeKlawiszy.POWROT){
+        } else if(statusGry == StatusGry.PRZEGRANA && wejscie == AkcjeKlawiszy.POWROT){
             reset();
-        } else if(statusGry == StatusGry.WYGRANA && input == AkcjeKlawiszy.POWROT){
+        } else if(statusGry == StatusGry.WYGRANA && wejscie == AkcjeKlawiszy.POWROT){
             reset();
         }
 
-        if(input == AkcjeKlawiszy.POWROT){
-            setGameStatus(StatusGry.MENU);
+        if(wejscie == AkcjeKlawiszy.POWROT){
+            setStatusGry(StatusGry.MENU);
         }
     }
 
-    private void selectOption(boolean selectUp) {
+    private void wybierzOpcje(boolean selectUp) {
         wyborWMenu = wyborWMenu.wybierz(selectUp);
     }
 
-    private void startGame() {
+    private void startGry() {
         if (statusGry != StatusGry.PRZEGRANA) {
-            setGameStatus(StatusGry.POZIOMY);
+            setStatusGry(StatusGry.POZIOMY);
         }
     }
 
-    private void pauseGame() {
+    private void zapauzuj() {
         if (statusGry == StatusGry.W_TRAKCIE) {
-            setGameStatus(StatusGry.ZATRZYMANO);
+            setStatusGry(StatusGry.ZATRZYMANO);
         } else if (statusGry == StatusGry.ZATRZYMANO) {
-            setGameStatus(StatusGry.W_TRAKCIE);
+            setStatusGry(StatusGry.W_TRAKCIE);
         }
     }
 
-    private boolean isGameOver() {
+    private boolean czyPrzegrano() {
         if(statusGry == StatusGry.W_TRAKCIE)
             return zarzadzaniePoziomem.czyPrzegrano();
         return false;
     }
 
-    public ArrayList<Rekord> read(String fileName) throws IOException, ClassNotFoundException {
-        ArrayList<Rekord> tmpArrayList = new ArrayList<>();
-        File file = new File(fileName);
+    public ArrayList<Rekord> wczytajZPliku(String nazwaPliku) throws IOException, ClassNotFoundException {
+        ArrayList<Rekord> listaRekordow = new ArrayList<>();
+        File plik = new File(nazwaPliku);
 
-        if(file.exists() && file.length() != 0) {
-            FileInputStream fis = new FileInputStream(fileName);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            tmpArrayList = (ArrayList<Rekord>) ois.readObject();
-            ois.close();
+        if(plik.exists() && plik.length() != 0) {
+            FileInputStream strumienWejsciowyPliku = new FileInputStream(nazwaPliku);
+            ObjectInputStream strumienWejsciowyObiektu = new ObjectInputStream(strumienWejsciowyPliku);
+            listaRekordow = (ArrayList<Rekord>) strumienWejsciowyObiektu.readObject();
+            strumienWejsciowyObiektu.close();
         }
 
-        return tmpArrayList;
+        return listaRekordow;
     }
 
-    public ZaladowanieObrazu getImageLoader() {
+    public ZaladowanieObrazu getZaladowanieObrazu() {
         return zaladowanieObrazu;
     }
 
-    public StatusGry getGameStatus() {
+    public StatusGry getStatusGry() {
         return statusGry;
     }
 
-    public WyborWMenu getStartScreenSelection() {
+    public WyborWMenu getWyborWMenu() {
         return wyborWMenu;
     }
 
-    public void setGameStatus(StatusGry statusGry) {
+    public void setStatusGry(StatusGry statusGry) {
         this.statusGry = statusGry;
     }
 
-    public int getScore() {
+    public int getPunkty() {
         return zarzadzaniePoziomem.getPunkty();
     }
 
-    public int getRemainingLives() {
+    public int getPozostaleSerca() {
         return zarzadzaniePoziomem.getPozostaleSerca();
     }
 
@@ -301,11 +301,11 @@ public class GameEngine implements Runnable {
         return wybranyPoziom;
     }
 
-    public void drawMap(Graphics2D g2) {
-        zarzadzaniePoziomem.wyswietlPoziom(g2);
+    public void wyswietlPoziom(Graphics2D grafika) {
+        zarzadzaniePoziomem.wyswietlPoziom(grafika);
     }
 
-    public Point getCameraLocation() {
+    public Point getPozycjaKamery() {
         return new Point((int) kamera.getX(), (int) kamera.getY());
     }
 
@@ -313,11 +313,11 @@ public class GameEngine implements Runnable {
         return zarzadzaniePoziomem.wygrana();
     }
 
-    public ZarzadzaniePoziomem getMapManager() {
+    public ZarzadzaniePoziomem getZarzadzaniePoziomem() {
         return zarzadzaniePoziomem;
     }
 
     public static void main(String... args) throws IOException, ClassNotFoundException {
-        new GameEngine();
+        new SilnikGry();
     }
 }
