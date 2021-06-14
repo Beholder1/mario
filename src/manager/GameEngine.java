@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class GameEngine implements Runnable {
 
-    private final static int SZEROKOSC = 1268, WYSOKOSC = 708;
+    private final static int SZEROKOSC = 1260, WYSOKOSC = 708;
 
     private ZarzadzaniePoziomem zarzadzaniePoziomem;
     private InterfejsUzytkownika interfejsUzytkownika;
