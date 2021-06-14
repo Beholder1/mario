@@ -56,11 +56,11 @@ public class GameEngine implements Runnable {
         {
             try {
                 ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
-                tmpArrayList.add(new Rekord("Poziom1", 0));
-                tmpArrayList.add(new Rekord("Poziom2", 0));
-                tmpArrayList.add(new Rekord("Poziom3", 0));
-                tmpArrayList.add(new Rekord("Poziom4", 0));
-                tmpArrayList.add(new Rekord("Poziom5", 0));
+                tmpArrayList.add(new Rekord("Poziom 1", 0));
+                tmpArrayList.add(new Rekord("Poziom 2", 0));
+                tmpArrayList.add(new Rekord("Poziom 3", 0));
+                tmpArrayList.add(new Rekord("Poziom 4", 0));
+                tmpArrayList.add(new Rekord("Poziom 5", 0));
                 wy.writeObject(tmpArrayList);
             }
             catch (Exception e) {
@@ -150,9 +150,9 @@ public class GameEngine implements Runnable {
     }
 
     private void aktualizujRanking() throws IOException {
-        if (rekordy.get(0).getRekord() < getScore()){
+        if (rekordy.get(selectedMap).getRekord() < getScore()){
             ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
-            rekordy.set(0, new Rekord("Poziom1", getScore()));
+            rekordy.set(selectedMap, new Rekord("Poziom " + (selectedMap+1), getScore()));
             wy.writeObject(rekordy);
         }
     }
@@ -191,7 +191,7 @@ public class GameEngine implements Runnable {
     }
 
     private void checkCollisions() {
-        mapManager.checkCollisions(this);
+        mapManager.sprawdzKolizje(this);
     }
 
     public void receiveInput(AkcjeKlawiszy input) {

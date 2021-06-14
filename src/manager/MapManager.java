@@ -79,44 +79,44 @@ public class MapManager {
         return getRario().getX() >= poziom.getKoniec().getX() + 320;
     }
 
-    public void checkCollisions(GameEngine silnik) {
+    public void sprawdzKolizje(GameEngine silnik) {
         if (poziom == null) {
             return;
         }
 
-        checkBottomCollisions();
-        checkTopCollisions(silnik);
+        sprawdzDolneKolizje();
+        sprawdzGorneKolizje(silnik);
         checkMarioHorizontalCollision(silnik);
         checkEnemyCollisions();
         checkPrizeCollision();
         checkPrizeContact();
     }
 
-    private void checkBottomCollisions() {
+    private void sprawdzDolneKolizje() {
         Rario rario = getRario();
-        ArrayList<Blok> bricks = poziom.getWszystkieCegly();
-        ArrayList<Przeciwnik> enemies = poziom.getPrzeciwnicy();
-        ArrayList<ObiektGry> toBeRemoved = new ArrayList<>();
+        ArrayList<Blok> cegly = poziom.getWszystkieCegly();
+        ArrayList<Przeciwnik> przeciwnicy = poziom.getPrzeciwnicy();
+        ArrayList<ObiektGry> doUsuniecia = new ArrayList<>();
 
-        Rectangle marioBottomBounds = rario.dolnaGranica();
+        Rectangle dolnaGranicaRario = rario.dolnaGranica();
 
         if (!rario.getCzySkacze())
             rario.setCzySpada(true);
 
-        for (Blok brick : bricks) {
-            Rectangle brickTopBounds = brick.gornaGranica();
-            if (marioBottomBounds.intersects(brickTopBounds)) {
-                rario.setY(brick.getY() - rario.getWymiar().height + 1);
+        for (Blok cegla : cegly) {
+            Rectangle brickTopBounds = cegla.gornaGranica();
+            if (dolnaGranicaRario.intersects(brickTopBounds)) {
+                rario.setY(cegla.getY() - rario.getWymiar().height + 1);
                 rario.setCzySpada(false);
                 rario.setPredkoscWY(0);
             }
         }
 
-        for (Przeciwnik przeciwnik : enemies) {
-            Rectangle enemyTopBounds = przeciwnik.gornaGranica();
-            if (marioBottomBounds.intersects(enemyTopBounds)) {
+        for (Przeciwnik przeciwnik : przeciwnicy) {
+            Rectangle gornaGranicaPrzeciwnika = przeciwnik.gornaGranica();
+            if (dolnaGranicaRario.intersects(gornaGranicaPrzeciwnika)) {
                 rario.zyskajPunkty(100);
-                toBeRemoved.add(przeciwnik);
+                doUsuniecia.add(przeciwnik);
             }
         }
 
@@ -126,10 +126,10 @@ public class MapManager {
             rario.setPredkoscWY(0);
         }
 
-        removeObjects(toBeRemoved);
+        removeObjects(doUsuniecia);
     }
 
-    private void checkTopCollisions(GameEngine engine) {
+    private void sprawdzGorneKolizje(GameEngine engine) {
         Rario rario = getRario();
         ArrayList<Blok> bricks = poziom.getWszystkieCegly();
 
