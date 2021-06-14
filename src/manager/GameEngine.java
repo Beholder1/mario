@@ -24,7 +24,7 @@ public class GameEngine implements Runnable {
     private Thread thread;
     private WyborWMenu wyborWMenu = WyborWMenu.GRAJ;
     private int selectedMap = 0;
-    private Ranking ranking;
+
     ArrayList<Rekord> rekordy;
 
     private GameEngine() throws IOException, ClassNotFoundException {
@@ -50,7 +50,6 @@ public class GameEngine implements Runnable {
         kamera = new Kamera();
         interfejsUzytkownika = new InterfejsUzytkownika(this, WIDTH, HEIGHT);
         mapManager = new MapManager();
-        ranking = new Ranking();
         ArrayList<Rekord> tmpArrayList = new ArrayList<>();
         File file = new File(".\\rekordy.dat");
         if(!file.exists())
@@ -68,11 +67,7 @@ public class GameEngine implements Runnable {
 
             }
         }
-
         rekordy = read(".\\rekordy.dat");
-
-
-
         JFrame frame = new JFrame("Rario");
         frame.add(interfejsUzytkownika);
         frame.addKeyListener(wejscie);
@@ -154,6 +149,14 @@ public class GameEngine implements Runnable {
         interfejsUzytkownika.repaint();
     }
 
+    private void aktualizujRanking() throws IOException {
+        if (rekordy.get(0).getRekord() < getScore()){
+            ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
+            rekordy.set(0, new Rekord("Poziom1", getScore()));
+            wy.writeObject(rekordy);
+        }
+    }
+
     private void gameLoop() throws IOException {
         mapManager.zmienPolozenia();
         checkCollisions();
@@ -161,11 +164,7 @@ public class GameEngine implements Runnable {
 
         if (isGameOver()) {
 
-            if (rekordy.get(0).getRekord() < getScore()){
-                ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
-                rekordy.set(0, new Rekord("Poziom1", getScore()));
-                wy.writeObject(rekordy);
-            }
+            aktualizujRanking();
 
             setGameStatus(StatusGry.PRZEGRANA);
         }
@@ -173,8 +172,10 @@ public class GameEngine implements Runnable {
         int missionPassed = getWygrana();
         if(missionPassed > -1){
             mapManager.zyskajPunkty(missionPassed);
-        } else if(mapManager.koniecPoziomu())
+        } else if(mapManager.koniecPoziomu()) {
+            aktualizujRanking();
             setGameStatus(StatusGry.WYGRANA);
+        }
     }
 
     private void updateCamera() {
@@ -314,10 +315,6 @@ public class GameEngine implements Runnable {
 
     public MapManager getMapManager() {
         return mapManager;
-    }
-
-    public Ranking getRanking(){
-        return ranking;
     }
 
     public static void main(String... args) throws IOException, ClassNotFoundException {

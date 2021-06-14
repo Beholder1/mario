@@ -112,7 +112,8 @@ public class InterfejsUzytkownika extends JPanel{
     void wyswietlRanking(Graphics2D grafika) throws IOException, ClassNotFoundException {
         grafika.setFont(font.deriveFont(50f));
         grafika.setColor(Color.WHITE);
-        silnik.getRanking().wyswietl(grafika);
+        Ranking ranking = new Ranking();
+        ranking.wyswietl(grafika);
     }
 
     private void wyswietlPrzegrana(Graphics2D grafika) {
