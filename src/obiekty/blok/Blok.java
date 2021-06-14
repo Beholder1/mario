@@ -1,6 +1,6 @@
 package obiekty.blok;
 
-import manager.SilnikGry;
+import zarzadzanie.SilnikGry;
 import obiekty.ObiektGry;
 import obiekty.nagroda.Nagroda;
 

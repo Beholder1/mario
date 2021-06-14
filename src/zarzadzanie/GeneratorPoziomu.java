@@ -1,4 +1,4 @@
-package manager;
+package zarzadzanie;
 
 import obiekty.Flaga;
 import obiekty.blok.*;
@@ -11,7 +11,7 @@ import obiekty.postac.Rario;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-class GeneratorMapy {
+class GeneratorPoziomu {
 
     private ZaladowanieObrazu obraz;
     private BufferedImage tlo;
@@ -19,7 +19,7 @@ class GeneratorMapy {
     private BufferedImage cegla, pytajnik, niezniszczalnaCegla, rura;
     private BufferedImage przeciwnikLewy, przeciwnikPrawy, flaga;
 
-    GeneratorMapy(ZaladowanieObrazu obraz) {
+    GeneratorPoziomu(ZaladowanieObrazu obraz) {
 
         this.obraz = obraz;
         BufferedImage obiekty = obraz.zaladujObraz("/obiekty.png");

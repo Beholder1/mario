@@ -1,7 +1,7 @@
 package obiekty.postac;
 
-import manager.Kamera;
-import manager.SilnikGry;
+import zarzadzanie.Kamera;
+import zarzadzanie.SilnikGry;
 import view.Animacja;
 import obiekty.ObiektGry;
 import view.ZaladowanieObrazu;

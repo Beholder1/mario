@@ -1,4 +1,4 @@
-package manager;
+package zarzadzanie;
 
 import obiekty.postac.Rario;
 import view.*;
@@ -42,18 +42,13 @@ public class SilnikGry implements Runnable {
         File plik = new File(".\\rekordy.dat");
         if(!plik.exists())
         {
-            try {
-                ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
-                listaRekordow.add(new Rekord("Poziom 1", 0));
-                listaRekordow.add(new Rekord("Poziom 2", 0));
-                listaRekordow.add(new Rekord("Poziom 3", 0));
-                listaRekordow.add(new Rekord("Poziom 4", 0));
-                listaRekordow.add(new Rekord("Poziom 5", 0));
-                wy.writeObject(listaRekordow);
-            }
-            catch (Exception e) {
-
-            }
+            ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
+            listaRekordow.add(new Rekord("Poziom 1", 0));
+            listaRekordow.add(new Rekord("Poziom 2", 0));
+            listaRekordow.add(new Rekord("Poziom 3", 0));
+            listaRekordow.add(new Rekord("Poziom 4", 0));
+            listaRekordow.add(new Rekord("Poziom 5", 0));
+            wy.writeObject(listaRekordow);
         }
         rekordy = wczytajZPliku(".\\rekordy.dat");
         JFrame klatka = new JFrame("Rario");

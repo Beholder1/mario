@@ -1,4 +1,4 @@
-package manager;
+package zarzadzanie;
 
 import obiekty.ObiektGry;
 import obiekty.Poziom;
@@ -35,8 +35,8 @@ public class ZarzadzaniePoziomem {
     }
 
     public boolean stworzPoziom(ZaladowanieObrazu obraz, String sciezka) {
-        GeneratorMapy generatorMapy = new GeneratorMapy(obraz);
-        poziom = generatorMapy.utworzPoziom("/poziomy/" + sciezka);
+        GeneratorPoziomu generatorPoziomu = new GeneratorPoziomu(obraz);
+        poziom = generatorPoziomu.utworzPoziom("/poziomy/" + sciezka);
 
         return poziom != null;
     }
@@ -308,12 +308,12 @@ public class ZarzadzaniePoziomem {
         if(list == null)
             return;
 
-        for(ObiektGry object : list){
-            if(object instanceof Przeciwnik){
-                poziom.usunPrzeciwnika((Przeciwnik)object);
+        for(ObiektGry obiektGry : list){
+            if(obiektGry instanceof Przeciwnik){
+                poziom.usunPrzeciwnika((Przeciwnik)obiektGry);
             }
-            else if(object instanceof Moneta || object instanceof PrzedmiotSpecjalny){
-                poziom.usunNagrode((Nagroda)object);
+            else if(obiektGry instanceof Moneta || obiektGry instanceof PrzedmiotSpecjalny){
+                poziom.usunNagrode((Nagroda)obiektGry);
             }
         }
     }

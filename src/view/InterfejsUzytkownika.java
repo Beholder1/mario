@@ -1,7 +1,7 @@
 package view;
 
-import manager.SilnikGry;
-import manager.StatusGry;
+import zarzadzanie.SilnikGry;
+import zarzadzanie.StatusGry;
 
 import javax.swing.*;
 import java.awt.*;

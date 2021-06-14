@@ -1,7 +1,7 @@
 package obiekty.blok;
 
-import manager.SilnikGry;
-import manager.ZarzadzaniePoziomem;
+import zarzadzanie.SilnikGry;
+import zarzadzanie.ZarzadzaniePoziomem;
 import obiekty.nagroda.Nagroda;
 
 import java.awt.image.BufferedImage;

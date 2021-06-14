@@ -1,4 +1,4 @@
-package manager;
+package zarzadzanie;
 
 public enum StatusGry {
     PRZEGRANA,
