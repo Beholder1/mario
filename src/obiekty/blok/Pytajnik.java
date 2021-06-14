@@ -18,8 +18,8 @@ public class Pytajnik extends Blok{
 
     @Override
     public Nagroda odkryj(GameEngine silnik){
-        BufferedImage nowyStyl = silnik.getImageLoader().loadImage("/obiekty.png");
-        nowyStyl = silnik.getImageLoader().getSubImage(nowyStyl, 0, 50, 50, 50);
+        BufferedImage nowyStyl = silnik.getImageLoader().zaladujObraz("/obiekty.png");
+        nowyStyl = silnik.getImageLoader().getMniejszyObraz(nowyStyl, 0, 50, 50, 50);
 
         if(nagroda != null){
             nagroda.odkryj();

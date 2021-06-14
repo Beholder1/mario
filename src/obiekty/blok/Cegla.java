@@ -1,7 +1,7 @@
 package obiekty.blok;
 
 import manager.GameEngine;
-import manager.MapManager;
+import manager.ZarzadzaniePoziomem;
 import obiekty.nagroda.Nagroda;
 
 import java.awt.image.BufferedImage;
@@ -17,15 +17,10 @@ public class Cegla extends Blok {
 
     @Override
     public Nagroda odkryj(GameEngine silnik){
-        MapManager menedzer = silnik.getMapManager();
-        if(!menedzer.getRario().isSuper())
+        ZarzadzaniePoziomem menedzer = silnik.getMapManager();
+        if(!menedzer.getRario().czyDuzy())
             return null;
-
-        menedzer.addRevealedBrick(this);
-
-        double x = getX() - 27, y = getY() - 27;
-        setPolozenie(x, y);
-
+        menedzer.odkrycieCegly(this);
         return null;
     }
 }

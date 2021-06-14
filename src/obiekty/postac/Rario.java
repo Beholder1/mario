@@ -4,7 +4,7 @@ import manager.Kamera;
 import manager.GameEngine;
 import view.Animacja;
 import obiekty.ObiektGry;
-import view.ImageLoader;
+import view.ZaladowanieObrazu;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,9 +23,9 @@ public class Rario extends ObiektGry {
         PozostaleSerca = 3;
         punkty = 0;
 
-        ImageLoader obraz = new ImageLoader();
-        BufferedImage[] leweKlatki = obraz.getLeftFrames(RarioForma.MALY);
-        BufferedImage[] praweKlatki = obraz.getRightFrames(RarioForma.MALY);
+        ZaladowanieObrazu obraz = new ZaladowanieObrazu();
+        BufferedImage[] leweKlatki = obraz.getLeweKlatki(RarioForma.MALY);
+        BufferedImage[] praweKlatki = obraz.getPraweKlatki(RarioForma.MALY);
 
         Animacja animacja = new Animacja(leweKlatki, praweKlatki);
         rarioForma = new RarioForma(animacja, false);
@@ -97,7 +97,7 @@ public class Rario extends ObiektGry {
         this.rarioForma = rarioForma;
     }
 
-    public boolean isSuper() {
+    public boolean czyDuzy() {
         return rarioForma.getCzyDuzy();
     }
 

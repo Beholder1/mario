@@ -3,7 +3,7 @@ package manager;
 import obiekty.Flaga;
 import obiekty.blok.*;
 import obiekty.nagroda.*;
-import view.ImageLoader;
+import view.ZaladowanieObrazu;
 import obiekty.Poziom;
 import obiekty.postac.Przeciwnik;
 import obiekty.postac.Rario;
@@ -13,33 +13,33 @@ import java.awt.image.BufferedImage;
 
 class GeneratorMapy {
 
-    private ImageLoader obraz;
+    private ZaladowanieObrazu obraz;
     private BufferedImage tlo;
     private BufferedImage pasek, serce, moneta;
     private BufferedImage cegla, pytajnik, niezniszczalnaCegla, rura;
     private BufferedImage przeciwnikLewy, przeciwnikPrawy, flaga;
 
-    GeneratorMapy(ImageLoader obraz) {
+    GeneratorMapy(ZaladowanieObrazu obraz) {
 
         this.obraz = obraz;
-        BufferedImage obiekty = obraz.loadImage("/obiekty.png");
+        BufferedImage obiekty = obraz.zaladujObraz("/obiekty.png");
 
-        this.tlo = obraz.loadImage("/tlo.png");
-        this.pasek = obraz.getSubImage(obiekty, 100, 150, 50, 50);
-        this.serce= obraz.getSubImage(obiekty, 50, 150, 50, 50);
-        this.moneta = obraz.getSubImage(obiekty, 0, 150, 50, 50);
-        this.cegla = obraz.getSubImage(obiekty, 0, 0, 50, 50);
-        this.pytajnik = obraz.getSubImage(obiekty, 50, 0, 50, 50);
-        this.niezniszczalnaCegla = obraz.getSubImage(obiekty, 50, 50, 50, 50);
-        this.rura = obraz.getSubImage(obiekty, 100, 0, 100, 100);
-        this.przeciwnikLewy = obraz.getSubImage(obiekty, 0, 100, 50, 50);
-        this.przeciwnikPrawy = obraz.getSubImage(obiekty, 50, 100, 50, 50);
-        this.flaga = obraz.getSubImage(obiekty, 100, 100, 50, 50);
+        this.tlo = obraz.zaladujObraz("/tlo.png");
+        this.pasek = obraz.getMniejszyObraz(obiekty, 100, 150, 50, 50);
+        this.serce= obraz.getMniejszyObraz(obiekty, 50, 150, 50, 50);
+        this.moneta = obraz.getMniejszyObraz(obiekty, 0, 150, 50, 50);
+        this.cegla = obraz.getMniejszyObraz(obiekty, 0, 0, 50, 50);
+        this.pytajnik = obraz.getMniejszyObraz(obiekty, 50, 0, 50, 50);
+        this.niezniszczalnaCegla = obraz.getMniejszyObraz(obiekty, 50, 50, 50, 50);
+        this.rura = obraz.getMniejszyObraz(obiekty, 100, 0, 100, 100);
+        this.przeciwnikLewy = obraz.getMniejszyObraz(obiekty, 0, 100, 50, 50);
+        this.przeciwnikPrawy = obraz.getMniejszyObraz(obiekty, 50, 100, 50, 50);
+        this.flaga = obraz.getMniejszyObraz(obiekty, 100, 100, 50, 50);
 
     }
 
     Poziom utworzPoziom(String sciezkaPoziomu) {
-        BufferedImage rozstawieniePoziomu = obraz.loadImage(sciezkaPoziomu);
+        BufferedImage rozstawieniePoziomu = obraz.zaladujObraz(sciezkaPoziomu);
 
         if (rozstawieniePoziomu == null) {
             System.out.println("Niepoprawna sciezka do pliku");

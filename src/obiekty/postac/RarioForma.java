@@ -1,7 +1,7 @@
 package obiekty.postac;
 
 import view.Animacja;
-import view.ImageLoader;
+import view.ZaladowanieObrazu;
 
 import java.awt.image.BufferedImage;
 
@@ -41,9 +41,9 @@ public class RarioForma {
         return styl;
     }
 
-    public RarioForma dotknieciePrzeciwnika(ImageLoader obraz) {
-        BufferedImage[] leweKlatki = obraz.getLeftFrames(0);
-        BufferedImage[] praweKlatki = obraz.getRightFrames(0);
+    public RarioForma dotknieciePrzeciwnika(ZaladowanieObrazu obraz) {
+        BufferedImage[] leweKlatki = obraz.getLeweKlatki(0);
+        BufferedImage[] praweKlatki = obraz.getPraweKlatki(0);
 
         Animacja animacja1 = new Animacja(leweKlatki, praweKlatki);
 

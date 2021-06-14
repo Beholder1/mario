@@ -13,104 +13,92 @@ import java.util.ArrayList;
 
 public class GameEngine implements Runnable {
 
-    private final static int WIDTH = 1268, HEIGHT = 708;
+    private final static int SZEROKOSC = 1268, WYSOKOSC = 708;
 
-    private MapManager mapManager;
+    private ZarzadzaniePoziomem zarzadzaniePoziomem;
     private InterfejsUzytkownika interfejsUzytkownika;
     private StatusGry statusGry;
-    private boolean isRunning;
+    private boolean czyDziala;
     private Kamera kamera;
-    private ImageLoader imageLoader;
+    private ZaladowanieObrazu zaladowanieObrazu;
     private Thread thread;
     private WyborWMenu wyborWMenu = WyborWMenu.GRAJ;
-    private int selectedMap = 0;
+    private int wybranyPoziom = 0;
 
     ArrayList<Rekord> rekordy;
 
     private GameEngine() throws IOException, ClassNotFoundException {
-        init();
+        rozpoczecie();
     }
-    public ArrayList<Rekord> read(String fileName) throws IOException, ClassNotFoundException {
-        ArrayList<Rekord> tmpArrayList = new ArrayList<>();
-        File file = new File(fileName);
 
-        if(file.exists() && file.length() != 0) {
-            FileInputStream fis = new FileInputStream(fileName);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            tmpArrayList = (ArrayList<Rekord>) ois.readObject();
-            ois.close();
-        }
-
-        return tmpArrayList;
-    }
-    private void init() throws IOException, ClassNotFoundException {
-        imageLoader = new ImageLoader();
+    private void rozpoczecie() throws IOException, ClassNotFoundException {
+        zaladowanieObrazu = new ZaladowanieObrazu();
         Wejscie wejscie = new Wejscie(this);
         statusGry = StatusGry.MENU;
         kamera = new Kamera();
-        interfejsUzytkownika = new InterfejsUzytkownika(this, WIDTH, HEIGHT);
-        mapManager = new MapManager();
-        ArrayList<Rekord> tmpArrayList = new ArrayList<>();
-        File file = new File(".\\rekordy.dat");
-        if(!file.exists())
+        interfejsUzytkownika = new InterfejsUzytkownika(this, SZEROKOSC, WYSOKOSC);
+        zarzadzaniePoziomem = new ZarzadzaniePoziomem();
+        ArrayList<Rekord> listaRekordow = new ArrayList<>();
+        File plik = new File(".\\rekordy.dat");
+        if(!plik.exists())
         {
             try {
                 ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
-                tmpArrayList.add(new Rekord("Poziom 1", 0));
-                tmpArrayList.add(new Rekord("Poziom 2", 0));
-                tmpArrayList.add(new Rekord("Poziom 3", 0));
-                tmpArrayList.add(new Rekord("Poziom 4", 0));
-                tmpArrayList.add(new Rekord("Poziom 5", 0));
-                wy.writeObject(tmpArrayList);
+                listaRekordow.add(new Rekord("Poziom 1", 0));
+                listaRekordow.add(new Rekord("Poziom 2", 0));
+                listaRekordow.add(new Rekord("Poziom 3", 0));
+                listaRekordow.add(new Rekord("Poziom 4", 0));
+                listaRekordow.add(new Rekord("Poziom 5", 0));
+                wy.writeObject(listaRekordow);
             }
             catch (Exception e) {
 
             }
         }
         rekordy = read(".\\rekordy.dat");
-        JFrame frame = new JFrame("Rario");
-        frame.add(interfejsUzytkownika);
-        frame.addKeyListener(wejscie);
-        frame.pack();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        JFrame klatka = new JFrame("Rario");
+        klatka.add(interfejsUzytkownika);
+        klatka.addKeyListener(wejscie);
+        klatka.pack();
+        klatka.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        klatka.setResizable(false);
+        klatka.setLocationRelativeTo(null);
+        klatka.setVisible(true);
 
         start();
     }
 
     private synchronized void start() {
-        if (isRunning)
+        if (czyDziala)
             return;
 
-        isRunning = true;
+        czyDziala = true;
         thread = new Thread(this);
         thread.start();
     }
 
     private void reset(){
-        resetCamera();
+        resetKamery();
         setGameStatus(StatusGry.MENU);
     }
 
-    public void resetCamera() {
+    public void resetKamery() {
         kamera = new Kamera();
     }
 
-    public void selectMapViaKeyboard(){
-        String path = interfejsUzytkownika.wybierzPoziom(selectedMap);
-        if (path != null) {
-            createMap(path);
+    public void wybierzPoziom(){
+        String sciezka = interfejsUzytkownika.wybierzPoziom(wybranyPoziom);
+        if (sciezka != null) {
+            createMap(sciezka);
         }
     }
 
     public void changeSelectedMap(boolean up){
-        selectedMap = interfejsUzytkownika.zmienPoziom(selectedMap, up);
+        wybranyPoziom = interfejsUzytkownika.zmienPoziom(wybranyPoziom, up);
     }
 
     private void createMap(String path) {
-        boolean loaded = mapManager.stworzPoziom(imageLoader, path);
+        boolean loaded = zarzadzaniePoziomem.stworzPoziom(zaladowanieObrazu, path);
         if(loaded){
             setGameStatus(StatusGry.W_TRAKCIE);
         }
@@ -126,7 +114,7 @@ public class GameEngine implements Runnable {
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
 
-        while (isRunning && !thread.isInterrupted()) {
+        while (czyDziala && !thread.isInterrupted()) {
 
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -150,36 +138,34 @@ public class GameEngine implements Runnable {
     }
 
     private void aktualizujRanking() throws IOException {
-        if (rekordy.get(selectedMap).getRekord() < getScore()){
+        if (rekordy.get(wybranyPoziom).getRekord() < getScore()){
             ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream(".\\rekordy.dat"));
-            rekordy.set(selectedMap, new Rekord("Poziom " + (selectedMap+1), getScore()));
+            rekordy.set(wybranyPoziom, new Rekord("Poziom " + (wybranyPoziom +1), getScore()));
             wy.writeObject(rekordy);
         }
     }
 
     private void gameLoop() throws IOException {
-        mapManager.zmienPolozenia();
+        zarzadzaniePoziomem.zmienPolozenia();
         checkCollisions();
         updateCamera();
 
         if (isGameOver()) {
-
             aktualizujRanking();
-
             setGameStatus(StatusGry.PRZEGRANA);
         }
 
         int missionPassed = getWygrana();
         if(missionPassed > -1){
-            mapManager.zyskajPunkty(missionPassed);
-        } else if(mapManager.koniecPoziomu()) {
+            zarzadzaniePoziomem.zyskajPunkty(missionPassed);
+        } else if(zarzadzaniePoziomem.koniecPoziomu()) {
             aktualizujRanking();
             setGameStatus(StatusGry.WYGRANA);
         }
     }
 
     private void updateCamera() {
-        Rario rario = mapManager.getRario();
+        Rario rario = zarzadzaniePoziomem.getRario();
         double marioVelocityX = rario.getPredkoscWX();
         double shiftAmount = 0;
 
@@ -191,7 +177,7 @@ public class GameEngine implements Runnable {
     }
 
     private void checkCollisions() {
-        mapManager.sprawdzKolizje(this);
+        zarzadzaniePoziomem.sprawdzKolizje(this);
     }
 
     public void receiveInput(AkcjeKlawiszy input) {
@@ -213,7 +199,7 @@ public class GameEngine implements Runnable {
         }
         else if(statusGry == StatusGry.POZIOMY){
             if(input == AkcjeKlawiszy.WYBIERZ){
-                selectMapViaKeyboard();
+                wybierzPoziom();
             }
             else if(input == AkcjeKlawiszy.W_GORE){
                 changeSelectedMap(true);
@@ -222,7 +208,7 @@ public class GameEngine implements Runnable {
                 changeSelectedMap(false);
             }
         } else if (statusGry == StatusGry.W_TRAKCIE) {
-            Rario rario = mapManager.getRario();
+            Rario rario = zarzadzaniePoziomem.getRario();
             if (input == AkcjeKlawiszy.SKOK) {
                 rario.skok();
             } else if (input == AkcjeKlawiszy.W_PRAWO) {
@@ -269,12 +255,26 @@ public class GameEngine implements Runnable {
 
     private boolean isGameOver() {
         if(statusGry == StatusGry.W_TRAKCIE)
-            return mapManager.czyPrzegrano();
+            return zarzadzaniePoziomem.czyPrzegrano();
         return false;
     }
 
-    public ImageLoader getImageLoader() {
-        return imageLoader;
+    public ArrayList<Rekord> read(String fileName) throws IOException, ClassNotFoundException {
+        ArrayList<Rekord> tmpArrayList = new ArrayList<>();
+        File file = new File(fileName);
+
+        if(file.exists() && file.length() != 0) {
+            FileInputStream fis = new FileInputStream(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            tmpArrayList = (ArrayList<Rekord>) ois.readObject();
+            ois.close();
+        }
+
+        return tmpArrayList;
+    }
+
+    public ZaladowanieObrazu getImageLoader() {
+        return zaladowanieObrazu;
     }
 
     public StatusGry getGameStatus() {
@@ -290,19 +290,19 @@ public class GameEngine implements Runnable {
     }
 
     public int getScore() {
-        return mapManager.getPunkty();
+        return zarzadzaniePoziomem.getPunkty();
     }
 
     public int getRemainingLives() {
-        return mapManager.getPozostaleSerca();
+        return zarzadzaniePoziomem.getPozostaleSerca();
     }
 
-    public int getSelectedMap() {
-        return selectedMap;
+    public int getWybranyPoziom() {
+        return wybranyPoziom;
     }
 
     public void drawMap(Graphics2D g2) {
-        mapManager.wyswietlPoziom(g2);
+        zarzadzaniePoziomem.wyswietlPoziom(g2);
     }
 
     public Point getCameraLocation() {
@@ -310,11 +310,11 @@ public class GameEngine implements Runnable {
     }
 
     private int getWygrana(){
-        return mapManager.wygrana();
+        return zarzadzaniePoziomem.wygrana();
     }
 
-    public MapManager getMapManager() {
-        return mapManager;
+    public ZarzadzaniePoziomem getMapManager() {
+        return zarzadzaniePoziomem;
     }
 
     public static void main(String... args) throws IOException, ClassNotFoundException {

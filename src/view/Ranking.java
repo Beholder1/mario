@@ -14,6 +14,8 @@ public class Ranking implements Serializable {
     private ElementWyboruPoziomu[] ElementyWyboruPoziomu;
 
     public Ranking() {
+        dodajPoziomy();
+        this.ElementyWyboruPoziomu = stworzElementy(this.poziomy);
     }
     public ArrayList<Rekord> read(String fileName) throws IOException, ClassNotFoundException {
         ArrayList<Rekord> tmpArrayList = new ArrayList<>();
@@ -50,5 +52,26 @@ public class Ranking implements Serializable {
             licznik++;
         }
     }
+    private void dodajPoziomy(){
+        poziomy.add("Poziom 1.png");
+        poziomy.add("Poziom 2.png");
+        poziomy.add("Poziom 3.png");
+        poziomy.add("Poziom 4.png");
+        poziomy.add("Poziom 5.png");
+    }
 
+    private ElementWyboruPoziomu[] stworzElementy(ArrayList<String> poziomy){
+        if(poziomy == null)
+            return null;
+
+        ElementWyboruPoziomu[] elementy = new ElementWyboruPoziomu[poziomy.size()];
+        for (int i = 0; i < elementy.length; i++) {
+            Point polozenie = new Point(0, (i+1)*100+150);
+            elementy[i] = new ElementWyboruPoziomu(poziomy.get(i), polozenie);
+        }
+
+        return elementy;
+    }
 }
+
+

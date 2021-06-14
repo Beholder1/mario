@@ -24,15 +24,15 @@ public class InterfejsUzytkownika extends JPanel{
         setMinimumSize(new Dimension(szerokosc, wysokosc));
 
         this.silnik = silnik;
-        ImageLoader obraz = silnik.getImageLoader();
+        ZaladowanieObrazu obraz = silnik.getImageLoader();
         wyborPoziomu = new WyborPoziomu();
 
-        this.serce = obraz.loadImage("/serce.png");
-        this.wybor = obraz.loadImage("/wybor.png");
-        this.menu = obraz.loadImage("/menu.png");
-        this.sterowanie = obraz.loadImage("/sterowanie.png");
-        this.tworcy = obraz.loadImage("/tworcy.png");
-        this.przegrana = obraz.loadImage("/przegrana.png");
+        this.serce = obraz.zaladujObraz("/serce.png");
+        this.wybor = obraz.zaladujObraz("/wybor.png");
+        this.menu = obraz.zaladujObraz("/menu.png");
+        this.sterowanie = obraz.zaladujObraz("/sterowanie.png");
+        this.tworcy = obraz.zaladujObraz("/tworcy.png");
+        this.przegrana = obraz.zaladujObraz("/przegrana.png");
 
         try {
             InputStream wejscie = getClass().getResourceAsStream("/grafika/font/font.ttf");
@@ -112,6 +112,7 @@ public class InterfejsUzytkownika extends JPanel{
     void wyswietlRanking(Graphics2D grafika) throws IOException, ClassNotFoundException {
         grafika.setFont(font.deriveFont(50f));
         grafika.setColor(Color.WHITE);
+
         Ranking ranking = new Ranking();
         ranking.wyswietl(grafika);
     }
@@ -159,7 +160,7 @@ public class InterfejsUzytkownika extends JPanel{
         grafika.setFont(font.deriveFont(50f));
         grafika.setColor(Color.WHITE);
         wyborPoziomu.wyswietl(grafika);
-        int wiersz = silnik.getSelectedMap();
+        int wiersz = silnik.getWybranyPoziom();
         int y = wiersz*100+253-wybor.getHeight();
         grafika.drawImage(wybor, 350, y, null);
     }
